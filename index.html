@@ -792,6 +792,8 @@
         .cj-irr-forms { font-size:14px;color:var(--text-primary); }
         .cj-irr-fr { grid-column:2;font-size:12px;color:var(--text-secondary); }
         .cj-link { margin:12px auto 0; }
+        .cj-cefr { background:rgba(0,212,170,.12);color:var(--accent2);font-size:14px;font-weight:900; }
+        .cj-blank { display:inline-block;min-width:90px;border-bottom:3px solid var(--accent);color:var(--accent);font-weight:800;text-align:center; }
         .bb-test-card { display:flex;align-items:center;gap:14px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.35);border-radius:16px;padding:14px 18px;margin-bottom:16px;cursor:pointer;transition:transform .2s; }
         .bb-test-card:hover { transform:translateY(-2px); }
         .bb-test-icon { font-size:30px; }
@@ -874,7 +876,7 @@
         <h1>LangSpark ⚡</h1>
         <span>Anglais · Portugais · Make</span>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v31</span>
+          <span style="font-size:10px;color:#444">v32</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -5889,6 +5891,90 @@ function cjWeakKeys(lang) {
   return Object.keys(s).filter(k => cjIsWeak(s[k]));
 }
 
+// ── Parcours par temps : réguliers puis irréguliers, d'abord en choix multiple puis à l'écrit ──
+const CJ_LEVEL_N = 12;
+const CJ_LEVEL_PASS = 0.8;
+const CJ_LEVELS = [
+  { n: 1, icon: '🌱', name: 'Les bases', desc: 'Verbes réguliers · choix multiple', pool: 'reg', mode: 'qcm' },
+  { n: 2, icon: '✍️', name: 'Les bases à l\'écrit', desc: 'Verbes réguliers · à écrire', pool: 'reg', mode: 'write' },
+  { n: 3, icon: '🧩', name: 'Les irréguliers', desc: 'Verbes irréguliers · choix multiple', pool: 'irr', mode: 'qcm' },
+  { n: 4, icon: '🔥', name: 'Les irréguliers à l\'écrit', desc: 'Verbes irréguliers · à écrire', pool: 'irr', mode: 'write' },
+];
+const CJ_CEFR = ['A1', 'A2', 'B1', 'B2'];
+
+// Un verbe est régulier à un temps si toutes ses formes suivent la règle (calculé par langue)
+function cjIsRegular(lang, v, t) {
+  return t.forms(v).every((f, i) => f === cjData(lang).ruleForm(v, t.id, i));
+}
+function cjPool(lang, t, pool) {
+  return cjData(lang).verbs.filter(v => cjIsRegular(lang, v, t) === (pool === 'reg'));
+}
+function cjLevelsFor(lang, t) {
+  return CJ_LEVELS.filter(l => cjPool(lang, t, l.pool).length > 0);
+}
+function cjLevelScores(lang) {
+  return JSON.parse(localStorage.getItem('cj_levels_' + lang) || '{}');
+}
+function cjSaveLevel(lang, tid, n, pct) {
+  const s = cjLevelScores(lang);
+  s[tid + ':' + n] = Math.max(s[tid + ':' + n] ?? 0, pct);
+  localStorage.setItem('cj_levels_' + lang, JSON.stringify(s));
+}
+function cjLevelPassed(lang, tid, n) {
+  return (cjLevelScores(lang)[tid + ':' + n] ?? 0) >= CJ_LEVEL_PASS;
+}
+function cjLevelUnlocked(lang, t, n) {
+  const lv = cjLevelsFor(lang, t);
+  const i = lv.findIndex(l => l.n === n);
+  return i <= 0 || cjLevelPassed(lang, t.id, lv[i - 1].n);
+}
+function cjTensesSorted(lang) {
+  return [...cjData(lang).tenses].sort((a, b) => CJ_CEFR.indexOf(a.level) - CJ_CEFR.indexOf(b.level));
+}
+
+// Choix multiple : la bonne forme + la faute typique (forme « régularisée ») + d'autres personnes / temps
+function cjOptions(lang, v, t, pi) {
+  const d = cjData(lang);
+  const correct = t.forms(v)[pi];
+  const rule = d.ruleForm(v, t.id, pi);
+  const extra = lang === 'en' ? [v.inf, v.s, v.past, v.pp] : [v.inf];
+  const wrong = [...new Set([...t.forms(v), ...extra, ...d.tenses.map(x => x.forms(v)[pi])])]
+    .filter(f => f && f !== correct && f !== rule);
+  // Les pièges ressemblent à la bonne réponse : même nombre de mots en priorité
+  const words = f => f.split(' ').length;
+  const similar = bbShuffle(wrong.filter(f => words(f) === words(correct)));
+  const others = bbShuffle(wrong.filter(f => words(f) !== words(correct)));
+  const first = rule !== correct && !rule.includes('\u0000') ? [rule] : [];
+  const picked = [...first, ...similar, ...others].slice(0, 3);
+  return bbShuffle([{ o: correct, ok: true }, ...picked.map(o => ({ o, ok: false }))]);
+}
+
+function cjPathHTML(lang, t) {
+  const levels = cjLevelsFor(lang, t);
+  const scores = cjLevelScores(lang);
+  return `
+    <div class="bb-ex-type">🧗 Parcours d'entraînement · ${bbEsc(t.short)}</div>
+    <div class="bb-hint" style="text-align:left;margin:0 0 14px">${CJ_LEVEL_N} questions par niveau · ${Math.round(CJ_LEVEL_PASS * 100)} % pour débloquer le suivant.${levels.every(l => l.pool === 'reg') ? ' Bonne nouvelle : aucun verbe irrégulier à ce temps 🎉' : ''}</div>
+    <div class="bb-units">
+      ${levels.map(l => {
+        const open = cjLevelUnlocked(lang, t, l.n);
+        const best = scores[t.id + ':' + l.n];
+        const n = cjPool(lang, t, l.pool).length;
+        return `
+        <div class="bb-unit${open ? '' : ' bb-unit-locked'}" ${open ? `onclick="cjStartDrill('${lang}',{tense:'${t.id}',level:${l.n}})"` : ''}>
+          <div class="bb-unit-icon" style="background:rgba(108,99,255,.15);font-size:20px">${open ? l.icon : '🔒'}</div>
+          <div class="bb-unit-info">
+            <div class="bb-unit-title">Niveau ${l.n} · ${bbEsc(l.name)}</div>
+            <div class="bb-unit-sub">${bbEsc(l.desc)} · ${n} verbe${n > 1 ? 's' : ''}</div>
+          </div>
+          <div class="bb-unit-right">
+            ${best !== undefined ? `<div class="bb-unit-count">${best >= CJ_LEVEL_PASS ? '✅' : '❌'} ${Math.round(best * 100)} %</div>` : ''}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
 // ── Accueil ──
 function cjHome(lang) {
   cjReset(lang);
@@ -5903,7 +5989,7 @@ function cjHome(lang) {
     </div>
     <div class="cj-actions">
       <button class="cj-action" onclick="cjSetup('${lang}')">
-        <span class="cj-action-icon">⚡</span><span><b>S'entraîner</b><br><small>Séries de 20 formes à écrire</small></span>
+        <span class="cj-action-icon">⚡</span><span><b>Entraînement libre</b><br><small>Mélangez temps et verbes · 20 questions</small></span>
       </button>
       <button class="cj-action${weak.length ? ' warn' : ''}" ${weak.length ? `onclick="cjStartDrill('${lang}',{weak:true})"` : 'disabled'}>
         <span class="cj-action-icon">🎯</span><span><b>Mes points faibles</b><br><small>${weak.length ? weak.length + ' à retravailler' : 'Aucun pour l\'instant'}</small></span>
@@ -5912,16 +5998,22 @@ function cjHome(lang) {
         <span class="cj-action-icon">📜</span><span><b>Verbes irréguliers</b><br><small>${d.irregulars.length} verbes · liste et entraînement</small></span>
       </button>` : ''}
     </div>
-    <div class="cj-section-title">Les temps</div>
+    <div class="cj-section-title">Les temps <span style="font-weight:500;color:var(--text-secondary);font-size:12px">· dans l'ordre d'apprentissage — commencez par le niveau 🌱 de chaque temps</span></div>
     <div class="bb-units">
-      ${d.tenses.map(t => `
+      ${cjTensesSorted(lang).map(t => {
+        const lv = cjLevelsFor(lang, t);
+        const done = lv.filter(l => cjLevelPassed(lang, t.id, l.n)).length;
+        return `
         <div class="bb-unit" onclick="cjTense('${lang}','${t.id}')">
-          <div class="bb-unit-icon" style="background:rgba(108,99,255,.15);font-size:18px">⏱️</div>
+          <div class="bb-unit-icon cj-cefr">${t.level}</div>
           <div class="bb-unit-info">
             <div class="bb-unit-title">${bbEsc(t.name)}</div>
             <div class="bb-unit-sub">${t.usage.replace(/<[^>]+>/g, '').split(/[.:]/)[0]}</div>
+            <div class="bb-unit-progress"><div class="bb-unit-fill" style="width:${Math.round(done / lv.length * 100)}%;background:var(--accent2)"></div></div>
           </div>
-        </div>`).join('')}
+          <div class="bb-unit-right"><div class="bb-unit-count">${done}/${lv.length} niv.</div></div>
+        </div>`;
+      }).join('')}
     </div>
     <div class="cj-section-title">Les verbes <span style="font-weight:500;color:var(--text-secondary);font-size:12px">· en orange : irréguliers</span></div>
     <div class="cj-chips">${d.verbs.map(verbChip).join('')}</div>`;
@@ -5953,7 +6045,7 @@ function cjTenseHTML(lang, id, withActions) {
       </div>`).join('')}</div>
     <div class="bb-gr-tip"><b>⚠️ Piège pour francophones</b><br>${bbEsc(t.tip)}</div>
     ${withActions ? `
-      <button class="bb-next-btn" onclick="cjStartDrill('${lang}',{tenses:['${t.id}'],verbs:'all'})">⚡ S'entraîner sur ce temps</button>
+      <button class="bb-next-btn bb-btn-ghost" onclick="cjStartDrill('${lang}',{tenses:['${t.id}'],verbs:'all'})">⚡ Entraînement libre sur ce temps (tous les verbes)</button>
       <div class="cj-section-title">Voir un verbe à ce temps</div>
       <div class="cj-chips">${d.verbs.map(v => `<button class="cj-chip${v.irr ? ' irr' : ''}" onclick="cjVerb('${lang}','${cjArg(v.id)}')">${bbEsc(v.inf)}</button>`).join('')}</div>` : ''}`;
 }
@@ -5962,6 +6054,7 @@ function cjTense(lang, id) {
   cjReset(lang);
   cjEl(lang).innerHTML = `
     <button class="bb-back-btn" onclick="cjHome('${lang}')">← Conjugaison</button>
+    <div class="bb-exercise" style="margin-top:16px">${cjPathHTML(lang, cjTenseById(lang, id))}</div>
     <div class="bb-exercise" style="margin-top:16px">${cjTenseHTML(lang, id, true)}</div>`;
 }
 
@@ -6063,7 +6156,7 @@ function cjSetup(lang) {
         <button class="cj-chip toggle${s.tenses.includes(t.id) ? ' on' : ''}" onclick="cjToggleTense('${lang}','${t.id}')">${bbEsc(t.short)}</button>`).join('')}</div>
       <div class="cj-label" style="margin-top:18px">Verbes</div>
       <div class="cj-chips">
-        ${[['top', `Les ${d.verbs.filter(v => v.top).length} plus courants`], ['irr', 'Irréguliers'], ['all', `Tous (${d.verbs.length})`]].map(([k, l]) => `
+        ${[['top', `Les ${d.verbs.filter(v => v.top).length} plus courants`], ['reg', 'Réguliers'], ['irr', 'Irréguliers'], ['all', `Tous (${d.verbs.length})`]].map(([k, l]) => `
           <button class="cj-chip toggle${s.verbs === k ? ' on' : ''}" onclick="cjState.setup['${lang}'].verbs='${k}';cjSetup('${lang}')">${l}</button>`).join('')}
       </div>
       <div class="bb-hint">${bbEsc(d.inputHint)}</div>
@@ -6090,7 +6183,17 @@ function cjStartDrill(lang, opts) {
   const N = 20;
   let items = [];
 
-  if (opts.irr) {
+  if (opts.level) {
+    const t = cjTenseById(lang, opts.tense);
+    const L = CJ_LEVELS.find(l => l.n === opts.level);
+    const persons = cjPersons(lang, t);
+    // On alterne les verbes pour ne pas enchaîner plusieurs fois le même
+    const byVerb = bbShuffle(cjPool(lang, t, L.pool)).map(v => bbShuffle(persons.map((_, pi) => pi)).map(pi => [v.id, pi]));
+    const combos = [];
+    for (let r = 0; combos.length < CJ_LEVEL_N && r < persons.length; r++)
+      byVerb.forEach(list => { if (list[r] && combos.length < CJ_LEVEL_N) combos.push(list[r]); });
+    items = combos.map(([vid, pi]) => ({ kind: 'conj', vid, tid: t.id, pi, mcq: L.mode === 'qcm' }));
+  } else if (opts.irr) {
     items = bbShuffle(d.irregulars).slice(0, N).map(row => ({ kind: 'irr', row }));
   } else {
     const stats = cjStats(lang);
@@ -6100,6 +6203,7 @@ function cjStartDrill(lang, opts) {
     } else {
       const verbs = opts.verbs === 'top' ? d.verbs.filter(v => v.top)
         : opts.verbs === 'irr' ? d.verbs.filter(v => v.irr)
+        : opts.verbs === 'reg' ? d.verbs.filter(v => !v.irr)
         : opts.verbs === 'all' ? d.verbs
         : d.verbs.filter(v => v.id === opts.verbs);
       const tenses = opts.tenses || d.tenses.map(t => t.id);
@@ -6142,27 +6246,54 @@ function cjRenderDrill() {
     const v = cjVerbById(lang, it.vid);
     const t = cjTenseById(lang, it.tid);
     const person = cjPersons(lang, t)[it.pi];
+    if (it.mcq && !it.options) it.options = cjOptions(lang, v, t, it.pi);
     body = `
       <div class="bb-ex-type">⏱️ ${bbEsc(t.name)}</div>
       <div class="bb-ex-word" style="font-size:30px">${bbEsc(v.inf)}</div>
       <div class="bb-ex-tr">${bbEsc(v.fr)}</div>
+      ${it.mcq ? `
+      <div class="cj-prompt" style="justify-content:center;margin-bottom:14px"><span class="cj-person">${bbEsc(person)}</span><span class="cj-blank">…</span></div>
+      <div class="bb-choices bb-choices-col">${it.options.map((o, i) => `<button class="bb-choice" onclick="cjChoose(${i})">${bbEsc(o.o)}</button>`).join('')}</div>` : `
       <div class="cj-prompt"><span class="cj-person">${bbEsc(person)}</span>
         <input class="bb-input" id="cj-in-1" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="…" onkeydown="if(event.key==='Enter'){event.preventDefault();cjCheck();}">
-      </div>`;
+      </div>`}`;
   }
+  const lvl = dr.opts.level ? CJ_LEVELS.find(l => l.n === dr.opts.level) : null;
+  const title = lvl ? `${cjTenseById(lang, dr.opts.tense).short} · ${lvl.icon} Niveau ${lvl.n}`
+    : dr.opts.weak ? 'Points faibles' : dr.opts.irr ? 'Irréguliers' : 'Conjugaison';
   cjEl(lang).innerHTML = `
     <div class="bb-lesson-header">
-      <button class="bb-back-btn" onclick="cjHome('${lang}')">←</button>
-      <div class="bb-lesson-title">⚡ ${dr.opts.weak ? 'Points faibles' : dr.opts.irr ? 'Irréguliers' : 'Conjugaison'}</div>
+      <button class="bb-back-btn" onclick="${dr.opts.tense ? `cjTense('${lang}','${dr.opts.tense}')` : `cjHome('${lang}')`}">←</button>
+      <div class="bb-lesson-title">⚡ ${bbEsc(title)}</div>
       <div class="bb-progress-track"><div class="bb-progress-done" style="width:${Math.round(dr.idx / dr.items.length * 100)}%"></div></div>
       <span style="font-size:12px;color:var(--text-secondary)">${dr.idx}/${dr.items.length}</span>
     </div>
     <div class="bb-exercise">
       ${body}
-      <button class="bb-next-btn" id="cj-check" onclick="cjCheck()">Vérifier</button>
+      ${it.mcq ? '' : `<button class="bb-next-btn" id="cj-check" onclick="cjCheck()">Vérifier</button>`}
       <div id="cj-feedback"></div>
     </div>`;
-  document.getElementById('cj-in-1').focus();
+  const input = document.getElementById('cj-in-1');
+  if (input) input.focus();
+}
+
+function cjChoose(i) {
+  const dr = cjState.drill;
+  if (dr.answered) return;
+  dr.answered = true;
+  const { lang } = dr;
+  const it = dr.items[dr.idx];
+  const v = cjVerbById(lang, it.vid);
+  const t = cjTenseById(lang, it.tid);
+  const person = cjPersons(lang, t)[it.pi];
+  const buttons = document.querySelectorAll('.bb-choice');
+  buttons.forEach(b => b.disabled = true);
+  const ok = it.options[i].ok;
+  buttons[i].classList.add(ok ? 'correct' : 'wrong');
+  buttons[it.options.findIndex(o => o.ok)].classList.add('correct');
+  cjRecord(lang, v.id + '|' + t.id, ok);
+  const answer = t.forms(v)[it.pi];
+  cjFeedback(ok, false, `${person} ${answer}`, `${v.inf} · ${t.short} · ${person}`, `${person.split('/')[0].trim()} ${answer}`, false);
 }
 
 function cjStripPronoun(lang, input) {
@@ -6213,16 +6344,21 @@ function cjCheck() {
   }
   if (in2) in2.disabled = true;
   in1.disabled = true;
+  document.getElementById('cj-check').remove();
+  cjFeedback(ok, warn, expected, label, speak, true);
+}
+
+function cjFeedback(ok, warn, expected, label, speak, allowOverride) {
+  const dr = cjState.drill;
   if (ok) dr.score++;
   else dr.mistakes.push({ label, expected });
-  document.getElementById('cj-check').remove();
   document.getElementById('cj-feedback').innerHTML = `
     <div class="bb-feedback ${ok ? (warn ? 'warn' : 'ok') : 'ko'}"><div>
       ${ok ? (warn ? `✅ Presque — attention aux accents : <strong>${bbEsc(expected)}</strong>` : '✅ Bravo !') : `❌ Réponse : <strong>${bbEsc(expected)}</strong>`}
     </div></div>
     ${speak ? `<div class="bb-audio-row" style="margin-top:12px">${bbAudioBtn(speak, '🔊 Écouter')}</div>` : ''}
     <div style="display:flex;gap:10px">
-      ${!ok ? `<button class="bb-next-btn bb-btn-ghost" onclick="cjOverride()">✋ J'avais bon</button>` : ''}
+      ${!ok && allowOverride ? `<button class="bb-next-btn bb-btn-ghost" onclick="cjOverride()">✋ J'avais bon</button>` : ''}
       <button class="bb-next-btn" id="cj-next" onclick="cjNext()">Continuer →</button>
     </div>`;
   document.getElementById('cj-next').focus();
@@ -6250,10 +6386,25 @@ function cjNext() {
   const { lang, score, items, mistakes, opts } = dr;
   bbAddXP(lang, Math.round(score / 2));
   const pct = Math.round(score / items.length * 100);
+  let levelTitle = '', levelBtn = '';
+  if (opts.level) {
+    const t = cjTenseById(lang, opts.tense);
+    const wasPassed = cjLevelPassed(lang, t.id, opts.level);
+    cjSaveLevel(lang, t.id, opts.level, score / items.length);
+    const passed = score / items.length >= CJ_LEVEL_PASS;
+    const lv = cjLevelsFor(lang, t);
+    const next = lv[lv.findIndex(l => l.n === opts.level) + 1];
+    levelTitle = passed
+      ? (next ? (wasPassed ? 'Niveau validé !' : `Niveau validé — niveau ${next.n} débloqué ! 🔓`) : `Temps maîtrisé : ${t.short} 🏆`)
+      : `Il faut ${Math.round(CJ_LEVEL_PASS * 100)} % pour valider — réessayez !`;
+    levelBtn = passed && next
+      ? `<button class="bb-next-btn" style="max-width:240px" onclick="cjStartDrill('${lang}',{tense:'${t.id}',level:${next.n}})">${next.icon} Niveau ${next.n}</button>`
+      : `<button class="bb-next-btn bb-btn-ghost" style="max-width:200px" onclick="cjTense('${lang}','${t.id}')">⏱️ Fiche du temps</button>`;
+  }
   cjEl(lang).innerHTML = `
     <div class="bb-complete">
       <div class="bb-check-score ${pct >= 70 ? 'ok' : 'ko'}">${pct} %</div>
-      <div class="bb-complete-title">${pct >= 90 ? 'Excellent !' : pct >= 70 ? 'Bien joué !' : 'Continuez, ça rentre !'}</div>
+      <div class="bb-complete-title">${levelTitle || (pct >= 90 ? 'Excellent !' : pct >= 70 ? 'Bien joué !' : 'Continuez, ça rentre !')}</div>
       <div class="bb-complete-sub">${score} / ${items.length} formes correctes${!opts.irr ? ' · vos erreurs alimentent « Mes points faibles »' : ''}</div>
       <div class="bb-complete-xp">⚡ +${Math.round(score / 2)} XP</div>
       ${mistakes.length ? `
@@ -6262,7 +6413,8 @@ function cjNext() {
           ${mistakes.map(m => `<div class="bb-review-item"><div class="bb-review-q">${bbEsc(m.label)}</div><div class="bb-review-a">→ ${bbEsc(m.expected)}</div></div>`).join('')}
         </div>` : `<div class="bb-review-perfect">🎯 Sans faute !</div>`}
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <button class="bb-next-btn" style="max-width:220px" onclick='cjStartDrill("${lang}", ${JSON.stringify(opts).replace(/'/g, '&#39;')})'>🔄 Nouvelle série</button>
+        ${levelBtn}
+        <button class="bb-next-btn${levelBtn && score / items.length >= CJ_LEVEL_PASS ? ' bb-btn-ghost' : ''}" style="max-width:220px" onclick='cjStartDrill("${lang}", ${JSON.stringify(opts).replace(/'/g, '&#39;')})'>🔄 ${opts.level ? 'Refaire ce niveau' : 'Nouvelle série'}</button>
         ${!opts.weak && cjWeakKeys(lang).length ? `<button class="bb-next-btn" style="max-width:220px;background:linear-gradient(135deg,#f59e0b,#ef4444)" onclick="cjStartDrill('${lang}',{weak:true})">🎯 Mes points faibles</button>` : ''}
         <button class="bb-next-btn bb-btn-ghost" style="max-width:200px" onclick="cjHome('${lang}')">🔤 Conjugaison</button>
       </div>

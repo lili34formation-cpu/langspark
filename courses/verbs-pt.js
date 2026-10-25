@@ -99,7 +99,7 @@ verbs.forEach(vb => { vb.part = participio(vb); });
 
 const tenses = [
   {
-    id: 'presente', name: 'Presente (présent)', short: 'Presente',
+    id: 'presente', level: 'A1', name: 'Presente (présent)', short: 'Presente',
     forms: vb => sp(vb.pr),
     usage: 'Les habitudes et les faits : <b>Trabalho</b> num hotel. Souvent aussi le futur proche à l\'oral : <b>Amanhã vou</b> ao Porto.',
     formation: `<b>-AR</b> : o, as, a, amos, am · <b>-ER</b> : o, es, e, emos, em · <b>-IR</b> : o, es, e, imos, em.<br>Beaucoup de verbes très courants sont irréguliers à la 1re personne : fa<b>ço</b>, di<b>go</b>, ou<b>ço</b>, pe<b>ço</b>, ten<b>ho</b>, pos<b>so</b>.`,
@@ -108,7 +108,7 @@ const tenses = [
     lessons: ['pt_a1_1_2', 'pt_a1_2_1', 'pt_a1_3_3', 'pt_a1_4_1', 'pt_a1_4_2'],
   },
   {
-    id: 'progressivo', name: 'Estar a + infinitif (action en cours)', short: 'Estar a…',
+    id: 'progressivo', level: 'A2', name: 'Estar a + infinitif (action en cours)', short: 'Estar a…',
     forms: vb => EST.map(e => `${e} a ${vb.inf}`),
     usage: 'Ce qui se passe <b>en ce moment</b> : <b>Estou a trabalhar</b> (je suis en train de travailler). C\'est la forme du Portugal.',
     formation: `<b>estar</b> (estou, estás, está, estamos, estão) <b>+ a + infinitif</b>.`,
@@ -117,7 +117,7 @@ const tenses = [
     lessons: ['pt_a2_4_1'],
   },
   {
-    id: 'perfeito', name: 'Pretérito perfeito (passé)', short: 'Perfeito',
+    id: 'perfeito', level: 'A2', name: 'Pretérito perfeito (passé)', short: 'Perfeito',
     forms: vb => sp(vb.pf),
     usage: 'Une action <b>terminée</b> dans le passé : = notre passé composé. <b>Ontem jantei</b> fora (hier j\'ai dîné dehors).',
     formation: `<b>-AR</b> : ei, aste, ou, <b>ámos</b>, aram · <b>-ER</b> : i, este, eu, emos, eram · <b>-IR</b> : i, iste, iu, imos, iram.<br>Irréguliers majeurs : ser/ir → fui, estar → estive, ter → tive, fazer → fiz, dizer → disse, poder → pude, pôr → pus, vir → vim.`,
@@ -126,7 +126,7 @@ const tenses = [
     lessons: ['pt_a2_3_1', 'pt_a2_3_2', 'pt_a2_3_3', 'pt_b1_2_2'],
   },
   {
-    id: 'imperfeito', name: 'Pretérito imperfeito (imparfait)', short: 'Imperfeito',
+    id: 'imperfeito', level: 'B1', name: 'Pretérito imperfeito (imparfait)', short: 'Imperfeito',
     forms: imperfeito,
     usage: 'Le <b>décor</b>, les <b>habitudes passées</b>, une action <b>en cours</b> dans le passé — comme l\'imparfait français. Aussi la politesse : <b>Queria</b> um café.',
     formation: `<b>-AR</b> : ava, avas, ava, ávamos, avam · <b>-ER / -IR</b> : ia, ias, ia, íamos, iam.<br>Seulement 4 irréguliers : ser → <b>era</b>, ter → <b>tinha</b>, vir → <b>vinha</b>, pôr → <b>punha</b>.`,
@@ -135,7 +135,7 @@ const tenses = [
     lessons: ['pt_b1_2_1', 'pt_b1_2_2'],
   },
   {
-    id: 'futproximo', name: 'Futur proche (ir + infinitif)', short: 'Ir + inf.',
+    id: 'futproximo', level: 'A2', name: 'Futur proche (ir + infinitif)', short: 'Ir + inf.',
     forms: vb => VOU.map(e => `${e} ${vb.inf}`),
     usage: 'Le futur <b>de la vie courante</b> : <b>Vou ligar</b> amanhã. C\'est de loin le plus utilisé à l\'oral.',
     formation: `<b>ir</b> (vou, vais, vai, vamos, vão) <b>+ infinitif</b>.`,
@@ -144,7 +144,7 @@ const tenses = [
     lessons: ['pt_a2_4_2'],
   },
   {
-    id: 'futuro', name: 'Futuro simples (futur)', short: 'Futuro',
+    id: 'futuro', level: 'B1', name: 'Futuro simples (futur)', short: 'Futuro',
     forms: futuro,
     usage: 'Futur plutôt <b>écrit ou formel</b>, promesses, hypothèses : <b>Ligarei</b> amanhã sem falta.',
     formation: `Infinitif + <b>ei, ás, á, emos, ão</b>.<br>Seulement 3 irréguliers : dizer → <b>direi</b>, fazer → <b>farei</b>, trazer → <b>trarei</b>.`,
@@ -153,7 +153,7 @@ const tenses = [
     lessons: ['pt_b1_3_3'],
   },
   {
-    id: 'condicional', name: 'Condicional (conditionnel)', short: 'Condicional',
+    id: 'condicional', level: 'B2', name: 'Condicional (conditionnel)', short: 'Condicional',
     forms: condicional,
     usage: 'Hypothèses et politesse : <b>Gostaria</b> de reservar uma mesa. <b>Se tivesse</b> tempo, <b>viajaria</b>.',
     formation: `Infinitif + <b>ia, ias, ia, íamos, iam</b> (mêmes irréguliers que le futur : diria, faria, traria).`,
@@ -162,7 +162,7 @@ const tenses = [
     lessons: ['pt_b2_1_3'],
   },
   {
-    id: 'conjuntivo', name: 'Presente do conjuntivo (subjonctif)', short: 'Conjuntivo',
+    id: 'conjuntivo', level: 'B2', name: 'Presente do conjuntivo (subjonctif)', short: 'Conjuntivo',
     forms: vb => sp(vb.cj),
     usage: 'Après <b>espero que, quero que, é preciso que, talvez, embora, para que</b>, et après « não acho que ».',
     formation: `Partir du « eu » du présent, enlever le -o, et « inverser » la voyelle : <b>-AR → e</b> (fal<b>e</b>), <b>-ER / -IR → a</b> (com<b>a</b>, faç<b>a</b>).<br>Irréguliers : seja, esteja, vá, saiba, queira, dê, haja.`,
@@ -171,7 +171,7 @@ const tenses = [
     lessons: ['pt_b2_1_1', 'pt_b2_1_2'],
   },
   {
-    id: 'imperativo', name: 'Imperativo (impératif)', short: 'Imperativo',
+    id: 'imperativo', level: 'A2', name: 'Imperativo (impératif)', short: 'Imperativo',
     persons: ['tu', 'você / o senhor', 'nós', 'vocês'],
     forms: vb => [vb.impT || sp(vb.pr)[2], sp(vb.cj)[2], sp(vb.cj)[3], sp(vb.cj)[4]],
     usage: 'Donner un ordre, une indication, un conseil : <b>Vire</b> à esquerda. <b>Liga</b>-me!',
@@ -182,7 +182,30 @@ const tenses = [
   },
 ];
 
+// ── Forme « régulière » attendue par la règle : sert à repérer les irréguliers (temps par temps,
+// y compris les changements d'orthographe comme ficar → fiquei) et à proposer la faute typique
+// dans les choix multiples (ex. « fazerei » au lieu de « farei »).
+const END = {
+  presente:    { ar: 'o as a amos am',      er: 'o es e emos em',      ir: 'o es e imos em' },
+  perfeito:    { ar: 'ei aste ou ámos aram', er: 'i este eu emos eram', ir: 'i iste iu imos iram' },
+  conjuntivo:  { ar: 'e es e emos em',      er: 'a as a amos am',      ir: 'a as a amos am' },
+  imperfeito:  { ar: 'ava avas ava ávamos avam', er: 'ia ias ia íamos iam', ir: 'ia ias ia íamos iam' },
+};
+const regEnd = (vb, tid, pi) => stem(vb) + sp(END[tid][group(vb)])[pi];
+function ruleForm(vb, tid, pi) {
+  const actual = tenses.find(t => t.id === tid).forms(vb)[pi];
+  if (tid === 'progressivo' || tid === 'futproximo') return actual;   // estar a / ir + infinitif : toujours réguliers
+  if (vb.inf === 'pôr') return actual + '\u0000';                     // pôr : irrégulier à tous les autres temps
+  if (!stem(vb) && END[tid]) return actual + '\u0000';                // ir : pas de radical, la règle n'a pas de sens
+  if (END[tid]) return regEnd(vb, tid, pi);
+  if (tid === 'futuro') return vb.inf + sp('ei ás á emos ão')[pi];
+  if (tid === 'condicional') return vb.inf + sp('ia ias ia íamos iam')[pi];
+  if (tid === 'imperativo') return pi === 0 ? regEnd(vb, 'presente', 2) : regEnd(vb, 'conjuntivo', [2, 3, 4][pi - 1]);
+  return actual;
+}
+
 window.CJ.pt = {
+  ruleForm,
   persons: P,
   personNote: '« você », « o senhor », « a senhora » se conjuguent comme « ele/ela » ; « vocês » comme « eles/elas ». « vós » n\'est plus utilisé.',
   verbs, tenses, irregulars: null,

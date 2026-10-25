@@ -56,7 +56,7 @@ const past = vb => vb.id === 'be' ? ['was', 'were', 'was', 'were', 'were'] : eac
 
 const tenses = [
   {
-    id: 'present', name: 'Présent simple', short: 'Présent',
+    id: 'present', level: 'A1', name: 'Présent simple', short: 'Présent',
     forms: pres,
     usage: 'Les habitudes, les vérités générales, les horaires : <b>I work</b> in a hotel. The train <b>leaves</b> at 9.',
     formation: `Verbe à la forme de base, <b>+ -s</b> à la 3e personne (he/she/it).<br>-es après s, sh, ch, x, o (watch<b>es</b>, go<b>es</b>) · consonne + y → <b>-ies</b> (stud<b>ies</b>).<br>Question : <b>Do / Does</b> + sujet + base. Négation : <b>don\'t / doesn\'t</b> + base.<br>Irréguliers : be → am / are / is · have → has.`,
@@ -65,7 +65,7 @@ const tenses = [
     lessons: ['en_a1_1_1', 'en_a1_1_2', 'en_a1_3_3', 'en_a1_4_1', 'en_a1_4_2', 'en_a2_2_2'],
   },
   {
-    id: 'continuous', name: 'Présent continu', short: 'Présent continu',
+    id: 'continuous', level: 'A2', name: 'Présent continu', short: 'Présent continu',
     forms: vb => each(i => `${BE_PRES[i]} ${vb.ing}`),
     usage: 'Ce qui se passe <b>en ce moment</b> (I\'m cooking) ou un projet déjà <b>organisé</b> (I\'m meeting Sam tomorrow).',
     formation: `<b>am / are / is + verbe-ing</b>.<br>-e final disparaît (make → mak<b>ing</b>) · consonne doublée après voyelle courte accentuée (get → get<b>ting</b>, travel → travel<b>ling</b> en anglais britannique).`,
@@ -74,7 +74,7 @@ const tenses = [
     lessons: ['en_a2_4_1', 'en_a2_4_3'],
   },
   {
-    id: 'past', name: 'Prétérit (past simple)', short: 'Prétérit',
+    id: 'past', level: 'A2', name: 'Prétérit (past simple)', short: 'Prétérit',
     forms: past,
     usage: 'Une action <b>terminée</b> à un moment <b>précis</b> du passé : yesterday, last week, in 2019, two days ago. = passé composé ou passé simple français.',
     formation: `Réguliers : <b>+ -ed</b> (worked, stayed, tried, travelled).<br>Irréguliers : à apprendre (went, had, saw…) — voir la liste des irréguliers.<br>Même forme à toutes les personnes (sauf be : was / were).<br>Question : <b>Did</b> + sujet + base. Négation : <b>didn\'t</b> + base.`,
@@ -83,7 +83,7 @@ const tenses = [
     lessons: ['en_a2_3_1', 'en_a2_3_2', 'en_a2_3_3', 'en_b2_2_1'],
   },
   {
-    id: 'perfect', name: 'Present perfect', short: 'Present perfect',
+    id: 'perfect', level: 'B1', name: 'Present perfect', short: 'Present perfect',
     forms: vb => each(i => `${HAVE[i]} ${vb.pp}`),
     usage: 'Une expérience <b>sans date</b> (Have you ever…?), un résultat <b>visible maintenant</b> (I\'ve lost my keys), une durée qui <b>continue</b> (« depuis » : I\'ve lived here for 5 years).',
     formation: `<b>have / has + participe passé</b>.<br>Avec : ever, never, already, yet, just, for, since, this week…`,
@@ -92,7 +92,7 @@ const tenses = [
     lessons: ['en_b1_2_1', 'en_b1_2_2', 'en_b1_2_3'],
   },
   {
-    id: 'will', name: 'Futur avec « will »', short: 'Futur (will)',
+    id: 'will', level: 'B1', name: 'Futur avec « will »', short: 'Futur (will)',
     forms: vb => each(() => `will ${vb.inf}`),
     usage: 'Une décision <b>prise sur le moment</b> (I\'ll get it!), une promesse, une prédiction, une offre.',
     formation: `<b>will + base</b>, identique à toutes les personnes. Contraction : I<b>\'ll</b>, she<b>\'ll</b>… Négation : <b>won\'t</b>.`,
@@ -101,7 +101,7 @@ const tenses = [
     lessons: ['en_b1_3_1', 'en_b1_3_3'],
   },
   {
-    id: 'goingto', name: 'Futur proche « going to »', short: 'Going to',
+    id: 'goingto', level: 'A2', name: 'Futur proche « going to »', short: 'Going to',
     forms: vb => each(i => `${BE_PRES[i]} going to ${vb.inf}`),
     usage: 'Une <b>intention déjà décidée</b> (I\'m going to learn Portuguese) ou une prédiction évidente (Look, it\'s going to rain).',
     formation: `<b>am / are / is + going to + base</b>. À l\'oral : « gonna ».`,
@@ -110,7 +110,7 @@ const tenses = [
     lessons: ['en_a2_4_2'],
   },
   {
-    id: 'would', name: 'Conditionnel « would »', short: 'Conditionnel',
+    id: 'would', level: 'B1', name: 'Conditionnel « would »', short: 'Conditionnel',
     forms: vb => each(() => `would ${vb.inf}`),
     usage: 'Situations <b>imaginaires</b> (I would travel), politesse (I\'d like, Would you…?), conseil (I would call her).',
     formation: `<b>would + base</b>, identique à toutes les personnes. Contraction : I<b>\'d</b>. Négation : <b>wouldn\'t</b>.<br>Avec if : <b>If</b> + prétérit, <b>would</b> + base : If I had time, I would travel.`,
@@ -141,7 +141,22 @@ const irregulars = [
   ...moreIrregulars,
 ].sort((a, b) => a[0].localeCompare(b[0]));
 
+// ── Forme « régulière » attendue par la règle : sert à repérer les irréguliers (temps par temps)
+// et à proposer la faute typique dans les choix multiples (ex. « goed » au lieu de « went »).
+const regS = b => /(s|sh|ch|x|z|o)$/.test(b) ? b + 'es' : /[^aeiou]y$/.test(b) ? b.slice(0, -1) + 'ies' : b + 's';
+const regEd = b => /e$/.test(b) ? b + 'd' : /[^aeiou]y$/.test(b) ? b.slice(0, -1) + 'ied' : b + 'ed';
+const regPast = vb => vb.past === vb.inf + vb.inf.slice(-1) + 'ed' ? vb.past : regEd(vb.inf);  // stop → stopped
+const regPP = vb => vb.pp === vb.inf + vb.inf.slice(-1) + 'ed' ? vb.pp : regEd(vb.inf);
+function ruleForm(vb, tid, pi) {
+  const t = tenses.find(x => x.id === tid);
+  if (tid === 'present') return pi === 2 ? regS(vb.inf) : vb.inf;
+  if (tid === 'past') return regPast(vb);
+  if (tid === 'perfect') return `${HAVE[pi]} ${regPP(vb)}`;
+  return t.forms(vb)[pi];   // les autres temps n'ont pas d'irréguliers
+}
+
 window.CJ.en = {
+  ruleForm,
   persons: P,
   personNote: '« you » = tu et vous · « he/she/it » = il / elle / ça.',
   verbs, tenses, irregulars,
