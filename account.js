@@ -115,6 +115,23 @@ function acctRefreshView() {
 }
 
 // ── Écran de connexion ──
+// Champ mot de passe avec un œil pour afficher / masquer la saisie
+function acctPassField(placeholder, autocomplete, onEnter) {
+  return `
+    <div class="acct-pass-wrap">
+      <input class="bb-input" id="acct-pass" type="password" placeholder="${placeholder}" autocomplete="${autocomplete}"
+        onkeydown="if(event.key==='Enter')${onEnter}">
+      <button type="button" class="acct-eye" title="Afficher le mot de passe" aria-label="Afficher le mot de passe" onclick="acctToggleEye(this)">👁</button>
+    </div>`;
+}
+function acctToggleEye(btn) {
+  const input = document.getElementById('acct-pass');
+  const show = input.type === 'password';
+  input.type = show ? 'text' : 'password';
+  btn.textContent = show ? '🙈' : '👁';
+  btn.title = btn.ariaLabel = show ? 'Masquer le mot de passe' : 'Afficher le mot de passe';
+  input.focus();
+}
 function acctShowGate(mode = 'login', message = '') {
   let gate = document.getElementById('acct-gate');
   if (!gate) {
@@ -126,8 +143,7 @@ function acctShowGate(mode = 'login', message = '') {
     login: `
       <div class="acct-title">Connexion</div>
       <input class="bb-input" id="acct-email" type="email" placeholder="E-mail" autocomplete="email">
-      <input class="bb-input" id="acct-pass" type="password" placeholder="Mot de passe" autocomplete="current-password"
-        onkeydown="if(event.key==='Enter')acctLogin()">
+      ${acctPassField('Mot de passe', 'current-password', 'acctLogin()')}
       <button class="bb-next-btn" id="acct-submit" onclick="acctLogin()">Se connecter</button>
       <div class="acct-links">
         <button onclick="acctShowGate('signup')">Créer un compte</button>
@@ -137,8 +153,7 @@ function acctShowGate(mode = 'login', message = '') {
       <div class="acct-title">Créer mon compte</div>
       <input class="bb-input" id="acct-name" placeholder="Prénom" autocomplete="given-name">
       <input class="bb-input" id="acct-email" type="email" placeholder="E-mail" autocomplete="email">
-      <input class="bb-input" id="acct-pass" type="password" placeholder="Mot de passe (8 caractères minimum)" autocomplete="new-password"
-        onkeydown="if(event.key==='Enter')acctSignup()">
+      ${acctPassField('Mot de passe (8 caractères minimum)', 'new-password', 'acctSignup()')}
       <button class="bb-next-btn" id="acct-submit" onclick="acctSignup()">Créer mon compte</button>
       <div class="acct-links"><button onclick="acctShowGate('login')">J'ai déjà un compte</button></div>`,
     forgot: `
@@ -150,8 +165,7 @@ function acctShowGate(mode = 'login', message = '') {
       <div class="acct-links"><button onclick="acctShowGate('login')">Retour à la connexion</button></div>`,
     reset: `
       <div class="acct-title">Nouveau mot de passe</div>
-      <input class="bb-input" id="acct-pass" type="password" placeholder="Nouveau mot de passe (8 caractères minimum)" autocomplete="new-password"
-        onkeydown="if(event.key==='Enter')acctReset()">
+      ${acctPassField('Nouveau mot de passe (8 caractères minimum)', 'new-password', 'acctReset()')}
       <button class="bb-next-btn" id="acct-submit" onclick="acctReset()">Enregistrer</button>`,
   };
   gate.innerHTML = `
