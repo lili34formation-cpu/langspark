@@ -448,6 +448,10 @@
         .home-course-next { font-size:13px;font-weight:700;color:var(--accent2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
         .home-section-title { font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin:4px 0 14px; }
 
+        /* ── Bandeau hors connexion ── */
+        #offline-banner { position:fixed;top:0;left:0;right:0;z-index:9000;background:#f59e0b;color:#1a1d2e;font-size:12px;font-weight:700;text-align:center;padding:calc(6px + env(safe-area-inset-top)) 12px 6px;transform:translateY(-110%);transition:transform .3s; }
+        #offline-banner.show { transform:none; }
+
         /* ── Menu « Plus » (mobile) ── */
         #more-menu { position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:900;display:none;align-items:flex-end; }
         #more-menu.open { display:flex; }
@@ -929,7 +933,7 @@
         <span>Anglais · Portugais · Make</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v38</span>
+          <span style="font-size:10px;color:#444">v39</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -3202,7 +3206,10 @@ function audioKey(text, lang) {
 // URL jouable pour un texte, ou null s'il faut utiliser la voix du navigateur
 async function ttsAudioUrl(text, lang) {
   const key = audioKey(text, lang);
-  if (AUDIO_INDEX.has(key)) return { url: `audio/${key}.mp3`, temp: false };
+  if (AUDIO_INDEX.has(key)) {
+    const res = await fetch(`audio/${key}.mp3`);
+    if (res.ok) return { url: URL.createObjectURL(await res.blob()), temp: true };
+  }
   if (!TTS_LOCAL) return null;
   const res = await fetch(`${TTS_URL}?text=${encodeURIComponent(text.trim())}&lang=${encodeURIComponent(lang)}`);
   if (!res.ok) throw new Error(res.status);
@@ -3880,10 +3887,26 @@ renderFC = function() {
 };
 
 // ── Service Worker ──
-// Service worker désactivé — toujours charger la dernière version
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+// Service worker : l'app reste utilisable hors connexion (voir sw.js)
+const SW_OK = 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost');
+if (SW_OK) {
+    navigator.serviceWorker.register('sw.js').catch(e => console.warn('Service worker :', e));
 }
+
+// Bandeau « hors connexion »
+function updateOnlineBanner() {
+    let b = document.getElementById('offline-banner');
+    if (!b) {
+        b = document.createElement('div');
+        b.id = 'offline-banner';
+        b.textContent = '📴 Hors connexion — tout fonctionne, vos progrès seront synchronisés au retour du réseau';
+        document.body.appendChild(b);
+    }
+    b.classList.toggle('show', !navigator.onLine);
+}
+window.addEventListener('online', updateOnlineBanner);
+window.addEventListener('offline', updateOnlineBanner);
+updateOnlineBanner();
 
 // ── Prompt installation PWA ──
 let deferredPrompt = null;
@@ -5054,6 +5077,56 @@ function bbCountDone(lang, unit) {
 function bbFreeMode(lang) {
   return localStorage.getItem('bb_free_' + lang) === '1';
 }
+// ── Voix hors connexion : téléchargement de toutes les voix d'une langue ──
+const OFFLINE_AUDIO_CACHE = 'langspark-audio';     // même nom que dans sw.js
+const offlineAudioBusy = {};
+async function offlineAudioList(lang) {
+  const res = await fetch(`audio/index-${bbTTS(lang)}.json`);
+  return res.ok ? res.json() : [];
+}
+async function offlineAudioCount(lang) {
+  if (!window.caches) return null;
+  const [list, cache] = await Promise.all([offlineAudioList(lang), caches.open(OFFLINE_AUDIO_CACHE)]);
+  const have = new Set((await cache.keys()).map(r => r.url.split('/').pop().replace('.mp3', '')));
+  return { total: list.length, done: list.filter(k => have.has(k)).length, list, have };
+}
+async function offlineAudioRefresh(lang) {
+  const el = document.getElementById('offline-audio-' + lang);
+  if (!el || offlineAudioBusy[lang]) return;
+  if (!window.caches || !SW_OK) {
+    el.innerHTML = 'disponible sur l\'app en ligne';
+    return;
+  }
+  try {
+    const st = await offlineAudioCount(lang);
+    el.innerHTML = st.done >= st.total
+      ? `✅ toutes les voix sont sur l'appareil`
+      : `${st.done} / ${st.total} sur l'appareil · <button class="bb-test-link" onclick="offlineAudioDownload('${lang}')">📥 Tout télécharger (${lang === 'en' ? '41' : '45'} Mo)</button>`;
+  } catch (e) { el.textContent = 'indisponible'; }
+}
+async function offlineAudioDownload(lang) {
+  const el = document.getElementById('offline-audio-' + lang);
+  if (!navigator.onLine) { el.textContent = 'connectez-vous à internet pour télécharger'; return; }
+  offlineAudioBusy[lang] = true;
+  const st = await offlineAudioCount(lang);
+  const todo = st.list.filter(k => !st.have.has(k));
+  const cache = await caches.open(OFFLINE_AUDIO_CACHE);
+  let done = st.done, failed = 0, i = 0;
+  const show = () => { const e = document.getElementById('offline-audio-' + lang); if (e) e.textContent = `📥 téléchargement… ${done} / ${st.total}`; };
+  show();
+  const worker = async () => {
+    while (i < todo.length) {
+      const k = todo[i++];
+      try { await cache.add(`audio/${k}.mp3`); done++; } catch (e) { failed++; }
+      if (done % 25 === 0) show();
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, worker));
+  offlineAudioBusy[lang] = false;
+  await offlineAudioRefresh(lang);
+  if (failed) { const e = document.getElementById('offline-audio-' + lang); if (e) e.innerHTML += ` · ${failed} échec(s), réessayez`; }
+}
+
 // ── Sauvegarde : état, export / import de la progression ──
 const BB_SAVE_PREFIXES = ['bb_', 'cj_', 'te_'];   // jamais la clé d'API Claude
 function bbStorageWorks() {
@@ -5071,6 +5144,7 @@ function bbSaveInfoHTML(lang) {
   return account + `
     <div class="bb-save-info">
       <div>💾 <b>${account ? 'Votre progression' : 'Sauvegardé sur cet appareil'}</b> : ${lessons} leçon${lessons > 1 ? 's' : ''} · ${levels} niveau${levels > 1 ? 'x' : ''} de conjugaison · ${checks} bilan${checks > 1 ? 's' : ''} / examen${checks > 1 ? 's' : ''} · ${bbXP(lang)} XP</div>
+      <div style="margin-top:4px">📴 <b>Voix hors connexion</b> : <span id="offline-audio-${lang}">…</span></div>
       <div class="bb-save-actions">
         <button class="bb-test-link" onclick="bbExportProgress()">⬇️ Exporter ma progression</button>
         <button class="bb-test-link" onclick="document.getElementById('bb-import-file').click()">⬆️ Importer</button>
@@ -5381,6 +5455,7 @@ function initBBView(lang) {
   });
 
   bbContainer(lang).innerHTML = html;
+  offlineAudioRefresh(lang);
 }
 
 function bbOpenUnit(lang, unitId) {

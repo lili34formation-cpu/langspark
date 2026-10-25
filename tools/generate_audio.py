@@ -71,6 +71,9 @@ async def main() -> None:
     await asyncio.gather(*(worker(*item) for item in todo))
     present = sorted(k for k in keys if (OUT / f"{k}.mp3").exists())
     (OUT / "index.json").write_text(json.dumps(present))
+    # Une liste par langue, pour le téléchargement des voix hors connexion (index-en-US.json, index-pt-PT.json)
+    for voice_lang in VOICES:
+        (OUT / f"index-{voice_lang}.json").write_text(json.dumps([k for k in present if keys[k][0] == voice_lang]))
     print(f"Terminé : {len(present)} fichiers audio, {failed} échec(s)")
 
 
