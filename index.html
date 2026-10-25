@@ -930,10 +930,10 @@
 <nav class="sidebar">
     <div class="logo">
         <h1>LangSpark ⚡</h1>
-        <span>Anglais · Portugais · Make</span>
+        <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v39</span>
+          <span style="font-size:10px;color:#444">v40</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -946,6 +946,9 @@
         </div>
         <div class="nav-item" onclick="showView('bb-pt')" data-view="bb-pt">
             <span class="nav-icon">🇵🇹</span><span>Portugais — cours</span>
+        </div>
+        <div class="nav-item" onclick="showView('bb-es')" data-view="bb-es">
+            <span class="nav-icon">🇪🇸</span><span>Espagnol — cours</span>
         </div>
         <div style="margin:14px 0 6px;padding:0 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary)">Vocabulaire tech</div>
         <div class="nav-item" onclick="showView('flashcards')" data-view="flashcards">
@@ -991,7 +994,7 @@
     <!-- HOME -->
     <div class="view active" id="view-home">
         <div class="page-title" id="home-hello">Bonjour 👋</div>
-        <div class="page-subtitle">Apprenez l'anglais et le portugais du Portugal, du débutant au B2</div>
+        <div class="page-subtitle">Anglais, portugais du Portugal et espagnol d'Espagne — du débutant au B2</div>
         <div class="home-courses" id="home-courses"></div>
         <div class="home-section-title">Vocabulaire tech · Make, Airtable et IA</div>
         <div class="stats-grid">
@@ -1295,6 +1298,9 @@
     <div class="view" id="view-bb-pt">
         <div id="bb-pt-content"></div>
     </div>
+    <div class="view" id="view-bb-es">
+        <div id="bb-es-content"></div>
+    </div>
 
     <div class="view" id="view-pt">
         <div class="page-title">🇵🇹 Portugais européen</div>
@@ -1334,8 +1340,8 @@
     <div class="bn-item" id="bn-ptc" onclick="showView('bb-pt')">
         <div class="bn-icon">🇵🇹</div><span>Portugais</span>
     </div>
-    <div class="bn-item" id="bn-certif" onclick="showView('certif')">
-        <div class="bn-icon">🎓</div><span>Make</span>
+    <div class="bn-item" id="bn-esc" onclick="showView('bb-es')">
+        <div class="bn-icon">🇪🇸</div><span>Espagnol</span>
     </div>
     <div class="bn-item" id="bn-more" onclick="openMoreMenu()">
         <div class="bn-icon">☰</div><span>Plus</span>
@@ -1354,6 +1360,7 @@
     <div class="more-group">Portugais</div>
     <button onclick="closeMoreMenu();showView('pt')">🇵🇹 Flashcards & phrases de portugais</button>
     <div class="more-group">Certifications</div>
+    <button onclick="closeMoreMenu();showView('certif')">🎓 Make</button>
     <button onclick="closeMoreMenu();showView('github')">🐙 GitHub</button>
     <button onclick="closeMoreMenu();showView('notion')">📝 Notion</button>
     <button onclick="closeMoreMenu();showView('airtable')">🗂️ Airtable</button>
@@ -1387,8 +1394,11 @@
 <script src="courses/en-b.js"></script>
 <script src="courses/pt-a.js"></script>
 <script src="courses/pt-b.js"></script>
+<script src="courses/es-a.js"></script>
+<script src="courses/es-b.js"></script>
 <script src="courses/verbs-en.js"></script>
 <script src="courses/verbs-pt.js"></script>
+<script src="courses/verbs-es.js"></script>
 <script>
 // ════════════════════════════════════════
 //  DATA
@@ -1576,6 +1586,7 @@ function showView(v) {
   if (v === 'home')      { renderHomeCourses(); }
   if (v === 'bb-en')     { initBBView('en'); }
   if (v === 'bb-pt')     { initBBView('pt'); }
+  if (v === 'bb-es')     { initBBView('es'); }
   if (v === 'certif')     {
     certifTab = 'cours';
     document.querySelectorAll('#view-certif .cat-tab').forEach(t => t.classList.remove('active'));
@@ -3813,7 +3824,7 @@ function renderHomeCourses() {
   if (!box || !window.BB_CURRICULUM) return;
   const name = typeof acctUser !== 'undefined' && acctUser ? acctName(acctUser) : '';
   document.getElementById('home-hello').textContent = name ? `Bonjour ${name} 👋` : 'Bonjour 👋';
-  box.innerHTML = ['en', 'pt'].map(lang => {
+  box.innerHTML = BB_LANGS.map(lang => {
     const cur = BB_CURRICULUM[lang];
     const total = cur.units.reduce((n, u) => n + u.lessons.length, 0);
     const p = bbProgress(lang);
@@ -3834,7 +3845,7 @@ function renderHomeCourses() {
 }
 
 function syncBottomNav(view) {
-    const map = { home:'bn-home', 'bb-en':'bn-en', 'bb-pt':'bn-ptc', certif:'bn-certif' };
+    const map = { home:'bn-home', 'bb-en':'bn-en', 'bb-pt':'bn-ptc', 'bb-es':'bn-esc' };
     document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
     const target = document.getElementById(map[view] || 'bn-more');
     if (target) target.classList.add('active');
@@ -3917,6 +3928,7 @@ window.addEventListener('storage', e => {
   if (!active) return;
   if (active.id === 'view-bb-en') initBBView('en');
   if (active.id === 'view-bb-pt') initBBView('pt');
+  if (active.id === 'view-bb-es') initBBView('es');
 });
 
 window.addEventListener('beforeinstallprompt', e => {
@@ -5036,8 +5048,12 @@ const BB_GRADED = ['choice', 'fill', 'translate', 'order', 'write', 'listen', 's
 
 // Conteneur d'affichage d'une langue. On vide celui de l'autre langue (vue cachée, reconstruite
 // à l'affichage) pour éviter les doublons d'identifiants (champ de réponse, retour…).
+const BB_LANGS = ['en', 'pt', 'es'];
+const BB_LANG_LABEL = { en: 'anglais', pt: 'portugais', es: 'espagnol' };
+const BB_AUDIO_MB = { en: 41, pt: 45, es: 56 };
+
 function bbContainer(lang) {
-  ['en', 'pt'].filter(l => l !== lang).forEach(l => { const o = document.getElementById('bb-' + l + '-content'); if (o) o.innerHTML = ''; });
+  BB_LANGS.filter(l => l !== lang).forEach(l => { const o = document.getElementById('bb-' + l + '-content'); if (o) o.innerHTML = ''; });
   return document.getElementById('bb-' + lang + '-content');
 }
 
@@ -5049,7 +5065,7 @@ function bbShuffle(arr) {
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
-function bbTTS(lang) { return BB_CURRICULUM[lang].tts || (lang === 'en' ? 'en-US' : 'pt-PT'); }
+function bbTTS(lang) { return BB_CURRICULUM[lang].tts || { en: 'en-US', pt: 'pt-PT', es: 'es-ES' }[lang]; }
 function bbFind(lang, unitId, lessonId) {
   const unit = BB_CURRICULUM[lang].units.find(u => u.id === unitId);
   return { unit, lesson: lessonId ? unit.lessons.find(l => l.id === lessonId) : null };
@@ -5101,7 +5117,7 @@ async function offlineAudioRefresh(lang) {
     const st = await offlineAudioCount(lang);
     el.innerHTML = st.done >= st.total
       ? `✅ toutes les voix sont sur l'appareil`
-      : `${st.done} / ${st.total} sur l'appareil · <button class="bb-test-link" onclick="offlineAudioDownload('${lang}')">📥 Tout télécharger (${lang === 'en' ? '41' : '45'} Mo)</button>`;
+      : `${st.done} / ${st.total} sur l'appareil · <button class="bb-test-link" onclick="offlineAudioDownload('${lang}')">📥 Tout télécharger (${BB_AUDIO_MB[lang]} Mo)</button>`;
   } catch (e) { el.textContent = 'indisponible'; }
 }
 async function offlineAudioDownload(lang) {
@@ -5611,7 +5627,7 @@ function bbRender() {
 
   } else if (ex.type === 'write') {
     body = `
-      <div class="bb-ex-type">⌨️ Écrivez en ${lang === 'en' ? 'anglais' : 'portugais'}</div>
+      <div class="bb-ex-type">⌨️ Écrivez en ${BB_LANG_LABEL[lang]}</div>
       <div class="bb-ex-q">« ${bbEsc(ex.fr)} »</div>
       ${bbInputBlock(ex.hint)}`;
 
@@ -6276,7 +6292,7 @@ function cjHome(lang) {
 function cjTenseHTML(lang, id, withActions) {
   const d = cjData(lang);
   const t = cjTenseById(lang, id);
-  const samples = (lang === 'en' ? ['be', 'go', 'work'] : ['ser', 'falar', 'fazer']).map(vid => cjVerbById(lang, vid));
+  const samples = { en: ['be', 'go', 'work'], pt: ['ser', 'falar', 'fazer'], es: ['ser', 'hablar', 'hacer'] }[lang].map(vid => cjVerbById(lang, vid));
   const persons = cjPersons(lang, t);
   return `
     <div class="bb-ex-type">⏱️ Fiche de temps</div>

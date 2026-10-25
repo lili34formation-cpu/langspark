@@ -1,7 +1,7 @@
 {
   "name": "LangSpark — Apprendre les langues",
   "short_name": "LangSpark",
-  "description": "Apprenez l'anglais, le portugais et préparez vos certifications Make avec Spark votre prof IA",
+  "description": "Apprenez l'anglais, le portugais et l'espagnol, du débutant au B2",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f1117",

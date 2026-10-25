@@ -19,6 +19,8 @@ VOICES = {
     "en-US":  "en-US-JennyNeural",      # Jenny — anglais américain naturel
     "en-GB":  "en-GB-SoniaNeural",
     "en":     "en-US-JennyNeural",
+    "es-ES":  "es-ES-ElviraNeural",     # Elvira — espagnol d'Espagne
+    "es":     "es-ES-ElviraNeural",
     "fr-FR":  "fr-FR-DeniseNeural",
     "fr":     "fr-FR-DeniseNeural",
 }

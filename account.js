@@ -111,7 +111,7 @@ function acctRefreshView() {
   const active = document.querySelector('.view.active');
   if (!active) return;
   if (active.id === 'view-home') return renderHomeCourses();
-  const lang = active.id === 'view-bb-en' ? 'en' : active.id === 'view-bb-pt' ? 'pt' : null;
+  const lang = { 'view-bb-en': 'en', 'view-bb-pt': 'pt', 'view-bb-es': 'es' }[active.id] || null;
   if (lang && document.querySelector(`#bb-${lang}-content .bb-xp-bar`)) initBBView(lang);
 }
 

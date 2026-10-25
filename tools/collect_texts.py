@@ -17,7 +17,7 @@ COLLECT = r"""() => {
   const add = (lang, text) => { if (text && text.trim()) out.add(JSON.stringify([lang, text.trim()])); };
   const grab = lang => bbState.audio.forEach(a => add(bbTTS(lang), a.text));
 
-  for (const lang of ['en', 'pt']) {
+  for (const lang of BB_LANGS) {
     showView('bb-' + lang);
     // Toutes les étapes de toutes les leçons
     for (const unit of BB_CURRICULUM[lang].units) for (const lesson of unit.lessons) {

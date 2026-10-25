@@ -15,7 +15,7 @@ import edge_tts
 ROOT = Path(__file__).resolve().parent.parent
 TEXTS = ROOT / "tools" / "texts.json"
 OUT = ROOT / "audio"
-VOICES = {"pt-PT": "pt-PT-RaquelNeural", "en-US": "en-US-JennyNeural"}
+VOICES = {"pt-PT": "pt-PT-RaquelNeural", "en-US": "en-US-JennyNeural", "es-ES": "es-ES-ElviraNeural"}
 CONCURRENCY = 8
 
 
