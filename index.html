@@ -437,6 +437,26 @@
         }
         .bn-spark .bn-icon { font-size: 20px; }
 
+        /* ── Accueil : cours ── */
+        .home-courses { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:8px 0 28px; }
+        .home-course { display:flex;gap:16px;align-items:center;background:linear-gradient(135deg,rgba(108,99,255,.16),rgba(0,212,170,.08));border:1px solid rgba(108,99,255,.35);border-radius:18px;padding:18px 20px;cursor:pointer;transition:transform .2s; }
+        .home-course:hover { transform:translateY(-2px); }
+        .home-course-flag { font-size:42px; }
+        .home-course-info { flex:1;min-width:0; }
+        .home-course-title { font-size:18px;font-weight:800;color:var(--text-primary); }
+        .home-course-sub { font-size:12px;color:var(--text-secondary);margin-top:2px; }
+        .home-course-next { font-size:13px;font-weight:700;color:var(--accent2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .home-section-title { font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin:4px 0 14px; }
+
+        /* ── Menu « Plus » (mobile) ── */
+        #more-menu { position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:900;display:none;align-items:flex-end; }
+        #more-menu.open { display:flex; }
+        .more-sheet { width:100%;background:var(--bg-sidebar);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:6px;max-height:80vh;overflow-y:auto; }
+        .more-title { font-size:16px;font-weight:800;color:var(--text-primary);margin-bottom:4px; }
+        .more-group { font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin:10px 0 2px; }
+        .more-sheet button { text-align:left;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text-primary);font-size:15px;font-weight:600;cursor:pointer; }
+        .more-sheet .more-close { text-align:center;margin-top:10px;background:none; }
+
         /* ── Swipe hint ── */
         .swipe-hint { font-size:11px;color:var(--text-secondary);text-align:center;margin-top:8px;opacity:.7; }
 
@@ -909,47 +929,47 @@
         <span>Anglais · Portugais · Make</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v37</span>
+          <span style="font-size:10px;color:#444">v38</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
     <div class="nav">
-        <div class="nav-item active" onclick="showView('home')">
+        <div class="nav-item active" onclick="showView('home')" data-view="home">
             <span class="nav-icon">🏠</span><span>Accueil</span>
         </div>
-        <div class="nav-item" onclick="showView('flashcards')">
-            <span class="nav-icon">🃏</span><span>Flashcards</span>
-        </div>
-        <div class="nav-item" onclick="showView('quiz')">
-            <span class="nav-icon">⚡</span><span>Quiz</span>
-        </div>
-        <div class="nav-item" onclick="showView('glossary')">
-            <span class="nav-icon">📖</span><span>Glossaire</span>
-        </div>
-        <div class="nav-item" onclick="showView('phrases')">
-            <span class="nav-icon">💬</span><span>Phrases utiles</span>
-        </div>
-        <div class="nav-item" onclick="showView('certif')" style="margin-top:8px;border-top:1px solid var(--border);padding-top:20px">
-            <span class="nav-icon">🎓</span><span>Certif. Make</span>
-        </div>
-        <div class="nav-item" id="nav-github" onclick="showView('github')" style="margin-top:4px">
-            <span class="nav-icon">🐙</span><span>GitHub</span>
-        </div>
-        <div class="nav-item" id="nav-notion" onclick="showView('notion')" style="margin-top:4px">
-            <span class="nav-icon">📝</span><span>Notion</span>
-        </div>
-        <div class="nav-item" id="nav-airtable" onclick="showView('airtable')" style="margin-top:4px">
-            <span class="nav-icon">📊</span><span>Airtable</span>
-        </div>
-        <div class="nav-item" onclick="showView('pt')" style="margin-top:4px;border-top:1px solid var(--border);padding-top:16px">
-            <span class="nav-icon">🇵🇹</span><span>Portugais</span>
-        </div>
-        <div style="margin:16px 0 8px;padding:0 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary)">Cours de langues</div>
-        <div class="nav-item" onclick="showView('bb-en')" style="margin-top:2px">
+        <div class="nav-item" onclick="showView('bb-en')" data-view="bb-en">
             <span class="nav-icon">🇬🇧</span><span>Anglais — cours</span>
         </div>
-        <div class="nav-item" onclick="showView('bb-pt')" style="margin-top:2px">
+        <div class="nav-item" onclick="showView('bb-pt')" data-view="bb-pt">
             <span class="nav-icon">🇵🇹</span><span>Portugais — cours</span>
+        </div>
+        <div style="margin:14px 0 6px;padding:0 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary)">Vocabulaire tech</div>
+        <div class="nav-item" onclick="showView('flashcards')" data-view="flashcards">
+            <span class="nav-icon">🃏</span><span>Flashcards</span>
+        </div>
+        <div class="nav-item" onclick="showView('quiz')" data-view="quiz">
+            <span class="nav-icon">⚡</span><span>Quiz</span>
+        </div>
+        <div class="nav-item" onclick="showView('glossary')" data-view="glossary">
+            <span class="nav-icon">📖</span><span>Glossaire</span>
+        </div>
+        <div class="nav-item" onclick="showView('phrases')" data-view="phrases">
+            <span class="nav-icon">💬</span><span>Phrases utiles</span>
+        </div>
+        <div class="nav-item" onclick="showView('certif')" data-view="certif" style="margin-top:8px;border-top:1px solid var(--border);padding-top:20px">
+            <span class="nav-icon">🎓</span><span>Certif. Make</span>
+        </div>
+        <div class="nav-item" id="nav-github" onclick="showView('github')" data-view="github" style="margin-top:4px">
+            <span class="nav-icon">🐙</span><span>GitHub</span>
+        </div>
+        <div class="nav-item" id="nav-notion" onclick="showView('notion')" data-view="notion" style="margin-top:4px">
+            <span class="nav-icon">📝</span><span>Notion</span>
+        </div>
+        <div class="nav-item" id="nav-airtable" onclick="showView('airtable')" data-view="airtable" style="margin-top:4px">
+            <span class="nav-icon">📊</span><span>Airtable</span>
+        </div>
+        <div class="nav-item" onclick="showView('pt')" data-view="pt" style="margin-top:4px;border-top:1px solid var(--border);padding-top:16px">
+            <span class="nav-icon">🇵🇹</span><span>Portugais — flashcards</span>
         </div>
     </div>
     <div class="progress-section">
@@ -966,8 +986,10 @@
 
     <!-- HOME -->
     <div class="view active" id="view-home">
-        <div class="page-title">Bonjour 👋</div>
-        <div class="page-subtitle">Apprenez le vocabulaire anglais de Make, Airtable et l'IA</div>
+        <div class="page-title" id="home-hello">Bonjour 👋</div>
+        <div class="page-subtitle">Apprenez l'anglais et le portugais du Portugal, du débutant au B2</div>
+        <div class="home-courses" id="home-courses"></div>
+        <div class="home-section-title">Vocabulaire tech · Make, Airtable et IA</div>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-value" id="stat-learned" style="color:var(--accent2)">0</div>
@@ -1302,16 +1324,38 @@
     <div class="bn-item active" id="bn-home" onclick="showView('home')">
         <div class="bn-icon">🏠</div><span>Accueil</span>
     </div>
-    <div class="bn-item" id="bn-flashcards" onclick="showView('flashcards')">
-        <div class="bn-icon">🃏</div><span>Anglais</span>
+    <div class="bn-item" id="bn-en" onclick="showView('bb-en')">
+        <div class="bn-icon">🇬🇧</div><span>Anglais</span>
     </div>
-    <div class="bn-item" id="bn-pt" onclick="showView('pt')">
+    <div class="bn-item" id="bn-ptc" onclick="showView('bb-pt')">
         <div class="bn-icon">🇵🇹</div><span>Portugais</span>
     </div>
     <div class="bn-item" id="bn-certif" onclick="showView('certif')">
         <div class="bn-icon">🎓</div><span>Make</span>
     </div>
+    <div class="bn-item" id="bn-more" onclick="openMoreMenu()">
+        <div class="bn-icon">☰</div><span>Plus</span>
+    </div>
 </nav>
+
+<!-- Menu « Plus » (mobile) : toutes les autres sections -->
+<div id="more-menu" onclick="if(event.target===this)closeMoreMenu()">
+  <div class="more-sheet">
+    <div class="more-title">Autres sections</div>
+    <div class="more-group">Vocabulaire tech (Make, Airtable, IA)</div>
+    <button onclick="closeMoreMenu();showView('flashcards')">🃏 Flashcards</button>
+    <button onclick="closeMoreMenu();showView('quiz')">⚡ Quiz</button>
+    <button onclick="closeMoreMenu();showView('glossary')">📖 Glossaire</button>
+    <button onclick="closeMoreMenu();showView('phrases')">💬 Phrases utiles</button>
+    <div class="more-group">Portugais</div>
+    <button onclick="closeMoreMenu();showView('pt')">🇵🇹 Flashcards & phrases de portugais</button>
+    <div class="more-group">Certifications</div>
+    <button onclick="closeMoreMenu();showView('github')">🐙 GitHub</button>
+    <button onclick="closeMoreMenu();showView('notion')">📝 Notion</button>
+    <button onclick="closeMoreMenu();showView('airtable')">🗂️ Airtable</button>
+    <button class="more-close" onclick="closeMoreMenu()">Fermer</button>
+  </div>
+</div>
 
 <!-- ════════ VOIX LOCALES (edge-tts) ════════ -->
 <div id="el-backdrop">
@@ -1512,8 +1556,7 @@ function showView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   document.getElementById('view-' + v).classList.add('active');
-  const map = ['home','flashcards','quiz','glossary','phrases','certif','pt'];
-  document.querySelectorAll('.nav-item')[map.indexOf(v)]?.classList.add('active');
+  document.querySelector(`.nav-item[data-view="${v}"]`)?.classList.add('active');
   if (v === 'glossary')   renderGlossary();
   if (v === 'phrases')    renderPhrases();
   if (v === 'quiz')       startQuiz();
@@ -1526,6 +1569,7 @@ function showView(v) {
   if (v === 'airtable')  { initATView(); }
   if (v === 'notion')    { initNotionView(); }
   if (v === 'github')    { initGHView(); }
+  if (v === 'home')      { renderHomeCourses(); }
   if (v === 'bb-en')     { initBBView('en'); }
   if (v === 'bb-pt')     { initBBView('pt'); }
   if (v === 'certif')     {
@@ -3753,10 +3797,39 @@ setInterval(() => {
 // ════════════════════════════════════════
 //  MOBILE — Swipe + Bottom nav sync
 // ════════════════════════════════════════
+function openMoreMenu() { document.getElementById('more-menu').classList.add('open'); }
+function closeMoreMenu() { document.getElementById('more-menu').classList.remove('open'); }
+
+// Cartes des deux cours sur l'accueil, avec la progression et la prochaine leçon
+function renderHomeCourses() {
+  const box = document.getElementById('home-courses');
+  if (!box || !window.BB_CURRICULUM) return;
+  const name = typeof acctUser !== 'undefined' && acctUser ? acctName(acctUser) : '';
+  document.getElementById('home-hello').textContent = name ? `Bonjour ${name} 👋` : 'Bonjour 👋';
+  box.innerHTML = ['en', 'pt'].map(lang => {
+    const cur = BB_CURRICULUM[lang];
+    const total = cur.units.reduce((n, u) => n + u.lessons.length, 0);
+    const p = bbProgress(lang);
+    const done = cur.units.reduce((n, u) => n + u.lessons.filter(l => p[l.id]).length, 0);
+    const next = bbNextLesson(lang);
+    const nextLabel = !next ? '🏆 Parcours terminé' : next.lesson ? `▶ ${next.lesson.titleFr}` : next.check === 'unit' ? '🏁 Bilan d\'unité' : '🎓 Examen de niveau';
+    return `
+      <div class="home-course" onclick="showView('bb-${lang}')">
+        <div class="home-course-flag">${cur.flag}</div>
+        <div class="home-course-info">
+          <div class="home-course-title">${cur.name}</div>
+          <div class="home-course-sub">${done} / ${total} leçons · ${bbXP(lang)} XP</div>
+          <div class="bb-xp-track" style="margin:8px 0"><div class="bb-xp-fill" style="width:${Math.round(done / total * 100)}%"></div></div>
+          <div class="home-course-next">${bbEsc(nextLabel)}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
 function syncBottomNav(view) {
-    const map = { home:'bn-home', flashcards:'bn-flashcards', quiz:'bn-flashcards', glossary:'bn-flashcards', phrases:'bn-flashcards', certif:'bn-certif', pt:'bn-pt' };
+    const map = { home:'bn-home', 'bb-en':'bn-en', 'bb-pt':'bn-ptc', certif:'bn-certif' };
     document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
-    const target = document.getElementById(map[view]);
+    const target = document.getElementById(map[view] || 'bn-more');
     if (target) target.classList.add('active');
 }
 
@@ -6535,6 +6608,7 @@ function cjNext() {
     </div>`;
 }
 
+renderHomeCourses();
 </script>
 <script src="account.js"></script>
 </body>
