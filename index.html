@@ -798,6 +798,25 @@
         .bb-mark-btn:hover { border-color:var(--accent2);color:var(--accent2); }
         .bb-mark-btn.done { border-style:dashed; }
         .bb-unit-locked .bb-mark-btn { cursor:pointer; }
+        #acct-gate { position:fixed;inset:0;z-index:10000;background:var(--bg-dark);display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto; }
+        #acct-gate.open { display:flex; }
+        .acct-card { width:100%;max-width:400px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;display:flex;flex-direction:column;gap:12px; }
+        .acct-logo { font-size:28px;font-weight:900;color:var(--text-primary);text-align:center; }
+        .acct-sub { font-size:13px;color:var(--text-secondary);text-align:center;margin-bottom:8px;line-height:1.5; }
+        .acct-title { font-size:18px;font-weight:800;color:var(--text-primary); }
+        .acct-help { font-size:13px;color:var(--text-secondary);line-height:1.5; }
+        .acct-card .bb-next-btn { margin-top:4px; }
+        .acct-links { display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap; }
+        .acct-links button { background:none;border:none;color:var(--accent2);font-size:13px;font-weight:700;cursor:pointer;padding:4px 0; }
+        .acct-msg { font-size:13px;line-height:1.5;border-radius:10px;padding:10px 12px;background:rgba(244,63,94,.12);color:#f44336; }
+        .acct-msg.ok { background:rgba(34,197,94,.12);color:#22c55e; }
+        .acct-msg.hidden { display:none; }
+        .acct-badge { font-size:12px;color:var(--text-secondary);background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:12px;padding:10px 14px;margin:-12px 0 12px;line-height:1.5; }
+        .acct-badge b { color:var(--text-primary); }
+        .acct-badge + .bb-save-info { margin-top:0; }
+        .acct-danger { color:#f44336 !important; }
+        .acct-side { font-size:11px;color:var(--text-secondary);margin-top:6px; }
+        .acct-side a { color:var(--accent2); }
         .bb-save-info { font-size:12px;color:var(--text-secondary);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:-12px 0 28px;line-height:1.5; }
         .bb-save-info b { color:var(--text-primary); }
         .bb-save-info.ko { background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.4);color:#f44336; }
@@ -885,8 +904,9 @@
     <div class="logo">
         <h1>LangSpark ⚡</h1>
         <span>Anglais · Portugais · Make</span>
+        <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v35</span>
+          <span style="font-size:10px;color:#444">v36</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -1310,6 +1330,7 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="courses/dsl.js"></script>
 <script src="courses/en-a.js"></script>
 <script src="courses/en-b.js"></script>
@@ -4964,15 +4985,16 @@ function bbStorageWorks() {
   catch (e) { return false; }
 }
 function bbSaveInfoHTML(lang) {
-  if (!bbStorageWorks()) return `
+  const account = typeof acctBadgeHTML === 'function' ? acctBadgeHTML() : '';
+  if (!bbStorageWorks()) return account + `
     <div class="bb-save-info ko">⚠️ <b>Ce navigateur n'enregistre pas votre progression.</b> Vous êtes probablement en navigation privée,
       ou les cookies / données de sites sont bloqués. Ouvrez l'app dans une fenêtre normale.</div>`;
   const lessons = Object.keys(bbProgress(lang)).length;
   const levels = Object.values(cjLevelScores(lang)).filter(v => v >= CJ_LEVEL_PASS).length;
   const checks = Object.values(bbChecks(lang)).filter(v => v >= BB_CHECK_PASS).length;
-  return `
+  return account + `
     <div class="bb-save-info">
-      <div>💾 <b>Sauvegardé sur cet appareil</b> : ${lessons} leçon${lessons > 1 ? 's' : ''} · ${levels} niveau${levels > 1 ? 'x' : ''} de conjugaison · ${checks} bilan${checks > 1 ? 's' : ''} / examen${checks > 1 ? 's' : ''} · ${bbXP(lang)} XP</div>
+      <div>💾 <b>${account ? 'Votre progression' : 'Sauvegardé sur cet appareil'}</b> : ${lessons} leçon${lessons > 1 ? 's' : ''} · ${levels} niveau${levels > 1 ? 'x' : ''} de conjugaison · ${checks} bilan${checks > 1 ? 's' : ''} / examen${checks > 1 ? 's' : ''} · ${bbXP(lang)} XP</div>
       <div class="bb-save-actions">
         <button class="bb-test-link" onclick="bbExportProgress()">⬇️ Exporter ma progression</button>
         <button class="bb-test-link" onclick="document.getElementById('bb-import-file').click()">⬆️ Importer</button>
@@ -6511,5 +6533,6 @@ function cjNext() {
 }
 
 </script>
+<script src="account.js"></script>
 </body>
 </html>
