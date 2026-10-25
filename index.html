@@ -876,7 +876,7 @@
         <h1>LangSpark ⚡</h1>
         <span>Anglais · Portugais · Make</span>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v32</span>
+          <span style="font-size:10px;color:#444">v33</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -5473,6 +5473,7 @@ function bbResult(ok, { expected = '', note = '', allowOverride = false } = {}) 
   bbState.graded++;
   if (ok) bbState.score++;
   else bbState.mistakes.push({ prompt: ex.fr || ex.q || ex.sentence || ex.text || ex.word, expected });
+  if (bbState.check && bbState.idx === bbState.steps.length - 1) bbCheckFinalize();
   const check = document.getElementById('bb-check');
   if (check) check.remove();
   const expl = ex.expl ? `<div class="bb-expl">💡 ${bbEsc(ex.expl)}</div>` : '';
@@ -5767,13 +5768,21 @@ function bbStartCheck(lang, kind, id) {
     </div>`;
 }
 
+// Enregistre le score du contrôle (appelé dès la dernière réponse, puis à l'écran de fin)
+function bbCheckFinalize() {
+  const { lang, score, graded, check } = bbState;
+  const key = check.kind === 'unit' ? check.id : 'level_' + check.id;
+  if (!bbState.final) bbState.final = { wasPassed: bbCheckPassed(lang, key) };
+  bbSaveCheck(lang, key, graded ? score / graded : 0);
+}
+
 function bbCheckComplete() {
   const { lang, score, graded, mistakes, check } = bbState;
   const pct = graded ? score / graded : 0;
   const passed = pct >= BB_CHECK_PASS;
   const key = check.kind === 'unit' ? check.id : 'level_' + check.id;
-  const wasPassed = bbCheckPassed(lang, key);
-  bbSaveCheck(lang, key, pct);
+  bbCheckFinalize();
+  const wasPassed = bbState.final.wasPassed;
   const xp = passed && !wasPassed ? (check.kind === 'unit' ? 30 : 60) : 5;
   bbAddXP(lang, xp);
 
@@ -6348,10 +6357,19 @@ function cjCheck() {
   cjFeedback(ok, warn, expected, label, speak, true);
 }
 
+// Enregistre le score du niveau (appelé dès la dernière réponse, puis à l'écran de fin)
+function cjLevelFinalize() {
+  const dr = cjState.drill;
+  if (!dr.opts.level) return;
+  if (!dr.final) dr.final = { wasPassed: cjLevelPassed(dr.lang, dr.opts.tense, dr.opts.level) };
+  cjSaveLevel(dr.lang, dr.opts.tense, dr.opts.level, dr.score / dr.items.length);
+}
+
 function cjFeedback(ok, warn, expected, label, speak, allowOverride) {
   const dr = cjState.drill;
   if (ok) dr.score++;
   else dr.mistakes.push({ label, expected });
+  if (dr.idx === dr.items.length - 1) cjLevelFinalize();
   document.getElementById('cj-feedback').innerHTML = `
     <div class="bb-feedback ${ok ? (warn ? 'warn' : 'ok') : 'ko'}"><div>
       ${ok ? (warn ? `✅ Presque — attention aux accents : <strong>${bbEsc(expected)}</strong>` : '✅ Bravo !') : `❌ Réponse : <strong>${bbEsc(expected)}</strong>`}
@@ -6389,8 +6407,8 @@ function cjNext() {
   let levelTitle = '', levelBtn = '';
   if (opts.level) {
     const t = cjTenseById(lang, opts.tense);
-    const wasPassed = cjLevelPassed(lang, t.id, opts.level);
-    cjSaveLevel(lang, t.id, opts.level, score / items.length);
+    cjLevelFinalize();
+    const wasPassed = dr.final.wasPassed;
     const passed = score / items.length >= CJ_LEVEL_PASS;
     const lv = cjLevelsFor(lang, t);
     const next = lv[lv.findIndex(l => l.n === opts.level) + 1];
