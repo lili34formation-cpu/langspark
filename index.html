@@ -794,6 +794,12 @@
         .cj-link { margin:12px auto 0; }
         .cj-cefr { background:rgba(0,212,170,.12);color:var(--accent2);font-size:14px;font-weight:900; }
         .cj-blank { display:inline-block;min-width:90px;border-bottom:3px solid var(--accent);color:var(--accent);font-weight:800;text-align:center; }
+        .bb-save-info { font-size:12px;color:var(--text-secondary);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:-12px 0 28px;line-height:1.5; }
+        .bb-save-info b { color:var(--text-primary); }
+        .bb-save-info.ko { background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.4);color:#f44336; }
+        .bb-save-info.ko b { color:#f44336; }
+        .bb-save-actions { display:flex;gap:16px;flex-wrap:wrap;margin-top:6px; }
+        .bb-save-actions .bb-test-link { margin:0; }
         .bb-test-card { display:flex;align-items:center;gap:14px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.35);border-radius:16px;padding:14px 18px;margin-bottom:16px;cursor:pointer;transition:transform .2s; }
         .bb-test-card:hover { transform:translateY(-2px); }
         .bb-test-icon { font-size:30px; }
@@ -876,7 +882,7 @@
         <h1>LangSpark ⚡</h1>
         <span>Anglais · Portugais · Make</span>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v33</span>
+          <span style="font-size:10px;color:#444">v34</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -4947,6 +4953,57 @@ function bbCountDone(lang, unit) {
 function bbFreeMode(lang) {
   return localStorage.getItem('bb_free_' + lang) === '1';
 }
+// ── Sauvegarde : état, export / import de la progression ──
+const BB_SAVE_PREFIXES = ['bb_', 'cj_', 'te_'];   // jamais la clé d'API Claude
+function bbStorageWorks() {
+  try { localStorage.setItem('__ls_test', '1'); localStorage.removeItem('__ls_test'); return true; }
+  catch (e) { return false; }
+}
+function bbSaveInfoHTML(lang) {
+  if (!bbStorageWorks()) return `
+    <div class="bb-save-info ko">⚠️ <b>Ce navigateur n'enregistre pas votre progression.</b> Vous êtes probablement en navigation privée,
+      ou les cookies / données de sites sont bloqués. Ouvrez l'app dans une fenêtre normale.</div>`;
+  const lessons = Object.keys(bbProgress(lang)).length;
+  const levels = Object.values(cjLevelScores(lang)).filter(v => v >= CJ_LEVEL_PASS).length;
+  const checks = Object.values(bbChecks(lang)).filter(v => v >= BB_CHECK_PASS).length;
+  return `
+    <div class="bb-save-info">
+      <div>💾 <b>Sauvegardé sur cet appareil</b> : ${lessons} leçon${lessons > 1 ? 's' : ''} · ${levels} niveau${levels > 1 ? 'x' : ''} de conjugaison · ${checks} bilan${checks > 1 ? 's' : ''} / examen${checks > 1 ? 's' : ''} · ${bbXP(lang)} XP</div>
+      <div class="bb-save-actions">
+        <button class="bb-test-link" onclick="bbExportProgress()">⬇️ Exporter ma progression</button>
+        <button class="bb-test-link" onclick="document.getElementById('bb-import-file').click()">⬆️ Importer</button>
+        <input type="file" id="bb-import-file" accept=".json,application/json" style="display:none" onchange="bbImportProgress(this.files[0])">
+      </div>
+    </div>`;
+}
+function bbExportProgress() {
+  const data = {};
+  Object.keys(localStorage).filter(k => BB_SAVE_PREFIXES.some(p => k.startsWith(p))).forEach(k => { data[k] = localStorage.getItem(k); });
+  const blob = new Blob([JSON.stringify({ app: 'langspark', date: new Date().toISOString(), data }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `langspark-progression-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+async function bbImportProgress(file) {
+  if (!file) return;
+  try {
+    const json = JSON.parse(await file.text());
+    if (json.app !== 'langspark' || !json.data) throw new Error('format');
+    const keys = Object.keys(json.data).filter(k => BB_SAVE_PREFIXES.some(p => k.startsWith(p)));
+    if (!confirm(`Importer la progression du ${new Date(json.date).toLocaleDateString('fr-FR')} ? Elle remplacera celle de cet appareil.`)) return;
+    keys.forEach(k => localStorage.setItem(k, json.data[k]));
+    alert('✅ Progression importée !');
+    initBBView(bbState.lang);
+  } catch (e) {
+    alert('❌ Ce fichier n\'est pas une sauvegarde LangSpark valide.');
+  }
+}
+// Demande au navigateur de ne pas effacer les données de l'app de lui-même
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+
 function bbToggleFree(lang) {
   localStorage.setItem('bb_free_' + lang, bbFreeMode(lang) ? '0' : '1');
   initBBView(lang);
@@ -5163,7 +5220,8 @@ function initBBView(lang) {
     <label class="bb-free-toggle">
       <input type="checkbox" ${free ? 'checked' : ''} onchange="bbToggleFree('${lang}')">
       <span>Mode libre — accéder à toutes les unités sans suivre l'ordre (si vous avez déjà un niveau)</span>
-    </label>`;
+    </label>
+    ${bbSaveInfoHTML(lang)}`;
 
   const levels = [...new Set(cur.units.map(u => u.level))];
   const levelNames = { A1: 'Débutant', A2: 'Élémentaire', B1: 'Intermédiaire', B2: 'Avancé' };
