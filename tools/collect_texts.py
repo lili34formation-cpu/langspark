@@ -34,6 +34,8 @@ COLLECT = r"""() => {
     d.verbs.forEach(v => d.tenses.forEach(t => t.forms(v).forEach((f, i) =>
       add(bbTTS(lang), `${(t.persons || d.persons)[i].split('/')[0].trim()} ${f}`))));
   }
+  // Vocabulaire essentiel (même texte lu que vocSpeak)
+  for (const lang of BB_LANGS) if (window.VOC && VOC[lang]) VOC[lang].themes.forEach(t => t.words.forEach(w => add(bbTTS(lang), vocSpeak(w[0]))));
   // Flashcards et phrases utiles
   vocabulary.forEach(c => {
     const ex = (c.example || '').replace(/^"|"$/g, '');

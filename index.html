@@ -782,6 +782,17 @@
         .bb-check-score.ok { color:#22c55e; }
         .bb-check-score.ko { color:#f59e0b; }
         .cj-entry { background:rgba(108,99,255,.1);border-color:rgba(108,99,255,.35); }
+        .voc-entry { background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.35); }
+        .voc-modes { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px; }
+        .voc-modes .bb-next-btn { margin:0;padding:12px 6px;font-size:14px; }
+        .voc-list { margin-top:16px; }
+        .voc-row { display:grid;grid-template-columns:auto 1fr 1fr auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--border); }
+        .voc-l2 { font-size:15px;font-weight:700;color:var(--text-primary); }
+        .voc-fr { font-size:13px;color:var(--text-secondary); }
+        .voc-dot { width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12); }
+        .voc-dot.mid { background:#f59e0b; }
+        .voc-dot.ok { background:#22c55e; }
+        .voc-card { background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;padding:36px 16px;margin-bottom:16px;cursor:pointer;text-align:center; }
         .cj-actions { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:24px; }
         .cj-action { display:flex;gap:12px;align-items:center;text-align:left;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:14px;color:var(--text-primary);cursor:pointer;font-size:14px;transition:all .2s; }
         .cj-action:hover:not(:disabled) { border-color:var(--accent);transform:translateY(-2px); }
@@ -933,7 +944,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v40</span>
+          <span style="font-size:10px;color:#444">v41</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -1399,6 +1410,7 @@
 <script src="courses/verbs-en.js"></script>
 <script src="courses/verbs-pt.js"></script>
 <script src="courses/verbs-es.js"></script>
+<script src="courses/vocab.js"></script>
 <script>
 // ════════════════════════════════════════
 //  DATA
@@ -5417,6 +5429,14 @@ function initBBView(lang) {
         <div class="bb-resume-sub">${window.CJ[lang].verbs.length} verbes · ${window.CJ[lang].tenses.length} temps · fiches et entraînement${cjWeakKeys(lang).length ? ` · 🎯 ${cjWeakKeys(lang).length} point(s) faible(s)` : ''}</div>
       </div>
     </div>
+    ${vocData(lang) ? `
+    <div class="bb-test-card voc-entry" onclick="vocHome('${lang}')">
+      <div class="bb-test-icon">📚</div>
+      <div>
+        <div class="bb-resume-title" style="margin:0">Vocabulaire essentiel</div>
+        <div class="bb-resume-sub">Jours, mois, couleurs, corps, nombres · cartes et quiz · ${vocMastery(lang, vocData(lang).themes).pct} % maîtrisé</div>
+      </div>
+    </div>` : ''}
     <label class="bb-free-toggle">
       <input type="checkbox" ${free ? 'checked' : ''} onchange="bbToggleFree('${lang}')">
       <span>Mode libre — accéder à toutes les unités sans suivre l'ordre (si vous avez déjà un niveau)</span>
@@ -6700,6 +6720,262 @@ function cjNext() {
 }
 
 renderHomeCourses();
+// ════════════════════════════════════════
+//  VOCABULAIRE ESSENTIEL — données dans courses/vocab.js
+// ════════════════════════════════════════
+
+let vocState = { drill: null };
+const VOC_N = 12;
+const VOC_MASTER = 2;   // un mot est « maîtrisé » à partir de 2 (bonnes réponses nettes)
+
+function vocData(lang) { return window.VOC && window.VOC[lang]; }
+function vocTheme(lang, id) { return vocData(lang).themes.find(t => t.id === id); }
+const vocSpeak = w => w.replace(/ \/ /g, ', ');
+const vocKey = (tid, w) => tid + '|' + w[0];
+// Réponses acceptées : chaque variante (masc. / fém.), avec ou sans article
+function vocAnswers(w) {
+  const out = [];
+  w[0].split(' / ').forEach(f => {
+    out.push(f);
+    const bare = f.replace(/^(the|an|a|o|os|as|el|la|los|las)\s+/i, '');
+    if (bare !== f) out.push(bare);
+    if (/^one (hundred|thousand)$/.test(f)) out.push(f.replace('one', 'a'), f.replace('one ', ''));
+  });
+  return out;
+}
+
+// ── Maîtrise (synchronisée avec le compte : préfixe bb_) ──
+function vocScores(lang) { return JSON.parse(localStorage.getItem('bb_vocab_' + lang) || '{}'); }
+function vocRecord(lang, key, ok) {
+  const s = vocScores(lang);
+  s[key] = ok ? Math.min(3, (s[key] || 0) + 1) : Math.max(0, (s[key] || 0) - 1);
+  localStorage.setItem('bb_vocab_' + lang, JSON.stringify(s));
+}
+function vocMastery(lang, themes) {
+  const s = vocScores(lang);
+  let total = 0, done = 0;
+  themes.forEach(t => t.words.forEach(w => { total++; if ((s[vocKey(t.id, w)] || 0) >= VOC_MASTER) done++; }));
+  return { total, done, pct: total ? Math.round(done / total * 100) : 0 };
+}
+
+// ── Accueil du vocabulaire ──
+function vocHome(lang) {
+  cjReset(lang);
+  const d = vocData(lang);
+  const all = vocMastery(lang, d.themes);
+  cjEl(lang).innerHTML = `
+    <button class="bb-back-btn" onclick="initBBView('${lang}')">← Retour aux cours</button>
+    <div style="margin:20px 0 18px">
+      <div style="font-size:26px;font-weight:800;color:var(--text-primary)">📚 Vocabulaire essentiel</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">${all.total} mots indispensables · ${all.done} maîtrisés (${all.pct} %)</div>
+    </div>
+    <button class="bb-next-btn" style="margin:0 0 20px" onclick="vocStart('${lang}',{mode:'quiz'})">🧠 Grand quiz — tous les thèmes mélangés</button>
+    <div class="bb-units">
+      ${d.themes.map(t => {
+        const m = vocMastery(lang, [t]);
+        return `
+        <div class="bb-unit" onclick="vocOpen('${lang}','${t.id}')">
+          <div class="bb-unit-icon" style="background:rgba(0,212,170,.12);font-size:22px">${t.icon}</div>
+          <div class="bb-unit-info">
+            <div class="bb-unit-title">${bbEsc(t.title)}</div>
+            <div class="bb-unit-sub">${t.words.length} mots · ${m.pct} % maîtrisés</div>
+            <div class="bb-unit-progress"><div class="bb-unit-fill" style="width:${m.pct}%;background:var(--accent2)"></div></div>
+          </div>
+          <div class="bb-unit-right"><div class="bb-unit-stars">${m.pct >= 100 ? '⭐⭐⭐' : m.pct >= 50 ? '⭐⭐☆' : m.pct > 0 ? '⭐☆☆' : '☆☆☆'}</div></div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+// ── Page d'un thème : liste + modes d'entraînement ──
+function vocOpen(lang, id) {
+  cjReset(lang);
+  const t = vocTheme(lang, id);
+  const s = vocScores(lang);
+  const m = vocMastery(lang, [t]);
+  cjEl(lang).innerHTML = `
+    <button class="bb-back-btn" onclick="vocHome('${lang}')">← Vocabulaire</button>
+    <div class="bb-exercise" style="margin-top:16px">
+      <div class="bb-ex-type">${t.icon} ${bbEsc(t.title)} · ${m.done} / ${m.total} maîtrisés</div>
+      <div class="voc-modes">
+        <button class="bb-next-btn" onclick="vocStart('${lang}',{theme:'${id}',mode:'cards'})">🃏 Cartes</button>
+        <button class="bb-next-btn" onclick="vocStart('${lang}',{theme:'${id}',mode:'quiz'})">❓ Quiz</button>
+        <button class="bb-next-btn" onclick="vocStart('${lang}',{theme:'${id}',mode:'write'})">⌨️ Écrire</button>
+      </div>
+      ${t.tip ? `<div class="bb-gr-tip"><b>💡 Bon à savoir</b><br>${bbEsc(t.tip)}</div>` : ''}
+      <div class="voc-list">
+        ${t.words.map(w => {
+          const sc = s[vocKey(id, w)] || 0;
+          return `
+          <div class="voc-row">
+            ${bbAudioBtn(vocSpeak(w[0]), '🔊', 'bb-mini-audio')}
+            <div class="voc-l2">${bbEsc(w[0])}</div>
+            <div class="voc-fr">${bbEsc(w[1])}</div>
+            <div class="voc-dot ${sc >= VOC_MASTER ? 'ok' : sc > 0 ? 'mid' : ''}" title="${sc >= VOC_MASTER ? 'Maîtrisé' : 'À travailler'}"></div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+// ── Séries : cartes, quiz, écriture ──
+function vocStart(lang, opts) {
+  cjReset(lang);
+  const d = vocData(lang);
+  const themes = opts.theme ? [vocTheme(lang, opts.theme)] : d.themes;
+  const pool = themes.flatMap(t => t.words.map(w => ({ t, w })));
+  const scores = vocScores(lang);
+  // les mots les moins maîtrisés passent en priorité
+  const sorted = bbShuffle(pool).sort((a, b) => (scores[vocKey(a.t.id, a.w)] || 0) - (scores[vocKey(b.t.id, b.w)] || 0));
+  const items = (opts.mode === 'cards' ? bbShuffle(pool) : bbShuffle(sorted.slice(0, VOC_N))).map(({ t, w }) => {
+    const it = { tid: t.id, w, dir: Math.random() < 0.5 ? 'toL2' : 'toFr' };
+    if (opts.mode === 'quiz') {
+      const others = bbShuffle(t.words.filter(x => x !== w)).slice(0, 3);
+      const pick = x => it.dir === 'toL2' ? x[0] : x[1];
+      it.options = bbShuffle([{ o: pick(w), ok: true }, ...others.map(x => ({ o: pick(x), ok: false }))]);
+    }
+    return it;
+  });
+  vocState.drill = { lang, opts, items, idx: 0, score: 0, mistakes: [], answered: false, flipped: false };
+  vocRender();
+}
+
+function vocRender() {
+  const dr = vocState.drill;
+  const { lang, opts } = dr;
+  const it = dr.items[dr.idx];
+  const t = vocTheme(lang, it.tid);
+  bbState.audio = [];
+  dr.answered = false;
+  dr.flipped = false;
+  let body;
+  if (opts.mode === 'cards') {
+    body = `
+      <div class="bb-ex-type">🃏 ${t.icon} ${bbEsc(t.title)}</div>
+      <div class="voc-card" id="voc-card" onclick="vocFlip()">
+        <div class="bb-ex-word">${bbEsc(it.w[0])}</div>
+        <div class="bb-ex-tr" id="voc-back" style="visibility:hidden">${bbEsc(it.w[1])}</div>
+        <div class="bb-hint" id="voc-hint">Touchez la carte pour voir la traduction</div>
+      </div>
+      <div class="bb-audio-row">${bbAudioBtn(vocSpeak(it.w[0]), '🔊 Écouter')}</div>
+      <div style="display:flex;gap:10px">
+        <button class="bb-next-btn bb-btn-ghost" onclick="vocCard(false)">🔁 À revoir</button>
+        <button class="bb-next-btn" onclick="vocCard(true)">✅ Je sais</button>
+      </div>`;
+  } else if (opts.mode === 'quiz') {
+    const q = it.dir === 'toL2' ? it.w[1] : it.w[0];
+    body = `
+      <div class="bb-ex-type">❓ ${t.icon} ${it.dir === 'toL2' ? `Comment dit-on en ${BB_LANG_LABEL[lang]} ?` : 'Que signifie ce mot ?'}</div>
+      <div class="bb-ex-q" style="font-size:24px">${bbEsc(q)}</div>
+      ${it.dir === 'toFr' ? `<div class="bb-audio-row">${bbAudioBtn(vocSpeak(it.w[0]), '🔊 Écouter')}</div>` : ''}
+      <div class="bb-choices">${it.options.map((o, i) => `<button class="bb-choice" onclick="vocChoose(${i})">${bbEsc(o.o)}</button>`).join('')}</div>
+      <div id="voc-feedback"></div>`;
+  } else {
+    body = `
+      <div class="bb-ex-type">⌨️ ${t.icon} Écrivez en ${BB_LANG_LABEL[lang]}</div>
+      <div class="bb-ex-q" style="font-size:24px">${bbEsc(it.w[1])}</div>
+      <input class="bb-input" id="voc-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Votre réponse…"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();vocCheck();}">
+      <div class="bb-hint">L'article est facultatif. Pour le masculin / féminin, une seule forme suffit.</div>
+      <button class="bb-next-btn" id="voc-check" onclick="vocCheck()">Vérifier</button>
+      <div id="voc-feedback"></div>`;
+  }
+  const title = opts.theme ? t.title : 'Grand quiz';
+  cjEl(lang).innerHTML = `
+    <div class="bb-lesson-header">
+      <button class="bb-back-btn" onclick="${opts.theme ? `vocOpen('${lang}','${opts.theme}')` : `vocHome('${lang}')`}">←</button>
+      <div class="bb-lesson-title">📚 ${bbEsc(title)}</div>
+      <div class="bb-progress-track"><div class="bb-progress-done" style="width:${Math.round(dr.idx / dr.items.length * 100)}%"></div></div>
+      <span style="font-size:12px;color:var(--text-secondary)">${dr.idx}/${dr.items.length}</span>
+    </div>
+    <div class="bb-exercise">${body}</div>`;
+  const input = document.getElementById('voc-input');
+  if (input) input.focus();
+}
+
+function vocFlip() {
+  const back = document.getElementById('voc-back');
+  const show = back.style.visibility === 'hidden';
+  back.style.visibility = show ? 'visible' : 'hidden';
+  document.getElementById('voc-hint').style.visibility = show ? 'hidden' : 'visible';
+}
+function vocCard(known) {
+  const dr = vocState.drill;
+  const it = dr.items[dr.idx];
+  vocRecord(dr.lang, vocKey(it.tid, it.w), known);
+  if (known) dr.score++;
+  else dr.mistakes.push({ q: it.w[1], a: it.w[0] });
+  vocNext();
+}
+
+function vocChoose(i) {
+  const dr = vocState.drill;
+  if (dr.answered) return;
+  dr.answered = true;
+  const it = dr.items[dr.idx];
+  const buttons = document.querySelectorAll('.bb-choice');
+  buttons.forEach(b => b.disabled = true);
+  const ok = it.options[i].ok;
+  buttons[i].classList.add(ok ? 'correct' : 'wrong');
+  buttons[it.options.findIndex(o => o.ok)].classList.add('correct');
+  vocFeedback(ok, false);
+}
+function vocCheck() {
+  const dr = vocState.drill;
+  if (dr.answered) return;
+  const input = document.getElementById('voc-input');
+  if (!input.value.trim()) return input.focus();
+  dr.answered = true;
+  const it = dr.items[dr.idx];
+  const res = bbCheckText(input.value, vocAnswers(it.w), dr.lang);
+  input.disabled = true;
+  input.classList.add(res === 'ko' ? 'wrong' : 'correct');
+  document.getElementById('voc-check').remove();
+  vocFeedback(res !== 'ko', res === 'accents');
+}
+function vocFeedback(ok, warn) {
+  const dr = vocState.drill;
+  const it = dr.items[dr.idx];
+  vocRecord(dr.lang, vocKey(it.tid, it.w), ok);
+  if (ok) dr.score++;
+  else dr.mistakes.push({ q: it.w[1], a: it.w[0] });
+  document.getElementById('voc-feedback').innerHTML = `
+    <div class="bb-feedback ${ok ? (warn ? 'warn' : 'ok') : 'ko'}"><div>
+      ${ok ? (warn ? `✅ Presque — attention aux accents : <strong>${bbEsc(it.w[0])}</strong>` : `✅ Bravo ! <strong>${bbEsc(it.w[0])}</strong> = ${bbEsc(it.w[1])}`) : `❌ <strong>${bbEsc(it.w[0])}</strong> = ${bbEsc(it.w[1])}`}
+    </div></div>
+    <div class="bb-audio-row" style="margin-top:12px">${bbAudioBtn(vocSpeak(it.w[0]), '🔊 Écouter')}</div>
+    <button class="bb-next-btn" id="voc-next" onclick="vocNext()">Continuer →</button>`;
+  document.getElementById('voc-next').focus();
+}
+
+function vocNext() {
+  const dr = vocState.drill;
+  bbStopAudio();
+  dr.idx++;
+  if (dr.idx < dr.items.length) return vocRender();
+  const { lang, opts, score, items, mistakes } = dr;
+  const pct = Math.round(score / items.length * 100);
+  bbAddXP(lang, Math.round(score / 2));
+  const again = JSON.stringify(opts).replace(/"/g, '&quot;');
+  cjEl(lang).innerHTML = `
+    <div class="bb-complete">
+      <div class="bb-check-score ${pct >= 70 ? 'ok' : 'ko'}">${pct} %</div>
+      <div class="bb-complete-title">${pct >= 90 ? 'Excellent !' : pct >= 70 ? 'Bien joué !' : 'Continuez, ça rentre !'}</div>
+      <div class="bb-complete-sub">${score} / ${items.length} ${opts.mode === 'cards' ? 'mots connus' : 'bonnes réponses'}</div>
+      <div class="bb-complete-xp">⚡ +${Math.round(score / 2)} XP</div>
+      ${mistakes.length ? `
+        <div class="bb-review">
+          <div class="bb-review-title">📝 À revoir (${mistakes.length})</div>
+          ${mistakes.map(m => `<div class="bb-review-item"><div class="bb-review-q">${bbEsc(m.q)}</div><div class="bb-review-a">→ ${bbEsc(m.a)}</div></div>`).join('')}
+        </div>` : `<div class="bb-review-perfect">🎯 Sans faute !</div>`}
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="bb-next-btn" style="max-width:200px" onclick="vocStart('${lang}', JSON.parse(this.dataset.o))" data-o="${again}">🔄 Recommencer</button>
+        ${opts.mode !== 'quiz' && opts.theme ? `<button class="bb-next-btn" style="max-width:200px;background:linear-gradient(135deg,#f59e0b,#ef4444)" onclick="vocStart('${lang}',{theme:'${opts.theme}',mode:'quiz'})">❓ Passer au quiz</button>` : ''}
+        <button class="bb-next-btn bb-btn-ghost" style="max-width:200px" onclick="${opts.theme ? `vocOpen('${lang}','${opts.theme}')` : `vocHome('${lang}')`}">📚 Retour</button>
+      </div>
+    </div>`;
+}
+
 </script>
 <script src="account.js"></script>
 </body>
