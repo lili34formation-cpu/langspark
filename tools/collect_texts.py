@@ -26,6 +26,12 @@ COLLECT = r"""() => {
       for (let i = 0; i < bbState.steps.length; i++) { bbState.idx = i; bbRender(); grab(lang); }
       bbStopAudio();
     }
+    // Écoute & compréhension : toutes les étapes de toutes les séances
+    if (typeof lsnPacks === 'function') for (const pk of lsnPacks(lang)) {
+      lsnStart(lang, pk.id);
+      for (let i = 0; i < bbState.steps.length; i++) { bbState.idx = i; bbRender(); grab(lang); }
+      bbStopAudio();
+    }
     // Conjugaison : fiches verbes, fiches temps, irréguliers
     const d = CJ[lang];
     d.verbs.forEach(v => { cjVerb(lang, v.id); grab(lang); });

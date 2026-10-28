@@ -783,6 +783,11 @@
         .bb-check-score.ko { color:#f59e0b; }
         .cj-entry { background:rgba(108,99,255,.1);border-color:rgba(108,99,255,.35); }
         .voc-entry { background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.35); }
+        .lsn-entry { background:rgba(14,165,233,.1);border-color:rgba(14,165,233,.4); }
+        .bb-dlg.masked .bb-dlg-text { color:transparent;text-shadow:0 0 9px rgba(255,255,255,.55);user-select:none; }
+        .bb-dlg.masked .bb-dlg-text .bb-mini-audio { color:var(--accent2);text-shadow:none; }
+        .bb-dlg.masked .bb-dlg-tr { display:none !important; }
+        textarea.bb-input { resize:vertical;font-family:inherit; }
         .voc-modes { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px; }
         .voc-modes .bb-next-btn { margin:0;padding:12px 6px;font-size:14px; }
         .voc-list { margin-top:16px; }
@@ -947,7 +952,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v42</span>
+          <span style="font-size:10px;color:#444">v43</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -1415,6 +1420,9 @@
 <script src="courses/verbs-pt.js"></script>
 <script src="courses/verbs-es.js"></script>
 <script src="courses/vocab.js"></script>
+<script src="courses/listen-pt.js"></script>
+<script src="courses/listen-en.js"></script>
+<script src="courses/listen-es.js"></script>
 <script>
 // ════════════════════════════════════════
 //  DATA
@@ -5337,6 +5345,7 @@ function bbAudioBtn(text, label = '🔊', cls = 'bb-listen-btn', slow = false) {
 }
 async function bbPlay(btn, i) {
   const a = bbState.audio[i];
+  if (!a || !btn || !btn.isConnected) return;   // l'exercice a changé entre-temps
   bbStopAudio();
   btn.classList.add('playing');
   await bbSay(a.text, bbTTS(bbState.lang), a.slow);
@@ -5455,6 +5464,14 @@ function initBBView(lang) {
         <div class="bb-resume-sub">${window.CJ[lang].verbs.length} verbes · ${window.CJ[lang].tenses.length} temps · fiches et entraînement${cjWeakKeys(lang).length ? ` · 🎯 ${cjWeakKeys(lang).length} point(s) faible(s)` : ''}</div>
       </div>
     </div>
+    ${lsnPacks(lang).length ? `
+    <div class="bb-test-card lsn-entry" onclick="lsnHome('${lang}')">
+      <div class="bb-test-icon">🎧</div>
+      <div>
+        <div class="bb-resume-title" style="margin:0">Écoute & compréhension</div>
+        <div class="bb-resume-sub">${lsnPacks(lang).length} séances : dialogues sans texte, dictées, traductions · ${Object.values(lsnScores(lang)).filter(v => v >= 0.7).length} réussies</div>
+      </div>
+    </div>` : ''}
     ${vocData(lang) ? `
     <div class="bb-test-card voc-entry" onclick="vocHome('${lang}')">
       <div class="bb-test-icon">📚</div>
@@ -5584,13 +5601,14 @@ function bbNext() {
   bbState.idx++;
   if (bbState.test && bbState.idx >= bbState.steps.length) bbTestLevelDone();
   else if (bbState.check && bbState.idx >= bbState.steps.length) bbCheckComplete();
+  else if (bbState.listen && bbState.idx >= bbState.steps.length) lsnComplete();
   else if (bbState.idx >= bbState.steps.length) bbLessonComplete();
   else bbRender();
 }
 
 function bbRender() {
-  const { lang, idx, steps, test, check } = bbState;
-  const { unit, lesson } = test || check ? { unit: null, lesson: {} } : bbFind(lang, bbState.unit, bbState.lesson);
+  const { lang, idx, steps, test, check, listen } = bbState;
+  const { unit, lesson } = test || check || listen ? { unit: null, lesson: {} } : bbFind(lang, bbState.unit, bbState.lesson);
   const ex = steps[idx];
   const pct = Math.round((idx / steps.length) * 100);
   bbState.audio = [];
@@ -5613,8 +5631,32 @@ function bbRender() {
       </div>
       <button class="bb-next-btn" onclick="bbNext()">Continuer →</button>`;
 
-  } else if (ex.type === 'dialogue') {
+  } else if (ex.type === 'oral') {
+    body = bbGrammarCard({ title: ex.title, body: ex.body, examples: ex.examples, tip: '' }).replace('📘 Grammaire', '🗣️ À l\'oral')
+      + `<button class="bb-next-btn" onclick="bbNext()">Écouter le dialogue →</button>`;
+
+  } else if (ex.type === 'hear') {
+    body = `
+      <div class="bb-ex-type">👂 Écoutez : que veut dire cette phrase ?</div>
+      <div class="bb-audio-row">
+        ${bbAudioBtn(ex.text, '🔊 Écouter', 'bb-listen-btn bb-listen-big')}
+        ${bbAudioBtn(ex.text, '🐢 Lentement', 'bb-listen-btn bb-btn-ghost', true)}
+      </div>
+      <div class="bb-choices bb-choices-col">${ex.options.map((o, i) => `<button class="bb-choice" onclick="bbChoose(this,${i})">${bbEsc(o.o)}</button>`).join('')}</div>
+      <div id="bb-feedback"></div>`;
+
+  } else if (ex.type === 'selftr') {
+    body = `
+      <div class="bb-ex-type">🔁 Traduisez en français</div>
+      <div class="bb-ex-q">« ${bbEsc(ex.text)} »</div>
+      <div class="bb-audio-row">${bbAudioBtn(ex.text, '🔊 Écouter', 'bb-listen-btn')}</div>
+      <textarea class="bb-input" id="bb-input" rows="2" placeholder="Votre traduction…"></textarea>
+      <button class="bb-next-btn" id="bb-check" onclick="bbSelfReveal()">Voir la correction</button>
+      <div id="bb-feedback"></div>`;
+
+  } else if (ex.type === 'dialogue' || ex.type === 'transcript') {
     const speakers = [...new Set(ex.lines.map(l => l[0]))];
+    const masked = ex.type === 'dialogue' && ex.hidden;
     const lines = ex.lines.map(([who, text, tr], i) => `
       <div class="bb-dlg-line ${speakers.indexOf(who) % 2 ? 'right' : 'left'}" id="bb-dl-${i}">
         <div class="bb-dlg-who">${bbEsc(who)}</div>
@@ -5624,21 +5666,27 @@ function bbRender() {
         </div>
       </div>`).join('');
     body = `
-      <div class="bb-ex-type">💬 Dialogue</div>
+      <div class="bb-ex-type">${ex.type === 'transcript' ? '📜 Le dialogue, avec la traduction' : masked ? '🎧 Écoute sans le texte' : '💬 Dialogue'}</div>
       <div class="bb-dlg-title">${bbEsc(ex.title)}</div>
       <div class="bb-dlg-controls">
-        <button class="bb-listen-btn" id="bb-dlg-play" onclick="bbPlayDialogue()">▶ Écouter le dialogue</button>
-        <button class="bb-listen-btn bb-btn-ghost" onclick="document.getElementById('bb-dlg').classList.toggle('show-tr')">👁 Traduction</button>
+        <button class="bb-listen-btn" id="bb-dlg-play" onclick="bbPlayDialogue()">▶ Écouter${ex.type === 'transcript' ? ' encore' : ' le dialogue'}</button>
+        <button class="bb-listen-btn bb-btn-ghost" onclick="bbPlayDialogue(true)">🐢 Lentement</button>
+        ${masked ? `<button class="bb-listen-btn bb-btn-ghost" onclick="document.getElementById('bb-dlg').classList.toggle('masked')">👁 Texte</button>`
+          : `<button class="bb-listen-btn bb-btn-ghost" onclick="document.getElementById('bb-dlg').classList.toggle('show-tr')">👁 Traduction</button>`}
       </div>
-      <div class="bb-dlg" id="bb-dlg">${lines}</div>
-      <div class="bb-hint">Écoutez d'abord sans la traduction, puis vérifiez. Des questions de compréhension suivent.</div>
-      <button class="bb-next-btn" onclick="bbNext()">Répondre aux questions →</button>`;
+      <div class="bb-dlg${masked ? ' masked' : ''}${ex.type === 'transcript' ? ' show-tr' : ''}" id="bb-dlg">${lines}</div>
+      <div class="bb-hint">${ex.type === 'transcript' ? 'Relisez en écoutant : repérez ce que vous n\'aviez pas compris.'
+        : masked ? 'Écoutez le dialogue une ou deux fois SANS lire (le texte est masqué). Puis répondez aux questions : le texte s\'affichera ensuite.'
+        : 'Écoutez d\'abord sans la traduction, puis vérifiez. Des questions de compréhension suivent.'}</div>
+      <button class="bb-next-btn" onclick="bbNext()">${ex.type === 'transcript' ? 'Continuer →' : 'Répondre aux questions →'}</button>`;
 
   } else if (ex.type === 'choice' || ex.type === 'translate') {
     const isTr = ex.type === 'translate';
     const opts = ex.options.map((o, i) => `<button class="bb-choice" onclick="bbChoose(this,${i})">${bbEsc(o.o)}</button>`).join('');
     const label = ex.dialogue ? '💬 Compréhension' : isTr ? '🔁 Traduction' : '❓ Choix multiple';
-    const recap = ex.dialogue ? `
+    const recap = ex.dialogue && ex.dialogue.hidden ? `
+      <div class="bb-audio-row"><button class="bb-listen-btn bb-btn-ghost" id="bb-dlg-play" onclick="bbPlayDialogue(false, bbState.steps[bbState.idx].dialogue.lines)">▶ Réécouter le dialogue</button></div>`
+      : ex.dialogue ? `
       <details class="bb-dlg-recap"><summary>Revoir le dialogue</summary>
         ${ex.dialogue.lines.map(([w, t]) => `<div><b>${bbEsc(w)} :</b> ${bbEsc(t)}</div>`).join('')}
       </details>` : '';
@@ -5703,8 +5751,8 @@ function bbRender() {
 
   const html = `
     <div class="bb-lesson-header">
-      <button class="bb-back-btn" onclick="${test || check?.kind === 'level' ? `initBBView('${lang}')` : `bbOpenUnit('${lang}','${check ? check.id : unit.id}')`}">←</button>
-      <div class="bb-lesson-title">${test ? `🎯 Test de niveau · ${test.levels[test.li]}` : check ? bbEsc(check.title) : bbEsc(lesson.titleFr)}</div>
+      <button class="bb-back-btn" onclick="${listen ? `lsnHome('${lang}')` : test || check?.kind === 'level' ? `initBBView('${lang}')` : `bbOpenUnit('${lang}','${check ? check.id : unit.id}')`}">←</button>
+      <div class="bb-lesson-title">${listen ? `🎧 ${bbEsc(listen.title)}` : test ? `🎯 Test de niveau · ${test.levels[test.li]}` : check ? bbEsc(check.title) : bbEsc(lesson.titleFr)}</div>
       ${lesson.grammar && ex.type !== 'grammar' ? `<button class="bb-back-btn" title="Revoir la règle" onclick="bbShowRule()">📘</button>` : ''}
       <div class="bb-progress-track"><div class="bb-progress-done" style="width:${pct}%"></div></div>
       <span style="font-size:12px;color:var(--text-secondary)">${idx}/${steps.length}</span>
@@ -5714,6 +5762,10 @@ function bbRender() {
     <div id="bb-rule-pop"></div>`;
 
   bbContainer(lang).innerHTML = html;
+  if (ex.type === 'hear' || ex.type === 'listen') {
+    const first = document.querySelector('.bb-exercise .bb-listen-btn');
+    if (first) setTimeout(() => bbPlay(first, 0), 300);
+  }
   // Les exercices oraux sont un bonus : la leçon compte comme faite dès qu'on y arrive
   if (ex.type === 'speak') bbSaveProgress(lang, lesson.id);
   const input = document.getElementById('bb-input');
@@ -5738,7 +5790,7 @@ function bbGrammarCard(g) {
 function bbReport() {
   const { lang, idx, steps, unit, lesson, check, test } = bbState;
   const ex = steps[idx] || {};
-  const where = test ? `test de niveau ${test.levels[test.li]}` : check ? `${check.kind === 'unit' ? 'bilan' : 'examen'} ${check.id}` : lesson;
+  const where = bbState.listen ? `écoute ${bbState.listen.id}` : test ? `test de niveau ${test.levels[test.li]}` : check ? `${check.kind === 'unit' ? 'bilan' : 'examen'} ${check.id}` : lesson;
   const what = ex.word || ex.q || ex.fr || ex.sentence || ex.text || ex.title || '';
   const ref = `${lang} · ${where} · étape ${idx + 1}/${steps.length} (${ex.type})${what ? ' · « ' + String(what).slice(0, 60) + ' »' : ''}`;
   if (navigator.clipboard) navigator.clipboard.writeText(ref).catch(() => {});
@@ -5765,21 +5817,40 @@ function bbInputBlock(hint) {
     <div id="bb-feedback"></div>`;
 }
 
-async function bbPlayDialogue() {
-  const ex = bbState.steps[bbState.idx];
+async function bbPlayDialogue(slow = false, lines = null) {
+  lines = lines || bbState.steps[bbState.idx].lines;
   const btn = document.getElementById('bb-dlg-play');
   bbStopAudio();
   const run = bbAudioRun;
-  btn.classList.add('playing');
-  for (let i = 0; i < ex.lines.length; i++) {
+  if (btn) btn.classList.add('playing');
+  for (let i = 0; i < lines.length; i++) {
     if (run !== bbAudioRun) break;
     const line = document.getElementById('bb-dl-' + i);
-    if (!line) break;
-    line.classList.add('speaking');
-    await bbSay(ex.lines[i][1], bbTTS(bbState.lang));
-    line.classList.remove('speaking');
+    if (line) line.classList.add('speaking');
+    await bbSay(lines[i][1], bbTTS(bbState.lang), slow);
+    if (line) line.classList.remove('speaking');
   }
   if (btn) btn.classList.remove('playing');
+}
+
+// Traduction vers le français : on compare soi-même avec le corrigé
+function bbSelfReveal() {
+  const ex = bbState.steps[bbState.idx];
+  const input = document.getElementById('bb-input');
+  const mine = input.value.trim();
+  input.disabled = true;
+  document.getElementById('bb-check').remove();
+  document.getElementById('bb-feedback').innerHTML = `
+    <div class="bb-expl">${mine ? `✍️ Votre traduction : <b>${bbEsc(mine)}</b><br>` : ''}✅ Traduction proposée : <b>${bbEsc(ex.model)}</b></div>
+    <div class="bb-hint">Le sens est-il le même ? Les petites différences de formulation ne comptent pas.</div>
+    <div style="display:flex;gap:10px">
+      <button class="bb-next-btn bb-btn-ghost" onclick="bbSelfGrade(false)">❌ À revoir</button>
+      <button class="bb-next-btn" onclick="bbSelfGrade(true)">✅ J'avais bon</button>
+    </div>`;
+}
+function bbSelfGrade(ok) {
+  const ex = bbState.steps[bbState.idx];
+  bbResult(ok, { expected: ex.model });
 }
 
 // ── Correction ──
@@ -6139,6 +6210,94 @@ function bbCheckComplete() {
         ${nextBtn}
         <button class="bb-next-btn ${passed ? 'bb-btn-ghost' : ''}" style="max-width:220px" onclick="bbStartCheck('${lang}','${check.kind}','${check.id}')">🔄 ${passed ? 'Refaire' : 'Retenter'}</button>
         <button class="bb-next-btn bb-btn-ghost" style="max-width:220px" onclick="${check.kind === 'unit' ? `bbOpenUnit('${lang}','${check.id}')` : `initBBView('${lang}')`}">📚 ${check.kind === 'unit' ? 'Revoir les leçons' : 'Retour au parcours'}</button>
+      </div>
+    </div>`;
+}
+
+// ── Écoute & compréhension (données dans courses/listen-*.js) ──
+function lsnPacks(lang) { return (window.LISTEN && window.LISTEN[lang]) || []; }
+function lsnScores(lang) { return JSON.parse(localStorage.getItem('bb_listen_' + lang) || '{}'); }
+
+function lsnSteps(p) {
+  const steps = [];
+  const prep = ex => bbPrep(ex);
+  if (p.oral) steps.push({ type: 'oral', title: p.oral[0], body: p.oral[1], examples: p.oral[2] || [] });
+  const dlg = { type: 'dialogue', hidden: true, title: p.dlg[0], lines: p.dlg[1], questions: p.dlg[2] };
+  steps.push(dlg);
+  p.dlg[2].forEach(([q, opts]) => steps.push(prep({ type: 'choice', q, opts, dialogue: dlg })));
+  steps.push({ type: 'transcript', title: p.dlg[0], lines: p.dlg[1] });
+  bbShuffle(p.hear).forEach(([text, ...opts]) => steps.push(prep({ type: 'hear', text, opts, expl: '« ' + text + ' »' })));
+  p.dict.forEach(([text, fr]) => steps.push({ type: 'listen', text, fr }));
+  p.toFr.forEach(([text, model]) => steps.push({ type: 'selftr', text, model }));
+  p.toL2.forEach(([fr, answers]) => steps.push({ type: 'write', fr, answers: answers.split('|'), hint: '' }));
+  return steps;
+}
+
+function lsnHome(lang) {
+  cjReset(lang);
+  const packs = lsnPacks(lang);
+  const scores = lsnScores(lang);
+  const done = packs.filter(p => (scores[p.id] ?? 0) >= 0.7).length;
+  const levels = [...new Set(packs.map(p => p.level))];
+  cjEl(lang).innerHTML = `
+    <button class="bb-back-btn" onclick="initBBView('${lang}')">← Retour aux cours</button>
+    <div style="margin:20px 0 18px">
+      <div style="font-size:26px;font-weight:800;color:var(--text-primary)">🎧 Écoute & compréhension</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">${packs.length} séances · ${done} réussies · dialogues sans texte, « que veut dire… », dictées, traductions</div>
+    </div>
+    <div class="bb-hint" style="text-align:left;margin:-6px 0 18px">💡 Conseil : faites la séance d'écoute d'une unité après ses 3 leçons. Écoutez avec des écouteurs, et utilisez 🐢 sans hésiter.</div>
+    ${levels.map(lvl => `
+      <div class="bb-level-section">
+        <div class="bb-level-badge">🎧 Niveau ${lvl}</div>
+        <div class="bb-units">
+          ${packs.filter(p => p.level === lvl).map(p => {
+            const best = scores[p.id];
+            return `
+            <div class="bb-unit" onclick="lsnStart('${lang}','${p.id}')">
+              <div class="bb-unit-icon" style="background:rgba(14,165,233,.15);font-size:22px">${p.icon}</div>
+              <div class="bb-unit-info">
+                <div class="bb-unit-title">${bbEsc(p.title)}</div>
+                <div class="bb-unit-sub">${bbEsc(p.dlg[0])}</div>
+              </div>
+              <div class="bb-unit-right">${best !== undefined ? `<div class="bb-unit-count">${best >= 0.7 ? '✅' : '🔁'} ${Math.round(best * 100)} %</div>` : ''}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`).join('')}`;
+}
+
+function lsnStart(lang, id) {
+  bbStopAudio();
+  const p = lsnPacks(lang).find(x => x.id === id);
+  bbState = { lang, unit: null, lesson: null, idx: 0, score: 0, graded: 0, mistakes: [], audio: [], steps: lsnSteps(p), listen: { id, title: p.title } };
+  bbRender();
+}
+
+function lsnComplete() {
+  const { lang, score, graded, mistakes, listen } = bbState;
+  const pct = graded ? score / graded : 0;
+  const s = lsnScores(lang);
+  s[listen.id] = Math.max(s[listen.id] ?? 0, pct);
+  localStorage.setItem('bb_listen_' + lang, JSON.stringify(s));
+  const xp = 10 + score * 2;
+  bbAddXP(lang, xp);
+  const packs = lsnPacks(lang);
+  const next = packs[packs.findIndex(p => p.id === listen.id) + 1];
+  bbContainer(lang).innerHTML = `
+    <div class="bb-complete">
+      <div class="bb-check-score ${pct >= 0.7 ? 'ok' : 'ko'}">${Math.round(pct * 100)} %</div>
+      <div class="bb-complete-title">${pct >= 0.9 ? 'Excellente oreille !' : pct >= 0.7 ? 'Bien compris !' : 'Ça viendra — réécoutez !'}</div>
+      <div class="bb-complete-sub">${score} / ${graded} bonnes réponses</div>
+      <div class="bb-complete-xp">⚡ +${xp} XP</div>
+      ${mistakes.length ? `
+        <div class="bb-review">
+          <div class="bb-review-title">📝 À revoir (${mistakes.length})</div>
+          ${mistakes.map(m => `<div class="bb-review-item"><div class="bb-review-q">${bbEsc(m.prompt)}</div><div class="bb-review-a">→ ${bbEsc(m.expected)}</div></div>`).join('')}
+        </div>` : `<div class="bb-review-perfect">🎯 Sans faute !</div>`}
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        ${next ? `<button class="bb-next-btn" style="max-width:240px" onclick="lsnStart('${lang}','${next.id}')">➡️ Séance suivante</button>` : ''}
+        <button class="bb-next-btn bb-btn-ghost" style="max-width:200px" onclick="lsnStart('${lang}','${listen.id}')">🔄 Recommencer</button>
+        <button class="bb-next-btn bb-btn-ghost" style="max-width:200px" onclick="lsnHome('${lang}')">🎧 Toutes les séances</button>
       </div>
     </div>`;
 }
