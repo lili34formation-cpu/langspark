@@ -5,7 +5,7 @@
 //  · Voix (audio/*.mp3) : copie locale d'abord ; chaque voix écoutée est gardée.
 //  · Comptes (Supabase) : jamais mis en cache.
 // ════════════════════════════════════════
-const VERSION = 'langspark-v18';
+const VERSION = 'langspark-v19';
 const SHELL_CACHE = 'langspark-shell-' + VERSION;
 const AUDIO_CACHE = 'langspark-audio';      // gardé d'une version à l'autre
 const NETWORK_TIMEOUT = 4000;

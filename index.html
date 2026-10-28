@@ -863,6 +863,32 @@
         .fc-example-btn { display:block;width:100%;max-width:600px;margin:-6px auto 14px;padding:10px;font-size:15px;font-weight:700;background:rgba(0,212,170,.1);color:var(--accent2);border:1px solid rgba(0,212,170,.35);border-radius:12px;cursor:pointer; }
         .bb-report { display:block;margin:14px auto 0;background:none;border:none;color:var(--text-secondary);font-size:12px;cursor:pointer;opacity:.7; }
         .bb-report:hover { opacity:1;color:var(--text-primary); }
+        #bb-report { position:fixed;inset:0;z-index:9500;background:var(--bg-dark);overflow-y:auto;padding:16px 16px 40px; }
+        .rp-bar { display:flex;gap:10px;max-width:760px;margin:0 auto 16px;position:sticky;top:0;background:var(--bg-dark);padding:6px 0;z-index:1; }
+        .rp-bar .bb-next-btn { margin:0; }
+        .rp-page { max-width:760px;margin:0 auto;color:var(--text-primary);line-height:1.55; }
+        .rp-page h1 { font-size:24px;margin:0 0 4px; }
+        .rp-date { color:var(--text-secondary);font-size:13px;margin:0 0 20px; }
+        .rp-lang { background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:18px 20px;margin-bottom:18px; }
+        .rp-lang h2 { font-size:20px;margin:0 0 12px; }
+        .rp-lang h3 { font-size:14px;margin:18px 0 6px;color:var(--accent2); }
+        .rp-lang ul { margin:0;padding-left:18px;font-size:14px; }
+        .rp-lang li { margin-bottom:6px; }
+        .rp-sub { font-size:12px;color:var(--text-secondary); }
+        .rp-empty { font-size:13px;color:var(--text-secondary);margin:0; }
+        .rp-kpis { display:grid;grid-template-columns:repeat(4,1fr);gap:8px; }
+        .rp-kpis div { background:rgba(255,255,255,.04);border-radius:10px;padding:8px;text-align:center; }
+        .rp-kpis b { display:block;font-size:16px; }
+        .rp-kpis span { font-size:11px;color:var(--text-secondary); }
+        @media print {
+          body > *:not(#bb-report) { display:none !important; }
+          #bb-report { position:static;background:#fff;padding:0;overflow:visible; }
+          .rp-bar { display:none; }
+          .rp-page, .rp-lang h3 { color:#111 !important; }
+          .rp-lang { background:#fff;border-color:#ccc;break-inside:avoid; }
+          .rp-sub, .rp-empty, .rp-date, .rp-kpis span { color:#555 !important; }
+          .rp-kpis div { background:#f2f2f2; }
+        }
         .bb-save-info { font-size:12px;color:var(--text-secondary);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:-12px 0 28px;line-height:1.5; }
         .bb-save-info b { color:var(--text-primary); }
         .bb-save-info.ko { background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.4);color:#f44336; }
@@ -952,7 +978,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v44</span>
+          <span style="font-size:10px;color:#444">v45</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -5208,12 +5234,84 @@ function bbSaveInfoHTML(lang) {
       <div>💾 <b>${account ? 'Votre progression' : 'Sauvegardé sur cet appareil'}</b> : ${lessons} leçon${lessons > 1 ? 's' : ''} · ${levels} niveau${levels > 1 ? 'x' : ''} de conjugaison · ${checks} bilan${checks > 1 ? 's' : ''} / examen${checks > 1 ? 's' : ''} · ${bbXP(lang)} XP</div>
       <div style="margin-top:4px">📴 <b>Voix hors connexion</b> : <span id="offline-audio-${lang}">…</span></div>
       <div class="bb-save-actions">
-        <button class="bb-test-link" onclick="bbExportProgress()">⬇️ Exporter ma progression</button>
+        <button class="bb-test-link" onclick="bbReportOpen()">📄 Mon bilan (lisible)</button>
+        <button class="bb-test-link" onclick="bbExportProgress()">⬇️ Sauvegarde (fichier technique)</button>
         <button class="bb-test-link" onclick="document.getElementById('bb-import-file').click()">⬆️ Importer</button>
         <input type="file" id="bb-import-file" accept=".json,application/json" style="display:none" onchange="bbImportProgress(this.files[0])">
       </div>
     </div>`;
 }
+// ── Bilan lisible : tout ce qui est acquis, langue par langue (imprimable / PDF) ──
+function bbReportLang(lang) {
+  const cur = BB_CURRICULUM[lang];
+  const p = bbProgress(lang);
+  const checks = bbChecks(lang);
+  const pct = x => Math.round(x * 100) + ' %';
+  const totalLessons = cur.units.reduce((n, u) => n + u.lessons.length, 0);
+  const doneLessons = cur.units.reduce((n, u) => n + u.lessons.filter(l => p[l.id]).length, 0);
+  const levels = [...new Set(cur.units.map(u => u.level))];
+  const certs = levels.filter(l => (checks['level_' + l] ?? 0) >= BB_CHECK_PASS);
+  const start = localStorage.getItem('bb_level_' + lang);
+
+  const unitsHTML = cur.units.map(u => {
+    const done = u.lessons.filter(l => p[l.id]);
+    const chk = checks[u.id];
+    if (!done.length && chk === undefined) return '';
+    return `<li><b>${u.level} · ${bbEsc(u.titleFr)}</b> — ${done.length}/${u.lessons.length} leçons${chk !== undefined ? ` · bilan ${chk >= BB_CHECK_PASS ? '✅' : '❌'} ${pct(chk)}` : ''}
+      <div class="rp-sub">${done.map(l => '✓ ' + bbEsc(l.titleFr)).join(' · ')}</div></li>`;
+  }).join('');
+
+  const cj = window.CJ && CJ[lang];
+  const lv = cj ? cjLevelScores(lang) : {};
+  const conjHTML = cj ? cjTensesSorted(lang).map(t => {
+    const ls = cjLevelsFor(lang, t);
+    const ok = ls.filter(l => (lv[t.id + ':' + l.n] ?? 0) >= CJ_LEVEL_PASS).length;
+    return ok ? `<li>${bbEsc(t.name)} — ${ok}/${ls.length} niveaux</li>` : '';
+  }).join('') : '';
+  const weak = cj ? cjWeakKeys(lang).map(k => { const [v, t] = k.split('|'); const tt = cjTenseById(lang, t); return tt ? `${v} (${tt.short})` : ''; }).filter(Boolean) : [];
+
+  const voc = vocData(lang);
+  const vocHTML = voc ? voc.themes.map(t => { const m = vocMastery(lang, [t]); return `<li>${t.icon} ${bbEsc(t.title)} — ${m.done}/${m.total} mots (${m.pct} %)</li>`; }).join('') : '';
+
+  const ls = lsnScores(lang);
+  const lsnHTML = lsnPacks(lang).filter(pk => ls[pk.id] !== undefined).map(pk => `<li>${pk.level} · ${bbEsc(pk.title)} — ${ls[pk.id] >= 0.7 ? '✅' : '🔁'} ${pct(ls[pk.id])}</li>`).join('');
+
+  return `
+    <section class="rp-lang">
+      <h2>${cur.flag} ${bbEsc(cur.name)}</h2>
+      <div class="rp-kpis">
+        <div><b>${doneLessons}/${totalLessons}</b><span>leçons</span></div>
+        <div><b>${bbXP(lang)}</b><span>XP</span></div>
+        <div><b>${certs.length ? certs.join(', ') : '—'}</b><span>certificats</span></div>
+        <div><b>${start || 'A1'}</b><span>niveau de départ</span></div>
+      </div>
+      <h3>📚 Leçons et bilans</h3>
+      ${unitsHTML ? `<ul>${unitsHTML}</ul>` : '<p class="rp-empty">Aucune leçon terminée pour l\'instant.</p>'}
+      ${cj ? `<h3>🔤 Conjugaison — niveaux validés</h3>${conjHTML ? `<ul>${conjHTML}</ul>` : '<p class="rp-empty">Aucun niveau validé pour l\'instant.</p>'}
+      ${weak.length ? `<p><b>🎯 Points faibles à retravailler :</b> ${bbEsc(weak.join(', '))}</p>` : ''}` : ''}
+      ${voc ? `<h3>📖 Vocabulaire essentiel</h3><ul>${vocHTML}</ul>` : ''}
+      <h3>🎧 Écoute & compréhension</h3>
+      ${lsnHTML ? `<ul>${lsnHTML}</ul>` : '<p class="rp-empty">Aucune séance faite pour l\'instant.</p>'}
+    </section>`;
+}
+
+function bbReportOpen() {
+  const who = typeof acctUser !== 'undefined' && acctUser ? acctName(acctUser) : '';
+  let el = document.getElementById('bb-report');
+  if (!el) { el = document.createElement('div'); el.id = 'bb-report'; document.body.appendChild(el); }
+  el.innerHTML = `
+    <div class="rp-bar">
+      <button class="bb-next-btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+      <button class="bb-next-btn bb-btn-ghost" onclick="document.getElementById('bb-report').remove()">Fermer</button>
+    </div>
+    <div class="rp-page">
+      <h1>📄 Mon bilan LangSpark${who ? ' — ' + bbEsc(who) : ''}</h1>
+      <p class="rp-date">Au ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+      ${BB_LANGS.map(bbReportLang).join('')}
+    </div>`;
+  el.scrollTop = 0;
+}
+
 function bbExportProgress() {
   const data = {};
   Object.keys(localStorage).filter(k => BB_SAVE_PREFIXES.some(p => k.startsWith(p))).forEach(k => { data[k] = localStorage.getItem(k); });
