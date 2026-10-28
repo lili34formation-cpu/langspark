@@ -38,8 +38,7 @@ COLLECT = r"""() => {
     d.tenses.forEach(t => { cjTense(lang, t.id); grab(lang); });
     if (d.irregulars) { cjIrregulars(lang); grab(lang); }
     // Correction du conjugueur : « pronom + forme » pour chaque verbe, temps et personne
-    d.verbs.forEach(v => d.tenses.forEach(t => t.forms(v).forEach((f, i) =>
-      add(bbTTS(lang), `${(t.persons || d.persons)[i].split('/')[0].trim()} ${f}`))));
+    d.verbs.forEach(v => cjTensesOf(lang, v).forEach(t => t.forms(v).forEach((f, i) => add(bbTTS(lang), cjSpeak(lang, t, i, f)))));
   }
   // Vocabulaire essentiel (même texte lu que vocSpeak)
   for (const lang of BB_LANGS) if (window.VOC && VOC[lang]) VOC[lang].themes.forEach(t => t.words.forEach(w => add(bbTTS(lang), vocSpeak(w[0]))));

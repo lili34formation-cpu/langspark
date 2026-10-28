@@ -95,7 +95,7 @@ const condicional = vb => ['ia', 'ias', 'ia', 'íamos', 'iam'].map(e => futStem(
 const participio = vb => vb.pp || stem(vb) + (group(vb) === 'ar' ? 'ado' : 'ido');
 const EST = sp('estou estás está estamos estão');
 const VOU = sp('vou vais vai vamos vão');
-verbs.forEach(vb => { vb.part = participio(vb); });
+verbs.forEach(vb => { if (!vb.refl) vb.part = participio(vb); });
 
 const tenses = [
   {
@@ -182,6 +182,67 @@ const tenses = [
   },
 ];
 
+// ── Verbes pronominaux (chamar-se, levantar-se…) : la place du pronom change selon la phrase ──
+// Affirmatif : après le verbe (chamo-me) · négatif et question avec mot interrogatif : avant (não me chamo, como te chamas?)
+// Avec « nos », le -s du verbe tombe : chamamos + nos → chamamo-nos.
+const PRON = ['me', 'te', 'se', 'nos', 'se'];
+const encl = (f, pi) => pi === 3 ? `${f.replace(/s$/, '')}-nos` : `${f}-${PRON[pi]}`;
+// r(infinitif sans « se », traduction, présent, passé, mot interrogatif, irrégulier ?, top ?, exemples)
+const r = (base, fr, pr, pf, q, irr, top, examples) =>
+  verbs.push({ id: base + '-se', inf: base + '-se', base, refl: true, fr, pr, pf, q, irr, top, examples });
+r('chamar', 's\'appeler', 'chamo chamas chama chamamos chamam', 'chamei chamaste chamou chamámos chamaram', 'Como', false, true,
+  [['Chamo-me Claire.', 'Je m\'appelle Claire.'], ['Como te chamas?', 'Comment t\'appelles-tu ?'], ['Não me chamo Ana, chamo-me Inês.', 'Je ne m\'appelle pas Ana, je m\'appelle Inês.']]);
+r('levantar', 'se lever', 'levanto levantas levanta levantamos levantam', 'levantei levantaste levantou levantámos levantaram', 'A que horas', false, true,
+  [['Levanto-me às sete.', 'Je me lève à sept heures.'], ['A que horas te levantas?', 'À quelle heure te lèves-tu ?'], ['Ontem levantei-me tarde.', 'Hier je me suis levé tard.']]);
+r('deitar', 'se coucher', 'deito deitas deita deitamos deitam', 'deitei deitaste deitou deitámos deitaram', 'A que horas', false, false,
+  [['Deito-me cedo.', 'Je me couche tôt.'], ['A que horas te deitas?', 'À quelle heure te couches-tu ?'], ['Não me deito antes da meia-noite.', 'Je ne me couche pas avant minuit.']]);
+r('sentar', 's\'asseoir', 'sento sentas senta sentamos sentam', 'sentei sentaste sentou sentámos sentaram', 'Onde', false, false,
+  [['Sente-se, por favor.', 'Asseyez-vous, je vous en prie.'], ['Onde te sentas?', 'Où t\'assieds-tu ?'], ['Sentámo-nos na esplanada.', 'Nous nous sommes assis en terrasse.']]);
+r('lembrar', 'se souvenir', 'lembro lembras lembra lembramos lembram', 'lembrei lembraste lembrou lembrámos lembraram', 'Já', false, true,
+  [['Não me lembro do nome dele.', 'Je ne me souviens pas de son nom.'], ['Já te lembras?', 'Tu t\'en souviens maintenant ?'], ['Lembro-me bem desse dia.', 'Je me souviens bien de ce jour-là.']]);
+r('esquecer', 'oublier', 'esqueço esqueces esquece esquecemos esquecem', 'esqueci esqueceste esqueceu esquecemos esqueceram', 'Porque', true, true,
+  [['Esqueci-me das chaves.', 'J\'ai oublié les clés.'], ['Porque te esqueces sempre?', 'Pourquoi oublies-tu toujours ?'], ['Não te esqueças!', 'N\'oublie pas !']]);
+r('sentir', 'se sentir', 'sinto sentes sente sentimos sentem', 'senti sentiste sentiu sentimos sentiram', 'Como', true, true,
+  [['Sinto-me muito melhor.', 'Je me sens beaucoup mieux.'], ['Como te sentes hoje?', 'Comment te sens-tu aujourd\'hui ?'], ['Não me sinto bem.', 'Je ne me sens pas bien.']]);
+r('vestir', 's\'habiller', 'visto vestes veste vestimos vestem', 'vesti vestiste vestiu vestimos vestiram', 'Como', true, false,
+  [['Visto-me depressa.', 'Je m\'habille vite.'], ['Como te vestes para a festa?', 'Comment t\'habilles-tu pour la fête ?'], ['Vestiu-se de azul.', 'Elle s\'est habillée en bleu.']]);
+r('preocupar', 's\'inquiéter', 'preocupo preocupas preocupa preocupamos preocupam', 'preocupei preocupaste preocupou preocupámos preocuparam', 'Porque', false, false,
+  [['Não se preocupe!', 'Ne vous inquiétez pas !'], ['Porque te preocupas tanto?', 'Pourquoi t\'inquiètes-tu autant ?'], ['Preocupo-me com o meu filho.', 'Je m\'inquiète pour mon fils.']]);
+r('divertir', 's\'amuser', 'divirto divertes diverte divertimos divertem', 'diverti divertiste divertiu divertimos divertiram', 'Como', true, false,
+  [['Divertimo-nos imenso!', 'On s\'est énormément amusés !'], ['Como te divertes ao fim de semana?', 'Comment t\'amuses-tu le week-end ?'], ['Diverte-te!', 'Amuse-toi bien !']]);
+
+const REFL_TENSES = [
+  { id: 'pron_afirm', level: 'A1', refl: true, name: 'Pronominaux — affirmatif (chamo-me)', short: 'Pron. affirmatif',
+    forms: vb => sp(vb.pr).map(encl),
+    usage: 'Dans une phrase affirmative simple, le pronom se place <b>après</b> le verbe, avec un trait d\'union : <b>Chamo-me</b> Ana. <b>Levanto-me</b> às sete.',
+    formation: `Verbe au présent + <b>-me, -te, -se, -nos, -se</b>.<br>Avec <b>nos</b>, le -s du verbe tombe : levantamos + nos → <b>levantamo-nos</b>.`,
+    tip: 'C\'est la grande différence avec le Brésil (« eu me chamo ») et avec le français : au Portugal, commencer par le pronom (« Me chamo… ») sonne faux.',
+    examples: [['Chamo-me Claire.', 'Je m\'appelle Claire.'], ['Levantamo-nos cedo.', 'Nous nous levons tôt.'], ['Ela sente-se cansada.', 'Elle se sent fatiguée.']],
+    lessons: ['pt_a1_1_2', 'pt_a1_4_1'] },
+  { id: 'pron_neg', level: 'A1', refl: true, name: 'Pronominaux — négatif (não me chamo)', short: 'Pron. négatif',
+    forms: vb => sp(vb.pr).map((f, pi) => `não ${PRON[pi]} ${f}`),
+    usage: 'Après <b>não</b> (et après nunca, já, também, ainda…), le pronom passe <b>avant</b> le verbe : <b>Não me lembro</b>. <b>Nunca te esqueces</b>.',
+    formation: `<b>não + me / te / se / nos / se + verbe</b>, sans trait d\'union. Le -s de « nos » ne tombe pas ici : não nos levantamos.`,
+    tip: 'Le même aimant fonctionne avec « já », « também », « nunca », « ainda » : « Já me lembro! », « Também se chama Ana ».',
+    examples: [['Não me lembro.', 'Je ne m\'en souviens pas.'], ['Não nos levantamos cedo.', 'Nous ne nous levons pas tôt.'], ['Ele nunca se esquece.', 'Il n\'oublie jamais.']],
+    lessons: ['pt_a1_4_1'] },
+  { id: 'pron_quest', level: 'A2', refl: true, name: 'Pronominaux — question (como te chamas?)', short: 'Pron. question',
+    forms: vb => sp(vb.pr).map((f, pi) => `${vb.q} ${PRON[pi]} ${f}?`),
+    usage: 'Avec un mot interrogatif (como, onde, quando, porque, a que horas, quem…), le pronom passe <b>avant</b> le verbe : <b>Como te chamas?</b> <b>A que horas se levanta?</b>',
+    formation: `<b>mot interrogatif + me / te / se / nos / se + verbe</b>.<br>Mais une question sans mot interrogatif garde l\'ordre normal : <b>Chamas-te Ana?</b> (Tu t\'appelles Ana ?)`,
+    tip: 'C\'est LE piège : « Como chamas-te? » est faux. Le mot interrogatif « attire » le pronom devant le verbe : « Como te chamas? ».',
+    examples: [['Como te chamas?', 'Comment t\'appelles-tu ?'], ['A que horas se levanta a senhora?', 'À quelle heure vous levez-vous, Madame ?'], ['Como se sente hoje?', 'Comment vous sentez-vous aujourd\'hui ?']],
+    lessons: ['pt_a1_1_2'] },
+  { id: 'pron_passado', level: 'A2', refl: true, name: 'Pronominaux — passé (levantei-me)', short: 'Pron. passé',
+    forms: vb => sp(vb.pf).map(encl),
+    usage: 'Au passé (pretérito perfeito) affirmatif, le pronom se place aussi <b>après</b> le verbe : <b>Levantei-me</b> tarde. <b>Esqueci-me</b> das chaves.',
+    formation: `Verbe au passé + <b>-me, -te, -se, -nos, -se</b>. Avec nos : levantámos → <b>levantámo-nos</b>.<br>À la négative : <b>não me levantei</b>.`,
+    tip: '« Esqueci-me » (je l\'ai oublié) est l\'une des phrases les plus utiles du quotidien !',
+    examples: [['Esqueci-me do telemóvel.', 'J\'ai oublié mon téléphone.'], ['Divertimo-nos imenso.', 'Nous nous sommes énormément amusés.'], ['Ontem deitei-me tarde.', 'Hier je me suis couché tard.']],
+    lessons: ['pt_a2_3_1'] },
+];
+tenses.push(...REFL_TENSES);
+
 // ── Forme « régulière » attendue par la règle : sert à repérer les irréguliers (temps par temps,
 // y compris les changements d'orthographe comme ficar → fiquei) et à proposer la faute typique
 // dans les choix multiples (ex. « fazerei » au lieu de « farei »).
@@ -194,6 +255,12 @@ const END = {
 const regEnd = (vb, tid, pi) => stem(vb) + sp(END[tid][group(vb)])[pi];
 function ruleForm(vb, tid, pi) {
   const actual = tenses.find(t => t.id === tid).forms(vb)[pi];
+  if (vb.refl) {
+    const base = { inf: vb.base };
+    const pres = sp(END.presente[group(base)]).map(e => stem(base) + e)[pi];
+    const past = sp(END.perfeito[group(base)]).map(e => stem(base) + e)[pi];
+    return { pron_afirm: encl(pres, pi), pron_neg: `não ${PRON[pi]} ${pres}`, pron_quest: `${vb.q} ${PRON[pi]} ${pres}?`, pron_passado: encl(past, pi) }[tid];
+  }
   if (tid === 'progressivo' || tid === 'futproximo') return actual;   // estar a / ir + infinitif : toujours réguliers
   if (vb.inf === 'pôr') return actual + '\u0000';                     // pôr : irrégulier à tous les autres temps
   if (!stem(vb) && END[tid]) return actual + '\u0000';                // ir : pas de radical, la règle n'a pas de sens

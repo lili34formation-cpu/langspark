@@ -104,7 +104,7 @@ const regGer = vb => stem(vb) + (group(vb) === 'ar' ? 'ando' : 'iendo');
 const HABER = sp('he has ha hemos habéis han');
 const ESTAR = sp('estoy estás está estamos estáis están');
 const IR = sp('voy vas va vamos vais van');
-verbs.forEach(vb => { vb.part = vb.pp || regPart(vb); vb.gerund = vb.ger || regGer(vb); });
+verbs.forEach(vb => { if (!vb.refl) { vb.part = vb.pp || regPart(vb); vb.gerund = vb.ger || regGer(vb); } });
 
 const tenses = [
   {
@@ -200,6 +200,59 @@ const tenses = [
   },
 ];
 
+// ── Verbos pronominales (llamarse, levantarse…) : en espagnol, le pronom va AVANT le verbe conjugué ──
+const PRON = ['me', 'te', 'se', 'nos', 'os', 'se'];
+const cap = w => w.charAt(0).toUpperCase() + w.slice(1);
+const r = (base, fr, pr, pf, q, irr, top, examples) =>
+  verbs.push({ id: base + 'se', inf: base + 'se', base, refl: true, fr, pr, pf, q, irr, top, examples });
+r('llamar', 's\'appeler', 'llamo llamas llama llamamos llamáis llaman', 'llamé llamaste llamó llamamos llamasteis llamaron', 'Cómo', false, true,
+  [['Me llamo Claire.', 'Je m\'appelle Claire.'], ['¿Cómo te llamas?', 'Comment t\'appelles-tu ?'], ['¿Cómo se llama usted?', 'Comment vous appelez-vous ?']]);
+r('levantar', 'se lever', 'levanto levantas levanta levantamos levantáis levantan', 'levanté levantaste levantó levantamos levantasteis levantaron', 'A qué hora', false, true,
+  [['Me levanto a las siete.', 'Je me lève à sept heures.'], ['¿A qué hora te levantas?', 'À quelle heure te lèves-tu ?'], ['Ayer me levanté tarde.', 'Hier je me suis levé tard.']]);
+r('acostar', 'se coucher', 'acuesto acuestas acuesta acostamos acostáis acuestan', 'acosté acostaste acostó acostamos acostasteis acostaron', 'A qué hora', true, true,
+  [['Me acuesto temprano.', 'Je me couche tôt.'], ['¿A qué hora te acuestas?', 'À quelle heure te couches-tu ?'], ['Nos acostamos a las doce.', 'Nous nous couchons à minuit.']]);
+r('duchar', 'se doucher', 'ducho duchas ducha duchamos ducháis duchan', 'duché duchaste duchó duchamos duchasteis ducharon', 'Cuándo', false, false,
+  [['Me ducho por la mañana.', 'Je me douche le matin.'], ['¿Cuándo te duchas?', 'Quand te douches-tu ?'], ['Se duchó y salió.', 'Il s\'est douché et il est sorti.']]);
+r('sentar', 's\'asseoir', 'siento sientas sienta sentamos sentáis sientan', 'senté sentaste sentó sentamos sentasteis sentaron', 'Dónde', true, false,
+  [['Siéntese, por favor.', 'Asseyez-vous, je vous en prie.'], ['¿Dónde te sientas?', 'Où t\'assieds-tu ?'], ['Nos sentamos en la terraza.', 'Nous nous sommes assis en terrasse.']]);
+r('acordar', 'se souvenir', 'acuerdo acuerdas acuerda acordamos acordáis acuerdan', 'acordé acordaste acordó acordamos acordasteis acordaron', 'Por qué no', true, true,
+  [['No me acuerdo.', 'Je ne m\'en souviens pas.'], ['¿Te acuerdas de mí?', 'Tu te souviens de moi ?'], ['Me acuerdo muy bien de ese día.', 'Je me souviens très bien de ce jour-là.']]);
+r('olvidar', 'oublier', 'olvido olvidas olvida olvidamos olvidáis olvidan', 'olvidé olvidaste olvidó olvidamos olvidasteis olvidaron', 'Por qué', false, true,
+  [['Se me ha olvidado.', 'J\'ai oublié.'], ['¿Por qué te olvidas siempre?', 'Pourquoi oublies-tu toujours ?'], ['No te olvides de llamar.', 'N\'oublie pas d\'appeler.']]);
+r('sentir', 'se sentir', 'siento sientes siente sentimos sentís sienten', 'sentí sentiste sintió sentimos sentisteis sintieron', 'Cómo', true, true,
+  [['Me siento mucho mejor.', 'Je me sens beaucoup mieux.'], ['¿Cómo te sientes hoy?', 'Comment te sens-tu aujourd\'hui ?'], ['No me siento bien.', 'Je ne me sens pas bien.']]);
+r('vestir', 's\'habiller', 'visto vistes viste vestimos vestís visten', 'vestí vestiste vistió vestimos vestisteis vistieron', 'Cómo', true, false,
+  [['Me visto rápido.', 'Je m\'habille vite.'], ['¿Cómo te vistes para la boda?', 'Comment t\'habilles-tu pour le mariage ?'], ['Se vistió de azul.', 'Elle s\'est habillée en bleu.']]);
+r('preocupar', 's\'inquiéter', 'preocupo preocupas preocupa preocupamos preocupáis preocupan', 'preocupé preocupaste preocupó preocupamos preocupasteis preocuparon', 'Por qué', false, false,
+  [['No se preocupe.', 'Ne vous inquiétez pas.'], ['¿Por qué te preocupas tanto?', 'Pourquoi t\'inquiètes-tu autant ?'], ['Me preocupo por mi hijo.', 'Je m\'inquiète pour mon fils.']]);
+r('divertir', 's\'amuser', 'divierto diviertes divierte divertimos divertís divierten', 'divertí divertiste divirtió divertimos divertisteis divirtieron', 'Cómo', true, false,
+  [['¡Nos divertimos muchísimo!', 'On s\'est énormément amusés !'], ['¿Cómo te diviertes los fines de semana?', 'Comment t\'amuses-tu le week-end ?'], ['¡Que te diviertas!', 'Amuse-toi bien !']]);
+
+const REFL_TENSES = [
+  { id: 'pron_pres', level: 'A1', refl: true, name: 'Pronominaux — présent (me llamo)', short: 'Pron. présent',
+    forms: vb => sp(vb.pr).map((f, pi) => `${PRON[pi]} ${f}`),
+    usage: 'Le pronom se place <b>avant</b> le verbe conjugué : <b>Me llamo</b> Ana. <b>Nos levantamos</b> temprano. À la négative : <b>No me llamo</b>…',
+    formation: `<b>me, te, se, nos, os, se</b> + verbe. Beaucoup changent de voyelle : me <b>acue</b>sto, me <b>sie</b>nto, me <b>vi</b>sto.`,
+    tip: 'Contrairement au portugais, l\'espagnol garde le pronom devant le verbe conjugué, même à l\'affirmatif : « Me llamo », jamais « Llamo-me ».',
+    examples: [['Me llamo Claire.', 'Je m\'appelle Claire.'], ['Nos levantamos temprano.', 'Nous nous levons tôt.'], ['¿Os acordáis?', 'Vous vous en souvenez ?']],
+    lessons: ['es_a1_1_2', 'es_a1_4_1'] },
+  { id: 'pron_quest', level: 'A1', refl: true, name: 'Pronominaux — question (¿cómo te llamas?)', short: 'Pron. question',
+    forms: vb => sp(vb.pr).map((f, pi) => `¿${vb.q} ${PRON[pi]} ${f}?`),
+    usage: 'Question avec un mot interrogatif : <b>¿Cómo te llamas?</b> <b>¿A qué hora se levanta?</b> Le pronom reste devant le verbe.',
+    formation: `<b>¿ + mot interrogatif (avec accent : cómo, dónde, cuándo, qué, por qué) + pronom + verbe ?</b>`,
+    tip: 'Les mots interrogatifs prennent un accent : « ¿Cómo? », « ¿Dónde? », « ¿Por qué? » (mais « porque » = parce que).',
+    examples: [['¿Cómo te llamas?', 'Comment t\'appelles-tu ?'], ['¿A qué hora os levantáis?', 'À quelle heure vous levez-vous ?'], ['¿Cómo se siente hoy?', 'Comment vous sentez-vous aujourd\'hui ?']],
+    lessons: ['es_a1_1_2'] },
+  { id: 'pron_indef', level: 'A2', refl: true, name: 'Pronominaux — passé simple (me levanté)', short: 'Pron. passé',
+    forms: vb => sp(vb.pf).map((f, pi) => `${PRON[pi]} ${f}`),
+    usage: 'Au passé simple, toujours le pronom devant : <b>Me levanté</b> tarde. <b>Nos divertimos</b> mucho.',
+    formation: `pronom + verbe au passé simple. Attention aux verbes en -ir qui changent : se <b>sintió</b>, se <b>vistió</b>, se <b>divirtieron</b>.`,
+    tip: 'Pour « aujourd\'hui », l\'Espagne préfère le passé composé : « Hoy me he levantado tarde ».',
+    examples: [['Ayer me acosté tarde.', 'Hier je me suis couché tard.'], ['Se sintió mal.', 'Il s\'est senti mal.'], ['Nos divertimos muchísimo.', 'Nous nous sommes énormément amusés.']],
+    lessons: ['es_a2_3_2'] },
+];
+tenses.push(...REFL_TENSES);
+
 // ── Forme « régulière » attendue par la règle (repère les irréguliers et propose la faute typique) ──
 const END = {
   presente:   { ar: 'o as a amos áis an', er: 'o es e emos éis en', ir: 'o es e imos ís en' },
@@ -210,6 +263,12 @@ const END = {
 const regEnd = (vb, tid, pi) => stem(vb) + sp(END[tid][group(vb)])[pi];
 function ruleForm(vb, tid, pi) {
   const actual = tenses.find(t => t.id === tid).forms(vb)[pi];
+  if (vb.refl) {
+    const base = { inf: vb.base };
+    const pres = sp(END.presente[group(base)]).map(e => stem(base) + e)[pi];
+    const past = sp(END.indefinido[group(base)]).map(e => stem(base) + e)[pi];
+    return { pron_pres: `${PRON[pi]} ${pres}`, pron_quest: `¿${vb.q} ${PRON[pi]} ${pres}?`, pron_indef: `${PRON[pi]} ${past}` }[tid];
+  }
   if (tid === 'ira') return actual;                                         // ir a + infinitif : toujours régulier
   if (!stem(vb)) return actual + '\u0000';                                  // ir : pas de radical, toujours irrégulier
   if (END[tid]) return regEnd(vb, tid, pi);
