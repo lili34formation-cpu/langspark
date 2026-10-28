@@ -14,7 +14,8 @@ URL, OUT = sys.argv[1], sys.argv[2]
 
 COLLECT = r"""() => {
   const out = new Set();
-  const add = (lang, text) => { if (text && text.trim()) out.add(JSON.stringify([lang, text.trim()])); };
+  // même nettoyage que l'app (speechText) : c'est ce texte-là qui est lu et dont on calcule la clé
+  const add = (lang, text) => { if (text && text.trim()) out.add(JSON.stringify([lang, speechText(text)])); };
   const grab = lang => bbState.audio.forEach(a => add(bbTTS(lang), a.text));
 
   for (const lang of BB_LANGS) {
@@ -38,12 +39,12 @@ COLLECT = r"""() => {
   for (const lang of BB_LANGS) if (window.VOC && VOC[lang]) VOC[lang].themes.forEach(t => t.words.forEach(w => add(bbTTS(lang), vocSpeak(w[0]))));
   // Flashcards et phrases utiles
   vocabulary.forEach(c => {
+    add('en-US', c.word);
     const ex = (c.example || '').replace(/^"|"$/g, '');
-    add('en-US', c.word + '. ' + ex);
     if (ex) add('en-US', ex);
   });
   phrases.forEach(p => add('en-US', p.english));
-  ptVocab.forEach(c => add('pt-PT', c.pt + '. ' + (c.ex || '')));
+  ptVocab.forEach(c => { add('pt-PT', c.pt); if (c.ex) add('pt-PT', c.ex); });
   ptPhrases.forEach(p => add('pt-PT', p.pt));
   return [...out].map(s => JSON.parse(s));
 }"""

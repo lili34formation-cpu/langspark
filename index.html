@@ -855,6 +855,9 @@
         .acct-danger { color:#f44336 !important; }
         .acct-side { font-size:11px;color:var(--text-secondary);margin-top:6px; }
         .acct-side a { color:var(--accent2); }
+        .fc-example-btn { display:block;width:100%;max-width:600px;margin:-6px auto 14px;padding:10px;font-size:15px;font-weight:700;background:rgba(0,212,170,.1);color:var(--accent2);border:1px solid rgba(0,212,170,.35);border-radius:12px;cursor:pointer; }
+        .bb-report { display:block;margin:14px auto 0;background:none;border:none;color:var(--text-secondary);font-size:12px;cursor:pointer;opacity:.7; }
+        .bb-report:hover { opacity:1;color:var(--text-primary); }
         .bb-save-info { font-size:12px;color:var(--text-secondary);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:-12px 0 28px;line-height:1.5; }
         .bb-save-info b { color:var(--text-primary); }
         .bb-save-info.ko { background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.4);color:#f44336; }
@@ -944,7 +947,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v41</span>
+          <span style="font-size:10px;color:#444">v42</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -1092,6 +1095,7 @@
                 cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 16px rgba(108,99,255,.4);
                 transition:all .2s;
             ">🔊 Écouter le mot</button>
+            <button onclick="pronounceExample()" class="fc-example-btn" id="btn-pronounce-example">🔊 Écouter l'exemple</button>
             <div class="flashcard-actions">
                 <button class="btn btn-secondary" onclick="prevCard()">← Précédent</button>
                 <button class="btn btn-danger"    onclick="markCard(false)">✗ À revoir</button>
@@ -1774,14 +1778,16 @@ function speakText(text, lang, btnId) {
 function pronounceWord() {
   const card = st.fcCards?.[st.fcIndex];
   if (!card) return;
-  const texte = card.word + '. ' + (card.example || '').replace(/^"|"$/g,'');
-  speakEL(texte, 'en-US', document.getElementById('btn-pronounce-word'));
+  speakEL(card.word, 'en-US', document.getElementById('btn-pronounce-word'));
 }
 
 function pronounceExample() {
   const card = st.fcCards?.[st.fcIndex];
   if (!card || !card.example) return;
-  speakEL(card.example.replace(/^"|"$/g, ''), 'en-US', document.getElementById('btn-pronounce-word'));
+  // on montre la phrase avant de la faire entendre
+  const fc = document.getElementById('flashcard');
+  if (fc && !fc.classList.contains('flipped')) flipCard();
+  speakEL(card.example.replace(/^"|"$/g, ''), 'en-US', document.getElementById('btn-pronounce-example'));
 }
 
 // ════════════════════════════════════════
@@ -2837,7 +2843,7 @@ const ptVocab = [
   // ── SALUTATIONS ──
   { pt:"Olá",            fr:"Bonjour / Salut",            prononc:"o-LA",           category:"salutations", ex:"Olá! Como estás?",                 exFr:"Salut ! Comment vas-tu ?" },
   { pt:"Bom dia",        fr:"Bonjour (matin)",            prononc:"bõ DI-a",        category:"salutations", ex:"Bom dia! Tudo bem?",               exFr:"Bonjour ! Ça va ?" },
-  { pt:"Boa tarde",      fr:"Bonjour (après-midi)",       prononc:"BO-a TARD",      category:"salutations", ex:"Boa tarde, senhora Silva!",        exFr:"Bonjour, Madame Silva !" },
+  { pt:"Boa tarde",      fr:"Bonjour (après-midi)",       prononc:"BO-a TARD",      category:"salutations", ex:"Boa tarde! Como está a senhora?",  exFr:"Bonjour ! Comment allez-vous, Madame ?" },
   { pt:"Boa noite",      fr:"Bonsoir / Bonne nuit",       prononc:"BO-a NOÏT",      category:"salutations", ex:"Boa noite! Até amanhã.",           exFr:"Bonne nuit ! À demain." },
   { pt:"Adeus",          fr:"Au revoir",                  prononc:"a-DÉ-ouch",      category:"salutations", ex:"Adeus e boa viagem!",              exFr:"Au revoir et bon voyage !" },
   { pt:"Até logo",       fr:"À tout à l'heure",           prononc:"a-TÈ LO-gou",    category:"salutations", ex:"Até logo, bom trabalho!",          exFr:"À tout à l'heure, bon travail !" },
@@ -3039,6 +3045,7 @@ function renderPtFlashcards() {
           background:var(--accent);color:white;border:none;border-radius:14px;
           cursor:pointer;box-shadow:0 4px 16px rgba(108,99,255,.4);transition:all .2s;
           " id="btn-pronounce-pt">🔊 Écouter le mot</button>
+      <button onclick="pronouncePtExample()" class="fc-example-btn" id="btn-pronounce-pt-ex">🔊 Écouter l'exemple</button>
       <div class="flashcard-actions">
         <button class="btn btn-secondary" onclick="ptPrev()">← Précédent</button>
         <button class="btn btn-danger"    onclick="ptNext()">À revoir</button>
@@ -3056,7 +3063,14 @@ function speakPhrase(btn) {
 function pronouncePt() {
   const c = ptCards[ptFcIndex];
   if (!c) return;
-  speakEL(c.pt + '. ' + (c.ex || ''), 'pt-PT', document.getElementById('btn-pronounce-pt'));
+  speakEL(c.pt, 'pt-PT', document.getElementById('btn-pronounce-pt'));
+}
+function pronouncePtExample() {
+  const c = ptCards[ptFcIndex];
+  if (!c || !c.ex) return;
+  // on montre la phrase avant de la faire entendre
+  if (!ptFlipped) { ptFlipped = true; document.getElementById('pt-card')?.classList.add('flipped'); }
+  speakEL(c.ex, 'pt-PT', document.getElementById('btn-pronounce-pt-ex'));
 }
 
 function flipPtCard() {
@@ -3218,6 +3232,17 @@ const TTS_LOCAL = window.location.protocol === 'http:';
 let AUDIO_INDEX = new Set();
 fetch('audio/index.json').then(r => r.ok ? r.json() : []).then(list => { AUDIO_INDEX = new Set(list); }).catch(() => {});
 
+// Ce que la voix doit lire : jamais les indications entre parenthèses ni les barres de variantes
+function speechText(text) {
+  return String(text)
+    .replace(/\s*\([^)]*\)/g, '')
+    .replace(/([A-Za-zÀ-ÿ]+)o\/a\b/g, '$1o, $1a')
+    .replace(/([A-Za-zÀ-ÿ]+)os\/as\b/g, '$1os, $1as')
+    .replace(/\s+\/\s+/g, ', ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 // FNV-1a 32 bits sur l'UTF-8 de « lang|texte » — identique au script de génération
 function audioKey(text, lang) {
   const bytes = new TextEncoder().encode(lang + '|' + text.trim());
@@ -3228,6 +3253,7 @@ function audioKey(text, lang) {
 
 // URL jouable pour un texte, ou null s'il faut utiliser la voix du navigateur
 async function ttsAudioUrl(text, lang) {
+  text = speechText(text);
   const key = audioKey(text, lang);
   if (AUDIO_INDEX.has(key)) {
     const res = await fetch(`audio/${key}.mp3`);
@@ -5294,7 +5320,7 @@ async function bbSay(text, lang, slow = false) {
   } catch (e) {
     await new Promise(resolve => {
       if (!window.speechSynthesis) return resolve();
-      const u = new SpeechSynthesisUtterance(text);
+      const u = new SpeechSynthesisUtterance(speechText(text));
       u.lang = lang;
       u.rate = slow ? 0.6 : 0.9;
       const voices = window.speechSynthesis.getVoices();
@@ -5434,7 +5460,7 @@ function initBBView(lang) {
       <div class="bb-test-icon">📚</div>
       <div>
         <div class="bb-resume-title" style="margin:0">Vocabulaire essentiel</div>
-        <div class="bb-resume-sub">Jours, mois, couleurs, corps, nombres · cartes et quiz · ${vocMastery(lang, vocData(lang).themes).pct} % maîtrisé</div>
+        <div class="bb-resume-sub">Jours, mois, nombres, couleurs, corps, famille, caractère, métiers · cartes et quiz · ${vocMastery(lang, vocData(lang).themes).pct} % maîtrisé</div>
       </div>
     </div>` : ''}
     <label class="bb-free-toggle">
@@ -5684,6 +5710,7 @@ function bbRender() {
       <span style="font-size:12px;color:var(--text-secondary)">${idx}/${steps.length}</span>
     </div>
     <div class="bb-exercise">${body}</div>
+    <button class="bb-report" onclick="bbReport()">🚩 Signaler un problème sur cet exercice</button>
     <div id="bb-rule-pop"></div>`;
 
   bbContainer(lang).innerHTML = html;
@@ -5706,6 +5733,16 @@ function bbGrammarCard(g) {
     ${g.tip ? `<div class="bb-gr-tip"><b>⚠️ Piège pour francophones</b><br>${bbEsc(g.tip)}</div>` : ''}
     ${bbState.lesson ? cjTensesForLesson(bbState.lang, bbState.lesson).map(t =>
       `<button class="bb-listen-btn bb-btn-ghost cj-link" onclick="bbShowConj('${t.id}')">🔤 Voir la conjugaison : ${bbEsc(t.short)}</button>`).join('') : ''}`;
+}
+
+function bbReport() {
+  const { lang, idx, steps, unit, lesson, check, test } = bbState;
+  const ex = steps[idx] || {};
+  const where = test ? `test de niveau ${test.levels[test.li]}` : check ? `${check.kind === 'unit' ? 'bilan' : 'examen'} ${check.id}` : lesson;
+  const what = ex.word || ex.q || ex.fr || ex.sentence || ex.text || ex.title || '';
+  const ref = `${lang} · ${where} · étape ${idx + 1}/${steps.length} (${ex.type})${what ? ' · « ' + String(what).slice(0, 60) + ' »' : ''}`;
+  if (navigator.clipboard) navigator.clipboard.writeText(ref).catch(() => {});
+  alert('Référence copiée — envoie-la à Claude avec ta remarque :\n\n' + ref);
 }
 
 function bbShowRule() {

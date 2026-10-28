@@ -10,8 +10,8 @@ course('pt', { flag: '🇵🇹', name: 'Portugais', nameFr: 'Português (Portuga
 unit('pt_a1_1', 'A1', 'Olá!', 'Saluer et se présenter', '👋', '#6c63ff', [
   lesson('Olá e adeus', 'Bonjour et au revoir',
     G('Tu, o senhor, a senhora : tutoyer ou vouvoyer',
-      `Au Portugal, on tutoie avec <b>tu</b> (amis, famille, jeunes).<br>Pour vouvoyer, on utilise <b>o senhor</b> / <b>a senhora</b> + le verbe à la 3e personne : <b>Como está</b> (o senhor)? — ou simplement le verbe à la 3e personne sans pronom.<br>⚠️ « Você » existe mais peut sembler distant, voire impoli, au Portugal. Préférez le verbe seul.`,
-      [['Como estás? — Estou bem, obrigado.', 'Comment vas-tu ? — Je vais bien, merci.'], ['Como está, senhora Silva?', 'Comment allez-vous, Madame Silva ?'], ['Bom dia! Tudo bem?', 'Bonjour ! Ça va ?']],
+      `Au Portugal, on tutoie avec <b>tu</b> (amis, famille, jeunes).<br>Pour vouvoyer, on parle à la personne à la 3e personne, <b>avec l\'article</b> : <b>o senhor</b> / <b>a senhora</b> + verbe : <b>Como está a senhora?</b> · <b>O senhor quer um café?</b><br>Avec le nom : <b>Como está a senhora Silva?</b> (et non « Como está, senhora Silva? »). On peut aussi utiliser le verbe seul : <b>Como está?</b><br>⚠️ « Você » existe mais peut sembler distant, voire impoli, au Portugal. Préférez « o senhor / a senhora » ou le verbe seul.`,
+      [['Como estás? — Estou bem, obrigado.', 'Comment vas-tu ? — Je vais bien, merci.'], ['O senhor quer um café?', 'Vous voulez un café, Monsieur ?'], ['Como está a senhora Silva?', 'Comment allez-vous, Madame Silva ?']],
       '« Obrigado » si vous êtes un homme, « obrigada » si vous êtes une femme — c\'est l\'accord avec la personne qui remercie, pas avec celle qu\'on remercie.'),
     [
       I('Olá', 'Bonjour / Salut', 'Olá! Tudo bem?', 'Salut ! Ça va ?'),
@@ -33,7 +33,7 @@ unit('pt_a1_1', 'A1', 'Olá!', 'Saluer et se présenter', '👋', '#6c63ff', [
       O('Comment vas-tu ?', 'Como estás', ['está']),
       W('À demain !', 'Até amanhã'),
       L('Bom dia! Tudo bem?', 'Bonjour ! Ça va ?'),
-      T('Comment allez-vous, Monsieur ?', ['Como está, senhor?', 'Como estás, senhor?', 'Como vai você, senhor?', 'Como és, senhor?']),
+      T('Comment allez-vous, Monsieur ?', ['Como está o senhor?', 'Como estás o senhor?', 'Como vai você, senhor?', 'Como é o senhor?'], 'Au Portugal, on vouvoie avec « o senhor / a senhora » + verbe à la 3e personne, avec l\'article.'),
     ]),
 
   lesson('Apresentar-se', 'Se présenter',

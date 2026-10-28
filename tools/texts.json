@@ -13,7 +13,7 @@
 ],
 [
 "en-US",
-"Hello / Hi"
+"Hello, Hi"
 ],
 [
 "en-US",
@@ -29,7 +29,7 @@
 ],
 [
 "en-US",
-"Goodbye / Bye"
+"Goodbye, Bye"
 ],
 [
 "en-US",
@@ -149,7 +149,7 @@
 ],
 [
 "en-US",
-"Thank you / Thanks"
+"Thank you, Thanks"
 ],
 [
 "en-US",
@@ -165,7 +165,7 @@
 ],
 [
 "en-US",
-"Excuse me / Sorry"
+"Excuse me, Sorry"
 ],
 [
 "en-US",
@@ -237,7 +237,7 @@
 ],
 [
 "en-US",
-"a hundred / a thousand"
+"a hundred, a thousand"
 ],
 [
 "en-US",
@@ -301,7 +301,7 @@
 ],
 [
 "en-US",
-"today / tomorrow / yesterday"
+"today, tomorrow, yesterday"
 ],
 [
 "en-US",
@@ -357,7 +357,7 @@
 ],
 [
 "en-US",
-"half past / quarter past"
+"half past, quarter past"
 ],
 [
 "en-US",
@@ -405,7 +405,7 @@
 ],
 [
 "en-US",
-"mother / father"
+"mother, father"
 ],
 [
 "en-US",
@@ -413,7 +413,7 @@
 ],
 [
 "en-US",
-"brother / sister"
+"brother, sister"
 ],
 [
 "en-US",
@@ -421,7 +421,7 @@
 ],
 [
 "en-US",
-"husband / wife"
+"husband, wife"
 ],
 [
 "en-US",
@@ -429,7 +429,7 @@
 ],
 [
 "en-US",
-"son / daughter / children"
+"son, daughter, children"
 ],
 [
 "en-US",
@@ -469,7 +469,7 @@
 ],
 [
 "en-US",
-"tall / short"
+"tall, short"
 ],
 [
 "en-US",
@@ -477,7 +477,7 @@
 ],
 [
 "en-US",
-"young / old"
+"young, old"
 ],
 [
 "en-US",
@@ -485,7 +485,7 @@
 ],
 [
 "en-US",
-"friendly / funny"
+"friendly, funny"
 ],
 [
 "en-US",
@@ -493,7 +493,7 @@
 ],
 [
 "en-US",
-"hair / eyes"
+"hair, eyes"
 ],
 [
 "en-US",
@@ -533,7 +533,7 @@
 ],
 [
 "en-US",
-"I love / I like"
+"I love, I like"
 ],
 [
 "en-US",
@@ -549,7 +549,7 @@
 ],
 [
 "en-US",
-"I hate / I can't stand"
+"I hate, I can't stand"
 ],
 [
 "en-US",
@@ -661,7 +661,7 @@
 ],
 [
 "en-US",
-"always / never"
+"always, never"
 ],
 [
 "en-US",
@@ -669,7 +669,7 @@
 ],
 [
 "en-US",
-"often / sometimes"
+"often, sometimes"
 ],
 [
 "en-US",
@@ -725,7 +725,7 @@
 ],
 [
 "en-US",
-"living room / bedroom"
+"living room, bedroom"
 ],
 [
 "en-US",
@@ -733,7 +733,7 @@
 ],
 [
 "en-US",
-"kitchen / bathroom"
+"kitchen, bathroom"
 ],
 [
 "en-US",
@@ -741,7 +741,7 @@
 ],
 [
 "en-US",
-"upstairs / downstairs"
+"upstairs, downstairs"
 ],
 [
 "en-US",
@@ -749,7 +749,7 @@
 ],
 [
 "en-US",
-"flat / house"
+"flat, house"
 ],
 [
 "en-US",
@@ -793,7 +793,7 @@
 ],
 [
 "en-US",
-"a cup of tea / coffee"
+"a cup of tea, coffee"
 ],
 [
 "en-US",
@@ -809,7 +809,7 @@
 ],
 [
 "en-US",
-"to take away / to eat in"
+"to take away, to eat in"
 ],
 [
 "en-US",
@@ -865,7 +865,7 @@
 ],
 [
 "en-US",
-"the menu / the bill"
+"the menu, the bill"
 ],
 [
 "en-US",
@@ -873,7 +873,7 @@
 ],
 [
 "en-US",
-"starter / main course / dessert"
+"starter, main course, dessert"
 ],
 [
 "en-US",
@@ -941,7 +941,7 @@
 ],
 [
 "en-US",
-"cheap / expensive"
+"cheap, expensive"
 ],
 [
 "en-US",
@@ -949,7 +949,7 @@
 ],
 [
 "en-US",
-"a size / to try on"
+"a size, to try on"
 ],
 [
 "en-US",
@@ -1001,7 +1001,7 @@
 ],
 [
 "en-US",
-"turn left / turn right"
+"turn left, turn right"
 ],
 [
 "en-US",
@@ -1061,7 +1061,7 @@
 ],
 [
 "en-US",
-"a return ticket / a single"
+"a return ticket, a single"
 ],
 [
 "en-US",
@@ -1069,7 +1069,7 @@
 ],
 [
 "en-US",
-"platform / gate"
+"platform, gate"
 ],
 [
 "en-US",
@@ -1077,7 +1077,7 @@
 ],
 [
 "en-US",
-"delayed / cancelled"
+"delayed, cancelled"
 ],
 [
 "en-US",
@@ -1085,7 +1085,7 @@
 ],
 [
 "en-US",
-"to check in / boarding pass"
+"to check in, boarding pass"
 ],
 [
 "en-US",
@@ -1129,7 +1129,7 @@
 ],
 [
 "en-US",
-"a double / single room"
+"a double, single room"
 ],
 [
 "en-US",
@@ -1205,7 +1205,7 @@
 ],
 [
 "en-US",
-"last night / last week"
+"last night, last week"
 ],
 [
 "en-US",
@@ -1221,7 +1221,7 @@
 ],
 [
 "en-US",
-"to relax / to stay"
+"to relax, to stay"
 ],
 [
 "en-US",
@@ -1261,7 +1261,7 @@
 ],
 [
 "en-US",
-"went (go)"
+"went"
 ],
 [
 "en-US",
@@ -1269,7 +1269,7 @@
 ],
 [
 "en-US",
-"had (have)"
+"had"
 ],
 [
 "en-US",
@@ -1277,7 +1277,7 @@
 ],
 [
 "en-US",
-"bought (buy)"
+"bought"
 ],
 [
 "en-US",
@@ -1285,7 +1285,7 @@
 ],
 [
 "en-US",
-"met (meet)"
+"met"
 ],
 [
 "en-US",
@@ -1341,7 +1341,7 @@
 ],
 [
 "en-US",
-"to miss (a train)"
+"to miss"
 ],
 [
 "en-US",
@@ -1349,7 +1349,7 @@
 ],
 [
 "en-US",
-"amazing / awful"
+"amazing, awful"
 ],
 [
 "en-US",
@@ -1397,7 +1397,7 @@
 ],
 [
 "en-US",
-"sunny / cloudy"
+"sunny, cloudy"
 ],
 [
 "en-US",
@@ -1413,7 +1413,7 @@
 ],
 [
 "en-US",
-"windy / hot / cold"
+"windy, hot, cold"
 ],
 [
 "en-US",
@@ -1461,7 +1461,7 @@
 ],
 [
 "en-US",
-"next week / next year"
+"next week, next year"
 ],
 [
 "en-US",
@@ -1593,7 +1593,7 @@
 ],
 [
 "en-US",
-"a headache / a stomach ache"
+"a headache, a stomach ache"
 ],
 [
 "en-US",
@@ -1609,7 +1609,7 @@
 ],
 [
 "en-US",
-"a temperature / a cough"
+"a temperature, a cough"
 ],
 [
 "en-US",
@@ -1685,7 +1685,7 @@
 ],
 [
 "en-US",
-"a pharmacy (UK: chemist's)"
+"a pharmacy"
 ],
 [
 "en-US",
@@ -1737,7 +1737,7 @@
 ],
 [
 "en-US",
-"better / the best"
+"better, the best"
 ],
 [
 "en-US",
@@ -1745,7 +1745,7 @@
 ],
 [
 "en-US",
-"worse / the worst"
+"worse, the worst"
 ],
 [
 "en-US",
@@ -1809,7 +1809,7 @@
 ],
 [
 "en-US",
-"once / twice / several times"
+"once, twice, several times"
 ],
 [
 "en-US",
@@ -1861,7 +1861,7 @@
 ],
 [
 "en-US",
-"for (+ durée)"
+"for"
 ],
 [
 "en-US",
@@ -1869,7 +1869,7 @@
 ],
 [
 "en-US",
-"since (+ date)"
+"since"
 ],
 [
 "en-US",
@@ -1885,7 +1885,7 @@
 ],
 [
 "en-US",
-"to move (house)"
+"to move"
 ],
 [
 "en-US",
@@ -1913,11 +1913,11 @@
 ],
 [
 "en-US",
-"I've lost my keys! (= je ne les ai pas)"
+"I've lost my keys!"
 ],
 [
 "en-US",
-"I lost my keys last week (= histoire finie)."
+"I lost my keys last week."
 ],
 [
 "en-US",
@@ -1941,7 +1941,7 @@
 ],
 [
 "en-US",
-"yet / not yet"
+"yet, not yet"
 ],
 [
 "en-US",
@@ -1989,7 +1989,7 @@
 ],
 [
 "en-US",
-"the rent / the landlord"
+"the rent, the landlord"
 ],
 [
 "en-US",
@@ -2133,7 +2133,7 @@
 ],
 [
 "en-US",
-"Hold on / Hang on"
+"Hold on, Hang on"
 ],
 [
 "en-US",
@@ -2201,7 +2201,7 @@
 ],
 [
 "en-US",
-"I agree / I disagree"
+"I agree, I disagree"
 ],
 [
 "en-US",
@@ -2269,7 +2269,7 @@
 ],
 [
 "en-US",
-"I would (I'd)"
+"I would"
 ],
 [
 "en-US",
@@ -2405,7 +2405,7 @@
 ],
 [
 "en-US",
-"at first / in the end"
+"at first, in the end"
 ],
 [
 "en-US",
@@ -2585,7 +2585,7 @@
 ],
 [
 "en-US",
-"is made / was built"
+"is made, was built"
 ],
 [
 "en-US",
@@ -2661,7 +2661,7 @@
 ],
 [
 "en-US",
-"to pick up / to drop off"
+"to pick up, to drop off"
 ],
 [
 "en-US",
@@ -2669,7 +2669,7 @@
 ],
 [
 "en-US",
-"to get on / to get off"
+"to get on, to get off"
 ],
 [
 "en-US",
@@ -3725,7 +3725,7 @@
 ],
 [
 "en-US",
-"I read it yesterday (/rɛd/)."
+"I read it yesterday."
 ],
 [
 "en-US",
@@ -9373,11 +9373,11 @@
 ],
 [
 "pt-PT",
-"Como está, senhora Silva?"
+"O senhor quer um café?"
 ],
 [
 "pt-PT",
-"Bom dia! Tudo bem?"
+"Como está a senhora Silva?"
 ],
 [
 "pt-PT",
@@ -9389,7 +9389,7 @@
 ],
 [
 "pt-PT",
-"Bom dia / Boa tarde"
+"Bom dia, Boa tarde"
 ],
 [
 "pt-PT",
@@ -9405,7 +9405,7 @@
 ],
 [
 "pt-PT",
-"Adeus / Até logo"
+"Adeus, Até logo"
 ],
 [
 "pt-PT",
@@ -9426,6 +9426,10 @@
 [
 "pt-PT",
 "Um pastel de nata, se faz favor."
+],
+[
+"pt-PT",
+"Bom dia! Tudo bem?"
 ],
 [
 "pt-PT",
@@ -9465,7 +9469,7 @@
 ],
 [
 "pt-PT",
-"Sou francês / francesa"
+"Sou francês, francesa"
 ],
 [
 "pt-PT",
@@ -9505,7 +9509,7 @@
 ],
 [
 "pt-PT",
-"Se faz favor / Por favor"
+"Se faz favor, Por favor"
 ],
 [
 "pt-PT",
@@ -9581,7 +9585,7 @@
 ],
 [
 "pt-PT",
-"cem / mil"
+"cem, mil"
 ],
 [
 "pt-PT",
@@ -9653,7 +9657,7 @@
 ],
 [
 "pt-PT",
-"hoje / amanhã / ontem"
+"hoje, amanhã, ontem"
 ],
 [
 "pt-PT",
@@ -9709,7 +9713,7 @@
 ],
 [
 "pt-PT",
-"e meia / e um quarto"
+"e meia, e um quarto"
 ],
 [
 "pt-PT",
@@ -9757,7 +9761,7 @@
 ],
 [
 "pt-PT",
-"o pai / a mãe"
+"o pai, a mãe"
 ],
 [
 "pt-PT",
@@ -9765,7 +9769,7 @@
 ],
 [
 "pt-PT",
-"o irmão / a irmã"
+"o irmão, a irmã"
 ],
 [
 "pt-PT",
@@ -9773,7 +9777,7 @@
 ],
 [
 "pt-PT",
-"o marido / a mulher"
+"o marido, a mulher"
 ],
 [
 "pt-PT",
@@ -9781,7 +9785,7 @@
 ],
 [
 "pt-PT",
-"o filho / a filha / os filhos"
+"o filho, a filha, os filhos"
 ],
 [
 "pt-PT",
@@ -9821,7 +9825,7 @@
 ],
 [
 "pt-PT",
-"alto / baixo"
+"alto, baixo"
 ],
 [
 "pt-PT",
@@ -9829,7 +9833,7 @@
 ],
 [
 "pt-PT",
-"simpático / engraçado"
+"simpático, engraçado"
 ],
 [
 "pt-PT",
@@ -9837,7 +9841,7 @@
 ],
 [
 "pt-PT",
-"cansado / contente"
+"cansado, contente"
 ],
 [
 "pt-PT",
@@ -9845,7 +9849,7 @@
 ],
 [
 "pt-PT",
-"o cabelo / os olhos"
+"o cabelo, os olhos"
 ],
 [
 "pt-PT",
@@ -9901,7 +9905,7 @@
 ],
 [
 "pt-PT",
-"Não gosto de… / Detesto…"
+"Não gosto de…, Detesto…"
 ],
 [
 "pt-PT",
@@ -9965,7 +9969,7 @@
 ],
 [
 "pt-PT",
-"almoçar / jantar"
+"almoçar, jantar"
 ],
 [
 "pt-PT",
@@ -10013,7 +10017,7 @@
 ],
 [
 "pt-PT",
-"comer / beber"
+"comer, beber"
 ],
 [
 "pt-PT",
@@ -10021,7 +10025,7 @@
 ],
 [
 "pt-PT",
-"sempre / nunca"
+"sempre, nunca"
 ],
 [
 "pt-PT",
@@ -10077,7 +10081,7 @@
 ],
 [
 "pt-PT",
-"a sala / o quarto"
+"a sala, o quarto"
 ],
 [
 "pt-PT",
@@ -10085,7 +10089,7 @@
 ],
 [
 "pt-PT",
-"a cozinha / a casa de banho"
+"a cozinha, a casa de banho"
 ],
 [
 "pt-PT",
@@ -10165,7 +10169,7 @@
 ],
 [
 "pt-PT",
-"para levar / para comer aqui"
+"para levar, para comer aqui"
 ],
 [
 "pt-PT",
@@ -10277,7 +10281,7 @@
 ],
 [
 "pt-PT",
-"barato / caro"
+"barato, caro"
 ],
 [
 "pt-PT",
@@ -10285,7 +10289,7 @@
 ],
 [
 "pt-PT",
-"este / esse / aquele"
+"este, esse, aquele"
 ],
 [
 "pt-PT",
@@ -10341,7 +10345,7 @@
 ],
 [
 "pt-PT",
-"à esquerda / à direita"
+"à esquerda, à direita"
 ],
 [
 "pt-PT",
@@ -10365,7 +10369,7 @@
 ],
 [
 "pt-PT",
-"É longe? / É perto?"
+"É longe?, É perto?"
 ],
 [
 "pt-PT",
@@ -10421,7 +10425,7 @@
 ],
 [
 "pt-PT",
-"atrasado / cancelado"
+"atrasado, cancelado"
 ],
 [
 "pt-PT",
@@ -10473,7 +10477,7 @@
 ],
 [
 "pt-PT",
-"um quarto duplo / individual"
+"um quarto duplo, individual"
 ],
 [
 "pt-PT",
@@ -10557,7 +10561,7 @@
 ],
 [
 "pt-PT",
-"há … (dias)"
+"há …"
 ],
 [
 "pt-PT",
@@ -10605,7 +10609,7 @@
 ],
 [
 "pt-PT",
-"fui (ir / ser)"
+"fui"
 ],
 [
 "pt-PT",
@@ -10677,7 +10681,7 @@
 ],
 [
 "pt-PT",
-"perder (o comboio)"
+"perder"
 ],
 [
 "pt-PT",
@@ -10693,7 +10697,7 @@
 ],
 [
 "pt-PT",
-"incrível / horrível"
+"incrível, horrível"
 ],
 [
 "pt-PT",
@@ -10757,7 +10761,7 @@
 ],
 [
 "pt-PT",
-"Está calor / frio"
+"Está calor, frio"
 ],
 [
 "pt-PT",
@@ -10821,7 +10825,7 @@
 ],
 [
 "pt-PT",
-"marcar / reservar"
+"marcar, reservar"
 ],
 [
 "pt-PT",
@@ -10945,7 +10949,7 @@
 ],
 [
 "pt-PT",
-"Estou constipado/a"
+"Estou constipado, constipada"
 ],
 [
 "pt-PT",
@@ -10953,7 +10957,7 @@
 ],
 [
 "pt-PT",
-"a febre / a tosse"
+"a febre, a tosse"
 ],
 [
 "pt-PT",
@@ -11065,7 +11069,7 @@
 ],
 [
 "pt-PT",
-"melhor / pior"
+"melhor, pior"
 ],
 [
 "pt-PT",
@@ -11073,7 +11077,7 @@
 ],
 [
 "pt-PT",
-"maior / mais pequeno"
+"maior, mais pequeno"
 ],
 [
 "pt-PT",
@@ -11129,7 +11133,7 @@
 ],
 [
 "pt-PT",
-"quando era pequeno/a"
+"quando era pequeno, pequena"
 ],
 [
 "pt-PT",
@@ -11265,7 +11269,7 @@
 ],
 [
 "pt-PT",
-"há (+ durée)"
+"há"
 ],
 [
 "pt-PT",
@@ -11281,7 +11285,7 @@
 ],
 [
 "pt-PT",
-"já / ainda não"
+"já, ainda não"
 ],
 [
 "pt-PT",
@@ -11353,7 +11357,7 @@
 ],
 [
 "pt-PT",
-"mobilado / despesas incluídas"
+"mobilado, despesas incluídas"
 ],
 [
 "pt-PT",
@@ -11397,7 +11401,7 @@
 ],
 [
 "pt-PT",
-"avariado/a"
+"avariado, avariada"
 ],
 [
 "pt-PT",
@@ -11465,7 +11469,7 @@
 ],
 [
 "pt-PT",
-"Estou? / Está?"
+"Estou?, Está?"
 ],
 [
 "pt-PT",
@@ -11541,7 +11545,7 @@
 ],
 [
 "pt-PT",
-"Concordo / Não concordo"
+"Concordo, Não concordo"
 ],
 [
 "pt-PT",
@@ -11925,7 +11929,7 @@
 ],
 [
 "pt-PT",
-"Vende-se / Aluga-se"
+"Vende-se, Aluga-se"
 ],
 [
 "pt-PT",
@@ -12069,7 +12073,7 @@
 ],
 [
 "pt-PT",
-"puxar / empurrar"
+"puxar, empurrar"
 ],
 [
 "pt-PT",
@@ -13794,18 +13798,6 @@
 [
 "pt-PT",
 "É preciso que saias cedo."
-],
-[
-"pt-PT",
-"tu sê, você  seja, nós sejamos, vocês sejam"
-],
-[
-"pt-PT",
-"tu fala, você  fale, nós falemos, vocês falem"
-],
-[
-"pt-PT",
-"tu faz, você  faça, nós façamos, vocês façam"
 ],
 [
 "pt-PT",
@@ -19613,7 +19605,7 @@
 ],
 [
 "es-ES",
-"Buenas tardes / Buenas noches"
+"Buenas tardes, Buenas noches"
 ],
 [
 "es-ES",
@@ -19621,7 +19613,7 @@
 ],
 [
 "es-ES",
-"Adiós / Hasta luego"
+"Adiós, Hasta luego"
 ],
 [
 "es-ES",
@@ -19673,7 +19665,7 @@
 ],
 [
 "es-ES",
-"Encantado / Encantada"
+"Encantado, Encantada"
 ],
 [
 "es-ES",
@@ -19681,7 +19673,7 @@
 ],
 [
 "es-ES",
-"Soy francés / francesa"
+"Soy francés, francesa"
 ],
 [
 "es-ES",
@@ -19729,11 +19721,11 @@
 ],
 [
 "es-ES",
-"Gracias / De nada"
+"Gracias, De nada"
 ],
 [
 "es-ES",
-"Perdone / Perdona"
+"Perdone, Perdona"
 ],
 [
 "es-ES",
@@ -19797,7 +19789,7 @@
 ],
 [
 "es-ES",
-"cien / mil"
+"cien, mil"
 ],
 [
 "es-ES",
@@ -19869,7 +19861,7 @@
 ],
 [
 "es-ES",
-"hoy / mañana / ayer"
+"hoy, mañana, ayer"
 ],
 [
 "es-ES",
@@ -19925,7 +19917,7 @@
 ],
 [
 "es-ES",
-"y media / y cuarto"
+"y media, y cuarto"
 ],
 [
 "es-ES",
@@ -19973,7 +19965,7 @@
 ],
 [
 "es-ES",
-"el padre / la madre"
+"el padre, la madre"
 ],
 [
 "es-ES",
@@ -19981,7 +19973,7 @@
 ],
 [
 "es-ES",
-"el hermano / la hermana"
+"el hermano, la hermana"
 ],
 [
 "es-ES",
@@ -19989,7 +19981,7 @@
 ],
 [
 "es-ES",
-"el marido / la mujer"
+"el marido, la mujer"
 ],
 [
 "es-ES",
@@ -19997,7 +19989,7 @@
 ],
 [
 "es-ES",
-"el hijo / la hija / los hijos"
+"el hijo, la hija, los hijos"
 ],
 [
 "es-ES",
@@ -20037,7 +20029,7 @@
 ],
 [
 "es-ES",
-"alto / bajo"
+"alto, bajo"
 ],
 [
 "es-ES",
@@ -20045,7 +20037,7 @@
 ],
 [
 "es-ES",
-"simpático / gracioso"
+"simpático, gracioso"
 ],
 [
 "es-ES",
@@ -20053,7 +20045,7 @@
 ],
 [
 "es-ES",
-"cansado / contento"
+"cansado, contento"
 ],
 [
 "es-ES",
@@ -20061,7 +20053,7 @@
 ],
 [
 "es-ES",
-"el pelo / los ojos"
+"el pelo, los ojos"
 ],
 [
 "es-ES",
@@ -20117,7 +20109,7 @@
 ],
 [
 "es-ES",
-"No me gusta / Odio…"
+"No me gusta, Odio…"
 ],
 [
 "es-ES",
@@ -20181,7 +20173,7 @@
 ],
 [
 "es-ES",
-"comer / cenar"
+"comer, cenar"
 ],
 [
 "es-ES",
@@ -20229,7 +20221,7 @@
 ],
 [
 "es-ES",
-"comer / beber"
+"comer, beber"
 ],
 [
 "es-ES",
@@ -20237,7 +20229,7 @@
 ],
 [
 "es-ES",
-"siempre / nunca"
+"siempre, nunca"
 ],
 [
 "es-ES",
@@ -20293,7 +20285,7 @@
 ],
 [
 "es-ES",
-"el salón / el dormitorio"
+"el salón, el dormitorio"
 ],
 [
 "es-ES",
@@ -20301,7 +20293,7 @@
 ],
 [
 "es-ES",
-"la cocina / el baño"
+"la cocina, el baño"
 ],
 [
 "es-ES",
@@ -20361,7 +20353,7 @@
 ],
 [
 "es-ES",
-"un café solo / un cortado"
+"un café solo, un cortado"
 ],
 [
 "es-ES",
@@ -20377,7 +20369,7 @@
 ],
 [
 "es-ES",
-"una tapa / una ración"
+"una tapa, una ración"
 ],
 [
 "es-ES",
@@ -20385,7 +20377,7 @@
 ],
 [
 "es-ES",
-"para llevar / para tomar aquí"
+"para llevar, para tomar aquí"
 ],
 [
 "es-ES",
@@ -20449,7 +20441,7 @@
 ],
 [
 "es-ES",
-"de primero / de segundo"
+"de primero, de segundo"
 ],
 [
 "es-ES",
@@ -20505,7 +20497,7 @@
 ],
 [
 "es-ES",
-"barato / caro"
+"barato, caro"
 ],
 [
 "es-ES",
@@ -20513,7 +20505,7 @@
 ],
 [
 "es-ES",
-"este / ese / aquel"
+"este, ese, aquel"
 ],
 [
 "es-ES",
@@ -20569,7 +20561,7 @@
 ],
 [
 "es-ES",
-"a la izquierda / a la derecha"
+"a la izquierda, a la derecha"
 ],
 [
 "es-ES",
@@ -20593,7 +20585,7 @@
 ],
 [
 "es-ES",
-"¿Está lejos? / ¿Está cerca?"
+"¿Está lejos?, ¿Está cerca?"
 ],
 [
 "es-ES",
@@ -20649,7 +20641,7 @@
 ],
 [
 "es-ES",
-"el retraso / cancelado"
+"el retraso, cancelado"
 ],
 [
 "es-ES",
@@ -20701,7 +20693,7 @@
 ],
 [
 "es-ES",
-"una habitación doble / individual"
+"una habitación doble, individual"
 ],
 [
 "es-ES",
@@ -20769,7 +20761,7 @@
 ],
 [
 "es-ES",
-"hoy / esta mañana"
+"hoy, esta mañana"
 ],
 [
 "es-ES",
@@ -20777,7 +20769,7 @@
 ],
 [
 "es-ES",
-"ya / todavía no"
+"ya, todavía no"
 ],
 [
 "es-ES",
@@ -20833,7 +20825,7 @@
 ],
 [
 "es-ES",
-"ayer / anoche"
+"ayer, anoche"
 ],
 [
 "es-ES",
@@ -20849,7 +20841,7 @@
 ],
 [
 "es-ES",
-"hace … (días)"
+"hace …"
 ],
 [
 "es-ES",
@@ -20897,7 +20889,7 @@
 ],
 [
 "es-ES",
-"fui (ir / ser)"
+"fui"
 ],
 [
 "es-ES",
@@ -20961,7 +20953,7 @@
 ],
 [
 "es-ES",
-"Hace sol / Hace calor"
+"Hace sol, Hace calor"
 ],
 [
 "es-ES",
@@ -20969,7 +20961,7 @@
 ],
 [
 "es-ES",
-"Llueve / Está lloviendo"
+"Llueve, Está lloviendo"
 ],
 [
 "es-ES",
@@ -20977,7 +20969,7 @@
 ],
 [
 "es-ES",
-"Hace frío / Hace viento"
+"Hace frío, Hace viento"
 ],
 [
 "es-ES",
@@ -20985,7 +20977,7 @@
 ],
 [
 "es-ES",
-"el pronóstico / el tiempo"
+"el pronóstico, el tiempo"
 ],
 [
 "es-ES",
@@ -21165,7 +21157,7 @@
 ],
 [
 "es-ES",
-"Estoy constipado/a"
+"Estoy constipado, constipada"
 ],
 [
 "es-ES",
@@ -21173,7 +21165,7 @@
 ],
 [
 "es-ES",
-"la fiebre / la tos"
+"la fiebre, la tos"
 ],
 [
 "es-ES",
@@ -21285,7 +21277,7 @@
 ],
 [
 "es-ES",
-"mejor / peor"
+"mejor, peor"
 ],
 [
 "es-ES",
@@ -21293,7 +21285,7 @@
 ],
 [
 "es-ES",
-"mayor / menor"
+"mayor, menor"
 ],
 [
 "es-ES",
@@ -21349,7 +21341,7 @@
 ],
 [
 "es-ES",
-"cuando era pequeño/a"
+"cuando era pequeño, pequeña"
 ],
 [
 "es-ES",
@@ -21549,7 +21541,7 @@
 ],
 [
 "es-ES",
-"el casero / la casera"
+"el casero, la casera"
 ],
 [
 "es-ES",
@@ -21565,7 +21557,7 @@
 ],
 [
 "es-ES",
-"amueblado / gastos incluidos"
+"amueblado, gastos incluidos"
 ],
 [
 "es-ES",
@@ -21609,7 +21601,7 @@
 ],
 [
 "es-ES",
-"estropeado/a"
+"estropeado, estropeada"
 ],
 [
 "es-ES",
@@ -21677,7 +21669,7 @@
 ],
 [
 "es-ES",
-"¿Diga? / ¿Sí?"
+"¿Diga?, ¿Sí?"
 ],
 [
 "es-ES",
@@ -22137,7 +22129,7 @@
 ],
 [
 "es-ES",
-"Se vende / Se alquila"
+"Se vende, Se alquila"
 ],
 [
 "es-ES",
@@ -22281,7 +22273,7 @@
 ],
 [
 "es-ES",
-"el éxito / la salida"
+"el éxito, la salida"
 ],
 [
 "es-ES",
@@ -22289,7 +22281,7 @@
 ],
 [
 "es-ES",
-"largo / ancho"
+"largo, ancho"
 ],
 [
 "es-ES",
@@ -33293,6 +33285,78 @@
 ],
 [
 "en-US",
+"father"
+],
+[
+"en-US",
+"mother"
+],
+[
+"en-US",
+"parents"
+],
+[
+"en-US",
+"son"
+],
+[
+"en-US",
+"daughter"
+],
+[
+"en-US",
+"children"
+],
+[
+"en-US",
+"brother"
+],
+[
+"en-US",
+"sister"
+],
+[
+"en-US",
+"grandfather"
+],
+[
+"en-US",
+"grandmother"
+],
+[
+"en-US",
+"grandson, granddaughter"
+],
+[
+"en-US",
+"uncle"
+],
+[
+"en-US",
+"aunt"
+],
+[
+"en-US",
+"cousin"
+],
+[
+"en-US",
+"nephew"
+],
+[
+"en-US",
+"niece"
+],
+[
+"en-US",
+"husband"
+],
+[
+"en-US",
+"wife"
+],
+[
+"en-US",
 "zero"
 ],
 [
@@ -33410,6 +33474,182 @@
 [
 "en-US",
 "one thousand"
+],
+[
+"en-US",
+"first"
+],
+[
+"en-US",
+"second"
+],
+[
+"en-US",
+"third"
+],
+[
+"en-US",
+"fourth"
+],
+[
+"en-US",
+"fifth"
+],
+[
+"en-US",
+"sixth"
+],
+[
+"en-US",
+"seventh"
+],
+[
+"en-US",
+"eighth"
+],
+[
+"en-US",
+"ninth"
+],
+[
+"en-US",
+"tenth"
+],
+[
+"en-US",
+"friendly"
+],
+[
+"en-US",
+"funny"
+],
+[
+"en-US",
+"shy"
+],
+[
+"en-US",
+"kind"
+],
+[
+"en-US",
+"clever"
+],
+[
+"en-US",
+"lazy"
+],
+[
+"en-US",
+"hard-working"
+],
+[
+"en-US",
+"serious"
+],
+[
+"en-US",
+"patient"
+],
+[
+"en-US",
+"calm"
+],
+[
+"en-US",
+"nervous"
+],
+[
+"en-US",
+"generous"
+],
+[
+"en-US",
+"stubborn"
+],
+[
+"en-US",
+"curious"
+],
+[
+"en-US",
+"polite"
+],
+[
+"en-US",
+"rude"
+],
+[
+"en-US",
+"doctor"
+],
+[
+"en-US",
+"nurse"
+],
+[
+"en-US",
+"teacher"
+],
+[
+"en-US",
+"cook"
+],
+[
+"en-US",
+"waiter, waitress"
+],
+[
+"en-US",
+"shop assistant"
+],
+[
+"en-US",
+"lawyer"
+],
+[
+"en-US",
+"engineer"
+],
+[
+"en-US",
+"police officer"
+],
+[
+"en-US",
+"firefighter"
+],
+[
+"en-US",
+"baker"
+],
+[
+"en-US",
+"farmer"
+],
+[
+"en-US",
+"hairdresser"
+],
+[
+"en-US",
+"mechanic"
+],
+[
+"en-US",
+"accountant"
+],
+[
+"en-US",
+"journalist"
+],
+[
+"en-US",
+"driver"
+],
+[
+"en-US",
+"pharmacist"
 ],
 [
 "pt-PT",
@@ -33629,6 +33869,78 @@
 ],
 [
 "pt-PT",
+"o pai"
+],
+[
+"pt-PT",
+"a mãe"
+],
+[
+"pt-PT",
+"os pais"
+],
+[
+"pt-PT",
+"o filho"
+],
+[
+"pt-PT",
+"a filha"
+],
+[
+"pt-PT",
+"os filhos"
+],
+[
+"pt-PT",
+"o irmão"
+],
+[
+"pt-PT",
+"a irmã"
+],
+[
+"pt-PT",
+"o avô"
+],
+[
+"pt-PT",
+"a avó"
+],
+[
+"pt-PT",
+"o neto, a neta"
+],
+[
+"pt-PT",
+"o tio"
+],
+[
+"pt-PT",
+"a tia"
+],
+[
+"pt-PT",
+"o primo, a prima"
+],
+[
+"pt-PT",
+"o sobrinho"
+],
+[
+"pt-PT",
+"a sobrinha"
+],
+[
+"pt-PT",
+"o marido"
+],
+[
+"pt-PT",
+"a mulher"
+],
+[
+"pt-PT",
 "zero"
 ],
 [
@@ -33746,6 +34058,182 @@
 [
 "pt-PT",
 "mil"
+],
+[
+"pt-PT",
+"primeiro, primeira"
+],
+[
+"pt-PT",
+"segundo, segunda"
+],
+[
+"pt-PT",
+"terceiro, terceira"
+],
+[
+"pt-PT",
+"quarto, quarta"
+],
+[
+"pt-PT",
+"quinto, quinta"
+],
+[
+"pt-PT",
+"sexto, sexta"
+],
+[
+"pt-PT",
+"sétimo, sétima"
+],
+[
+"pt-PT",
+"oitavo, oitava"
+],
+[
+"pt-PT",
+"nono, nona"
+],
+[
+"pt-PT",
+"décimo, décima"
+],
+[
+"pt-PT",
+"simpático, simpática"
+],
+[
+"pt-PT",
+"engraçado, engraçada"
+],
+[
+"pt-PT",
+"tímido, tímida"
+],
+[
+"pt-PT",
+"amável"
+],
+[
+"pt-PT",
+"inteligente"
+],
+[
+"pt-PT",
+"preguiçoso, preguiçosa"
+],
+[
+"pt-PT",
+"trabalhador, trabalhadora"
+],
+[
+"pt-PT",
+"sério, séria"
+],
+[
+"pt-PT",
+"paciente"
+],
+[
+"pt-PT",
+"calmo, calma"
+],
+[
+"pt-PT",
+"nervoso, nervosa"
+],
+[
+"pt-PT",
+"generoso, generosa"
+],
+[
+"pt-PT",
+"teimoso, teimosa"
+],
+[
+"pt-PT",
+"curioso, curiosa"
+],
+[
+"pt-PT",
+"educado, educada"
+],
+[
+"pt-PT",
+"mal-educado, mal-educada"
+],
+[
+"pt-PT",
+"o médico, a médica"
+],
+[
+"pt-PT",
+"o enfermeiro, a enfermeira"
+],
+[
+"pt-PT",
+"o professor, a professora"
+],
+[
+"pt-PT",
+"o cozinheiro, a cozinheira"
+],
+[
+"pt-PT",
+"o empregado de mesa, a empregada de mesa"
+],
+[
+"pt-PT",
+"o vendedor, a vendedora"
+],
+[
+"pt-PT",
+"o advogado, a advogada"
+],
+[
+"pt-PT",
+"o engenheiro, a engenheira"
+],
+[
+"pt-PT",
+"o polícia, a polícia"
+],
+[
+"pt-PT",
+"o bombeiro, a bombeira"
+],
+[
+"pt-PT",
+"o padeiro, a padeira"
+],
+[
+"pt-PT",
+"o agricultor, a agricultora"
+],
+[
+"pt-PT",
+"o cabeleireiro, a cabeleireira"
+],
+[
+"pt-PT",
+"o mecânico, a mecânica"
+],
+[
+"pt-PT",
+"o contabilista, a contabilista"
+],
+[
+"pt-PT",
+"o jornalista, a jornalista"
+],
+[
+"pt-PT",
+"o motorista, a motorista"
+],
+[
+"pt-PT",
+"o farmacêutico, a farmacêutica"
 ],
 [
 "es-ES",
@@ -33965,6 +34453,78 @@
 ],
 [
 "es-ES",
+"el padre"
+],
+[
+"es-ES",
+"la madre"
+],
+[
+"es-ES",
+"los padres"
+],
+[
+"es-ES",
+"el hijo"
+],
+[
+"es-ES",
+"la hija"
+],
+[
+"es-ES",
+"los hijos"
+],
+[
+"es-ES",
+"el hermano"
+],
+[
+"es-ES",
+"la hermana"
+],
+[
+"es-ES",
+"el abuelo"
+],
+[
+"es-ES",
+"la abuela"
+],
+[
+"es-ES",
+"el nieto, la nieta"
+],
+[
+"es-ES",
+"el tío"
+],
+[
+"es-ES",
+"la tía"
+],
+[
+"es-ES",
+"el primo, la prima"
+],
+[
+"es-ES",
+"el sobrino"
+],
+[
+"es-ES",
+"la sobrina"
+],
+[
+"es-ES",
+"el marido"
+],
+[
+"es-ES",
+"la mujer"
+],
+[
+"es-ES",
 "cero"
 ],
 [
@@ -34084,8 +34644,184 @@
 "mil"
 ],
 [
+"es-ES",
+"primero, primera"
+],
+[
+"es-ES",
+"segundo, segunda"
+],
+[
+"es-ES",
+"tercero, tercera"
+],
+[
+"es-ES",
+"cuarto, cuarta"
+],
+[
+"es-ES",
+"quinto, quinta"
+],
+[
+"es-ES",
+"sexto, sexta"
+],
+[
+"es-ES",
+"séptimo, séptima"
+],
+[
+"es-ES",
+"octavo, octava"
+],
+[
+"es-ES",
+"noveno, novena"
+],
+[
+"es-ES",
+"décimo, décima"
+],
+[
+"es-ES",
+"simpático, simpática"
+],
+[
+"es-ES",
+"divertido, divertida"
+],
+[
+"es-ES",
+"tímido, tímida"
+],
+[
+"es-ES",
+"amable"
+],
+[
+"es-ES",
+"inteligente"
+],
+[
+"es-ES",
+"vago, vaga"
+],
+[
+"es-ES",
+"trabajador, trabajadora"
+],
+[
+"es-ES",
+"serio, seria"
+],
+[
+"es-ES",
+"paciente"
+],
+[
+"es-ES",
+"tranquilo, tranquila"
+],
+[
+"es-ES",
+"nervioso, nerviosa"
+],
+[
+"es-ES",
+"generoso, generosa"
+],
+[
+"es-ES",
+"cabezota"
+],
+[
+"es-ES",
+"curioso, curiosa"
+],
+[
+"es-ES",
+"educado, educada"
+],
+[
+"es-ES",
+"maleducado, maleducada"
+],
+[
+"es-ES",
+"el médico, la médica"
+],
+[
+"es-ES",
+"el enfermero, la enfermera"
+],
+[
+"es-ES",
+"el profesor, la profesora"
+],
+[
+"es-ES",
+"el cocinero, la cocinera"
+],
+[
+"es-ES",
+"el camarero, la camarera"
+],
+[
+"es-ES",
+"el dependiente, la dependienta"
+],
+[
+"es-ES",
+"el abogado, la abogada"
+],
+[
+"es-ES",
+"el ingeniero, la ingeniera"
+],
+[
+"es-ES",
+"el policía, la policía"
+],
+[
+"es-ES",
+"el bombero, la bombera"
+],
+[
+"es-ES",
+"el panadero, la panadera"
+],
+[
+"es-ES",
+"el agricultor, la agricultora"
+],
+[
+"es-ES",
+"el peluquero, la peluquera"
+],
+[
+"es-ES",
+"el mecánico, la mecánica"
+],
+[
+"es-ES",
+"el contable, la contable"
+],
+[
+"es-ES",
+"el periodista, la periodista"
+],
+[
+"es-ES",
+"el conductor, la conductora"
+],
+[
+"es-ES",
+"el farmacéutico, la farmacéutica"
+],
+[
 "en-US",
-"Workflow. I need to set up a new workflow."
+"Workflow"
 ],
 [
 "en-US",
@@ -34093,7 +34829,7 @@
 ],
 [
 "en-US",
-"Automation. Automation saves a lot of time."
+"Automation"
 ],
 [
 "en-US",
@@ -34101,7 +34837,7 @@
 ],
 [
 "en-US",
-"Dashboard. Check the dashboard for updates."
+"Dashboard"
 ],
 [
 "en-US",
@@ -34109,7 +34845,7 @@
 ],
 [
 "en-US",
-"Settings. Go to Settings to change your preferences."
+"Settings"
 ],
 [
 "en-US",
@@ -34117,7 +34853,7 @@
 ],
 [
 "en-US",
-"Integration. This tool has a native Slack integration."
+"Integration"
 ],
 [
 "en-US",
@@ -34125,7 +34861,7 @@
 ],
 [
 "en-US",
-"Template. Use a template to get started quickly."
+"Template"
 ],
 [
 "en-US",
@@ -34133,7 +34869,7 @@
 ],
 [
 "en-US",
-"Database. The database stores all your records."
+"Database"
 ],
 [
 "en-US",
@@ -34141,7 +34877,7 @@
 ],
 [
 "en-US",
-"Dropdown. Select your option from the dropdown."
+"Dropdown"
 ],
 [
 "en-US",
@@ -34149,7 +34885,7 @@
 ],
 [
 "en-US",
-"Toggle. Toggle the switch to enable this feature."
+"Toggle"
 ],
 [
 "en-US",
@@ -34157,7 +34893,7 @@
 ],
 [
 "en-US",
-"Preview. Click Preview before publishing."
+"Preview"
 ],
 [
 "en-US",
@@ -34165,7 +34901,7 @@
 ],
 [
 "en-US",
-"Log. Check the log to see what happened."
+"Log"
 ],
 [
 "en-US",
@@ -34173,7 +34909,7 @@
 ],
 [
 "en-US",
-"Error. I got an error — the connection failed."
+"Error"
 ],
 [
 "en-US",
@@ -34181,7 +34917,7 @@
 ],
 [
 "en-US",
-"Update. Please update your app to the latest version."
+"Update"
 ],
 [
 "en-US",
@@ -34189,7 +34925,7 @@
 ],
 [
 "en-US",
-"Sync. Sync your data between devices."
+"Sync"
 ],
 [
 "en-US",
@@ -34197,7 +34933,7 @@
 ],
 [
 "en-US",
-"Backup. Always create a backup before making changes."
+"Backup"
 ],
 [
 "en-US",
@@ -34205,7 +34941,7 @@
 ],
 [
 "en-US",
-"Permission. You don't have permission to edit this file."
+"Permission"
 ],
 [
 "en-US",
@@ -34213,7 +34949,7 @@
 ],
 [
 "en-US",
-"Webhook. Set up a webhook to receive real-time data."
+"Webhook"
 ],
 [
 "en-US",
@@ -34221,7 +34957,7 @@
 ],
 [
 "en-US",
-"API. Use the API to connect your applications."
+"API"
 ],
 [
 "en-US",
@@ -34229,7 +34965,7 @@
 ],
 [
 "en-US",
-"Debug. I need to debug this scenario."
+"Debug"
 ],
 [
 "en-US",
@@ -34237,7 +34973,7 @@
 ],
 [
 "en-US",
-"Deploy. Deploy the changes to production."
+"Deploy"
 ],
 [
 "en-US",
@@ -34245,7 +34981,7 @@
 ],
 [
 "en-US",
-"Scenario. My scenario runs every hour."
+"Scenario"
 ],
 [
 "en-US",
@@ -34253,7 +34989,7 @@
 ],
 [
 "en-US",
-"Trigger. The trigger starts the scenario automatically."
+"Trigger"
 ],
 [
 "en-US",
@@ -34261,7 +34997,7 @@
 ],
 [
 "en-US",
-"Module. Add a Gmail module to send emails."
+"Module"
 ],
 [
 "en-US",
@@ -34269,7 +35005,7 @@
 ],
 [
 "en-US",
-"Bundle. Each bundle contains one row of data."
+"Bundle"
 ],
 [
 "en-US",
@@ -34277,7 +35013,7 @@
 ],
 [
 "en-US",
-"Iterator. Use an iterator to process each item in the array."
+"Iterator"
 ],
 [
 "en-US",
@@ -34285,7 +35021,7 @@
 ],
 [
 "en-US",
-"Aggregator. The aggregator combines multiple bundles into one."
+"Aggregator"
 ],
 [
 "en-US",
@@ -34293,7 +35029,7 @@
 ],
 [
 "en-US",
-"Router. The router sends data down different paths."
+"Router"
 ],
 [
 "en-US",
@@ -34301,7 +35037,7 @@
 ],
 [
 "en-US",
-"Data Store. Save the result in a Data Store for later use."
+"Data Store"
 ],
 [
 "en-US",
@@ -34309,7 +35045,7 @@
 ],
 [
 "en-US",
-"Connection. Create a new connection to your Airtable account."
+"Connection"
 ],
 [
 "en-US",
@@ -34317,7 +35053,7 @@
 ],
 [
 "en-US",
-"Filter. Add a filter to only process new records."
+"Filter"
 ],
 [
 "en-US",
@@ -34325,7 +35061,7 @@
 ],
 [
 "en-US",
-"Mapping. Map the email field from the previous module."
+"Mapping"
 ],
 [
 "en-US",
@@ -34333,7 +35069,7 @@
 ],
 [
 "en-US",
-"Operation. This scenario uses 5 operations per run."
+"Operation"
 ],
 [
 "en-US",
@@ -34341,7 +35077,7 @@
 ],
 [
 "en-US",
-"Schedule. Set the schedule to run at 9am every day."
+"Schedule"
 ],
 [
 "en-US",
@@ -34349,7 +35085,7 @@
 ],
 [
 "en-US",
-"Blueprint. Export the blueprint to share your scenario."
+"Blueprint"
 ],
 [
 "en-US",
@@ -34357,7 +35093,7 @@
 ],
 [
 "en-US",
-"Array. The result is an array of 10 items."
+"Array"
 ],
 [
 "en-US",
@@ -34365,7 +35101,7 @@
 ],
 [
 "en-US",
-"Error Handler. Add an error handler to catch failures gracefully."
+"Error Handler"
 ],
 [
 "en-US",
@@ -34373,7 +35109,7 @@
 ],
 [
 "en-US",
-"Instant Trigger. Use an instant trigger for real-time automation."
+"Instant Trigger"
 ],
 [
 "en-US",
@@ -34381,7 +35117,7 @@
 ],
 [
 "en-US",
-"Run once. Click Run once to test your scenario."
+"Run once"
 ],
 [
 "en-US",
@@ -34389,7 +35125,7 @@
 ],
 [
 "en-US",
-"Active. Toggle the scenario to Active to start it."
+"Active"
 ],
 [
 "en-US",
@@ -34397,7 +35133,7 @@
 ],
 [
 "en-US",
-"Incomplete execution. Check your incomplete executions for failed runs."
+"Incomplete execution"
 ],
 [
 "en-US",
@@ -34405,7 +35141,7 @@
 ],
 [
 "en-US",
-"Base. Create a new base for your project."
+"Base"
 ],
 [
 "en-US",
@@ -34413,7 +35149,7 @@
 ],
 [
 "en-US",
-"Table. Add a new table for your contacts."
+"Table"
 ],
 [
 "en-US",
@@ -34421,7 +35157,7 @@
 ],
 [
 "en-US",
-"Field. Add a Date field to track deadlines."
+"Field"
 ],
 [
 "en-US",
@@ -34429,7 +35165,7 @@
 ],
 [
 "en-US",
-"Record. Create a new record for each client."
+"Record"
 ],
 [
 "en-US",
@@ -34437,7 +35173,7 @@
 ],
 [
 "en-US",
-"View. Switch to Gallery view to display images."
+"View"
 ],
 [
 "en-US",
@@ -34445,7 +35181,7 @@
 ],
 [
 "en-US",
-"Lookup. Use a Lookup field to pull data from a linked table."
+"Lookup"
 ],
 [
 "en-US",
@@ -34453,7 +35189,7 @@
 ],
 [
 "en-US",
-"Linked record. Link this record to a project in the Projects table."
+"Linked record"
 ],
 [
 "en-US",
@@ -34461,7 +35197,7 @@
 ],
 [
 "en-US",
-"Formula. Write a formula to calculate the total price."
+"Formula"
 ],
 [
 "en-US",
@@ -34469,7 +35205,7 @@
 ],
 [
 "en-US",
-"Rollup. Add a Rollup field to sum linked record values."
+"Rollup"
 ],
 [
 "en-US",
@@ -34477,7 +35213,7 @@
 ],
 [
 "en-US",
-"Workspace. Invite your team to the workspace."
+"Workspace"
 ],
 [
 "en-US",
@@ -34485,7 +35221,7 @@
 ],
 [
 "en-US",
-"Interface. Build an interface for your clients to use."
+"Interface"
 ],
 [
 "en-US",
@@ -34493,7 +35229,7 @@
 ],
 [
 "en-US",
-"Primary field. The primary field is always the first column."
+"Primary field"
 ],
 [
 "en-US",
@@ -34501,7 +35237,7 @@
 ],
 [
 "en-US",
-"Single select. Use a Single select field for the project status."
+"Single select"
 ],
 [
 "en-US",
@@ -34509,7 +35245,7 @@
 ],
 [
 "en-US",
-"Multiple select. Tags use a Multiple select field type."
+"Multiple select"
 ],
 [
 "en-US",
@@ -34517,7 +35253,7 @@
 ],
 [
 "en-US",
-"Grid view. Grid view is the default spreadsheet-like view."
+"Grid view"
 ],
 [
 "en-US",
@@ -34525,7 +35261,7 @@
 ],
 [
 "en-US",
-"Gallery view. Gallery view shows one image per card."
+"Gallery view"
 ],
 [
 "en-US",
@@ -34533,7 +35269,7 @@
 ],
 [
 "en-US",
-"Collaborator. Add a collaborator to share the base."
+"Collaborator"
 ],
 [
 "en-US",
@@ -34541,7 +35277,7 @@
 ],
 [
 "en-US",
-"Attachment. Upload an attachment to the record."
+"Attachment"
 ],
 [
 "en-US",
@@ -34549,7 +35285,7 @@
 ],
 [
 "en-US",
-"Sort. Sort records by date, newest first."
+"Sort"
 ],
 [
 "en-US",
@@ -34557,7 +35293,7 @@
 ],
 [
 "en-US",
-"Group. Group records by status to see your pipeline."
+"Group"
 ],
 [
 "en-US",
@@ -34565,7 +35301,7 @@
 ],
 [
 "en-US",
-"Prompt. Write a clear prompt for better results."
+"Prompt"
 ],
 [
 "en-US",
@@ -34573,7 +35309,7 @@
 ],
 [
 "en-US",
-"Model. Choose the right model for your task."
+"Model"
 ],
 [
 "en-US",
@@ -34581,7 +35317,7 @@
 ],
 [
 "en-US",
-"Token. This request uses 500 tokens."
+"Token"
 ],
 [
 "en-US",
@@ -34589,7 +35325,7 @@
 ],
 [
 "en-US",
-"Context window. The context window limits how much text the AI reads."
+"Context window"
 ],
 [
 "en-US",
@@ -34597,7 +35333,7 @@
 ],
 [
 "en-US",
-"System prompt. Set a system prompt to define the AI's role and tone."
+"System prompt"
 ],
 [
 "en-US",
@@ -34605,7 +35341,7 @@
 ],
 [
 "en-US",
-"Temperature. Set temperature to 0 for precise, consistent answers."
+"Temperature"
 ],
 [
 "en-US",
@@ -34613,7 +35349,7 @@
 ],
 [
 "en-US",
-"Hallucination. Always verify AI outputs to avoid hallucinations."
+"Hallucination"
 ],
 [
 "en-US",
@@ -34621,7 +35357,7 @@
 ],
 [
 "en-US",
-"Embedding. Embeddings are used in semantic search."
+"Embedding"
 ],
 [
 "en-US",
@@ -34629,7 +35365,7 @@
 ],
 [
 "en-US",
-"RAG. RAG lets the AI search through your documents."
+"RAG"
 ],
 [
 "en-US",
@@ -34637,7 +35373,7 @@
 ],
 [
 "en-US",
-"API key. Keep your API key secret — never share it."
+"API key"
 ],
 [
 "en-US",
@@ -34645,7 +35381,7 @@
 ],
 [
 "en-US",
-"Tool use. Tool use lets the AI call external functions."
+"Tool use"
 ],
 [
 "en-US",
@@ -34653,7 +35389,7 @@
 ],
 [
 "en-US",
-"Streaming. Enable streaming to see the response word by word."
+"Streaming"
 ],
 [
 "en-US",
@@ -34661,7 +35397,7 @@
 ],
 [
 "en-US",
-"Rate limit. You hit the rate limit — wait a moment and retry."
+"Rate limit"
 ],
 [
 "en-US",
@@ -34669,7 +35405,7 @@
 ],
 [
 "en-US",
-"Batch. Use batch processing for large-scale tasks."
+"Batch"
 ],
 [
 "en-US",
@@ -34677,7 +35413,7 @@
 ],
 [
 "en-US",
-"Fine-tuning. Fine-tuning adapts the model to your specific data."
+"Fine-tuning"
 ],
 [
 "en-US",
@@ -34685,7 +35421,7 @@
 ],
 [
 "en-US",
-"Inference. The inference takes about 2 seconds on average."
+"Inference"
 ],
 [
 "en-US",
@@ -34693,7 +35429,7 @@
 ],
 [
 "en-US",
-"Agent. Build an AI agent to automate multi-step tasks."
+"Agent"
 ],
 [
 "en-US",
@@ -34701,7 +35437,7 @@
 ],
 [
 "en-US",
-"Output. The output is saved directly to Airtable."
+"Output"
 ],
 [
 "en-US",
@@ -34709,7 +35445,7 @@
 ],
 [
 "en-US",
-"Input. The input is the text you send to the model."
+"Input"
 ],
 [
 "en-US",
@@ -34717,7 +35453,7 @@
 ],
 [
 "en-US",
-"Endpoint. Call the API endpoint with your request."
+"Endpoint"
 ],
 [
 "en-US",
@@ -34865,291 +35601,551 @@
 ],
 [
 "pt-PT",
-"Olá. Olá! Como estás?"
+"Olá! Como estás?"
 ],
 [
 "pt-PT",
-"Bom dia. Bom dia! Tudo bem?"
+"Bom dia"
 ],
 [
 "pt-PT",
-"Boa tarde. Boa tarde, senhora Silva!"
+"Boa tarde"
 ],
 [
 "pt-PT",
-"Boa noite. Boa noite! Até amanhã."
+"Boa tarde! Como está a senhora?"
 ],
 [
 "pt-PT",
-"Adeus. Adeus e boa viagem!"
+"Boa noite! Até amanhã."
 ],
 [
 "pt-PT",
-"Até logo. Até logo, bom trabalho!"
+"Adeus"
 ],
 [
 "pt-PT",
-"Se faz favor. Uma bica, se faz favor."
+"Adeus e boa viagem!"
 ],
 [
 "pt-PT",
-"Obrigado. Muito obrigado pela ajuda!"
+"Até logo"
 ],
 [
 "pt-PT",
-"Obrigada. Obrigada, é muito simpático."
+"Até logo, bom trabalho!"
 ],
 [
 "pt-PT",
-"De nada. — Obrigado! — De nada!"
+"Se faz favor"
 ],
 [
 "pt-PT",
-"Desculpe. Desculpe, não percebi."
+"Obrigado"
 ],
 [
 "pt-PT",
-"Sim. Sim, com certeza!"
+"Muito obrigado pela ajuda!"
 ],
 [
 "pt-PT",
-"Não. Não, obrigado."
+"Obrigada"
 ],
 [
 "pt-PT",
-"Tudo bem?. Olá! Tudo bem contigo?"
+"Obrigada, é muito simpático."
 ],
 [
 "pt-PT",
-"Com licença. Com licença, posso passar?"
+"— Obrigado! — De nada!"
 ],
 [
 "pt-PT",
-"Casa. Estou em casa."
+"Desculpe, não percebi."
 ],
 [
 "pt-PT",
-"Trabalho. Vou para o trabalho às oito."
+"Sim"
 ],
 [
 "pt-PT",
-"Comida. A comida aqui é deliciosa!"
+"Sim, com certeza!"
 ],
 [
 "pt-PT",
-"Água. Pode trazer-me uma água?"
+"Não"
 ],
 [
 "pt-PT",
-"Bica. Tomo uma bica todas as manhãs."
+"Não, obrigado."
 ],
 [
 "pt-PT",
-"Pequeno-almoço. O pequeno-almoço está incluído."
+"Tudo bem?"
 ],
 [
 "pt-PT",
-"Pão. Queria pão com manteiga."
+"Olá! Tudo bem contigo?"
 ],
 [
 "pt-PT",
-"Restaurante. Vamos ao restaurante?"
+"Com licença"
 ],
 [
 "pt-PT",
-"Supermercado. Vou ao supermercado comprar leite."
+"Com licença, posso passar?"
 ],
 [
 "pt-PT",
-"Escola. As crianças estão na escola."
+"Casa"
 ],
 [
 "pt-PT",
-"Autocarro. O autocarro chega daqui a dez minutos."
+"Estou em casa."
 ],
 [
 "pt-PT",
-"Comboio. O comboio para o Porto está atrasado."
+"Trabalho"
 ],
 [
 "pt-PT",
-"Carro. O meu carro é vermelho."
+"Vou para o trabalho às oito."
 ],
 [
 "pt-PT",
-"Dinheiro. Não tenho dinheiro."
+"Comida"
 ],
 [
 "pt-PT",
-"Praia. Vou à praia ao fim de semana."
+"A comida aqui é deliciosa!"
 ],
 [
 "pt-PT",
-"Tempo. Hoje está um tempo lindo!"
+"Água"
 ],
 [
 "pt-PT",
-"Loja. Essa loja fecha às sete."
+"Pode trazer-me uma água?"
 ],
 [
 "pt-PT",
-"Casa de banho. Onde é a casa de banho?"
+"Bica"
 ],
 [
 "pt-PT",
-"Médico. Preciso de ir ao médico."
+"Tomo uma bica todas as manhãs."
 ],
 [
 "pt-PT",
-"Mãe. A minha mãe é professora."
+"Pequeno-almoço"
 ],
 [
 "pt-PT",
-"Pai. O meu pai trabalha muito."
+"O pequeno-almoço está incluído."
 ],
 [
 "pt-PT",
-"Filho. Tenho um filho de cinco anos."
+"Pão"
 ],
 [
 "pt-PT",
-"Filha. A minha filha adora dançar."
+"Queria pão com manteiga."
 ],
 [
 "pt-PT",
-"Irmão. O meu irmão mora em Lisboa."
+"Restaurante"
 ],
 [
 "pt-PT",
-"Irmã. Tenho duas irmãs."
+"Vamos ao restaurante?"
 ],
 [
 "pt-PT",
-"Avó. A minha avó faz o melhor bolo!"
+"Supermercado"
 ],
 [
 "pt-PT",
-"Avô. O meu avô tem 80 anos."
+"Vou ao supermercado comprar leite."
 ],
 [
 "pt-PT",
-"Marido. O meu marido é francês."
+"Escola"
 ],
 [
 "pt-PT",
-"Mulher. A minha mulher fala português."
+"As crianças estão na escola."
 ],
 [
 "pt-PT",
-"Amigo. O meu melhor amigo é português."
+"Autocarro"
 ],
 [
 "pt-PT",
-"Amiga. Tenho muitas amigas aqui."
+"O autocarro chega daqui a dez minutos."
 ],
 [
 "pt-PT",
-"Um / Uma. Queria um café."
+"Comboio"
 ],
 [
 "pt-PT",
-"Dois / Duas. Tenho dois filhos."
+"O comboio para o Porto está atrasado."
 ],
 [
 "pt-PT",
-"Três. São três horas."
+"Carro"
 ],
 [
 "pt-PT",
-"Quatro. Uma mesa para quatro pessoas."
+"O meu carro é vermelho."
 ],
 [
 "pt-PT",
-"Cinco. Cinco dias de trabalho."
+"Dinheiro"
 ],
 [
 "pt-PT",
-"Seis. São seis da tarde."
+"Não tenho dinheiro."
 ],
 [
 "pt-PT",
-"Sete. Sete dias na semana."
+"Praia"
 ],
 [
 "pt-PT",
-"Oito. Oito horas da manhã."
+"Vou à praia ao fim de semana."
 ],
 [
 "pt-PT",
-"Nove. Nove meses de gravidez."
+"Tempo"
 ],
 [
 "pt-PT",
-"Dez. Dez euros, se faz favor."
+"Hoje está um tempo lindo!"
 ],
 [
 "pt-PT",
-"Dezasseis. Ela tem dezasseis anos."
+"Loja"
 ],
 [
 "pt-PT",
-"Vinte. Tenho vinte anos."
+"Essa loja fecha às sete."
 ],
 [
 "pt-PT",
-"Cem. Custa cem euros."
+"Casa de banho"
 ],
 [
 "pt-PT",
-"Mil. Mil pessoas no concerto."
+"Onde é a casa de banho?"
 ],
 [
 "pt-PT",
-"Computador. O meu computador bloqueou."
+"Médico"
 ],
 [
 "pt-PT",
-"Telemóvel. Esqueci-me do telemóvel em casa."
+"Preciso de ir ao médico."
 ],
 [
 "pt-PT",
-"Internet. A internet está lenta hoje."
+"Mãe"
 ],
 [
 "pt-PT",
-"Palavra-passe. Esqueci-me da palavra-passe."
+"A minha mãe é professora."
 ],
 [
 "pt-PT",
-"Aplicação. Descarreguei uma nova aplicação."
+"Pai"
 ],
 [
 "pt-PT",
-"Ficheiro. Onde está o ficheiro?"
+"O meu pai trabalha muito."
 ],
 [
 "pt-PT",
-"Ecrã. Pode partilhar o ecrã?"
+"Filho"
 ],
 [
 "pt-PT",
-"Reunião. A reunião começa às dez."
+"Tenho um filho de cinco anos."
 ],
 [
 "pt-PT",
-"Projeto. O nosso projeto está atrasado."
+"Filha"
 ],
 [
 "pt-PT",
-"Automatização. A automatização poupa tempo."
+"A minha filha adora dançar."
 ],
 [
 "pt-PT",
-"Nuvem. O ficheiro está na nuvem."
+"Irmão"
 ],
 [
 "pt-PT",
-"Equipa. A nossa equipa é ótima!"
+"O meu irmão mora em Lisboa."
+],
+[
+"pt-PT",
+"Irmã"
+],
+[
+"pt-PT",
+"Avó"
+],
+[
+"pt-PT",
+"A minha avó faz o melhor bolo!"
+],
+[
+"pt-PT",
+"Avô"
+],
+[
+"pt-PT",
+"O meu avô tem 80 anos."
+],
+[
+"pt-PT",
+"Marido"
+],
+[
+"pt-PT",
+"O meu marido é francês."
+],
+[
+"pt-PT",
+"Mulher"
+],
+[
+"pt-PT",
+"A minha mulher fala português."
+],
+[
+"pt-PT",
+"Amigo"
+],
+[
+"pt-PT",
+"O meu melhor amigo é português."
+],
+[
+"pt-PT",
+"Amiga"
+],
+[
+"pt-PT",
+"Tenho muitas amigas aqui."
+],
+[
+"pt-PT",
+"Um, Uma"
+],
+[
+"pt-PT",
+"Queria um café."
+],
+[
+"pt-PT",
+"Dois, Duas"
+],
+[
+"pt-PT",
+"Tenho dois filhos."
+],
+[
+"pt-PT",
+"Três"
+],
+[
+"pt-PT",
+"São três horas."
+],
+[
+"pt-PT",
+"Quatro"
+],
+[
+"pt-PT",
+"Uma mesa para quatro pessoas."
+],
+[
+"pt-PT",
+"Cinco"
+],
+[
+"pt-PT",
+"Cinco dias de trabalho."
+],
+[
+"pt-PT",
+"Seis"
+],
+[
+"pt-PT",
+"São seis da tarde."
+],
+[
+"pt-PT",
+"Sete"
+],
+[
+"pt-PT",
+"Sete dias na semana."
+],
+[
+"pt-PT",
+"Oito"
+],
+[
+"pt-PT",
+"Oito horas da manhã."
+],
+[
+"pt-PT",
+"Nove"
+],
+[
+"pt-PT",
+"Nove meses de gravidez."
+],
+[
+"pt-PT",
+"Dez"
+],
+[
+"pt-PT",
+"Dez euros, se faz favor."
+],
+[
+"pt-PT",
+"Dezasseis"
+],
+[
+"pt-PT",
+"Ela tem dezasseis anos."
+],
+[
+"pt-PT",
+"Vinte"
+],
+[
+"pt-PT",
+"Tenho vinte anos."
+],
+[
+"pt-PT",
+"Cem"
+],
+[
+"pt-PT",
+"Custa cem euros."
+],
+[
+"pt-PT",
+"Mil"
+],
+[
+"pt-PT",
+"Mil pessoas no concerto."
+],
+[
+"pt-PT",
+"Computador"
+],
+[
+"pt-PT",
+"O meu computador bloqueou."
+],
+[
+"pt-PT",
+"Telemóvel"
+],
+[
+"pt-PT",
+"Esqueci-me do telemóvel em casa."
+],
+[
+"pt-PT",
+"Internet"
+],
+[
+"pt-PT",
+"A internet está lenta hoje."
+],
+[
+"pt-PT",
+"Palavra-passe"
+],
+[
+"pt-PT",
+"Esqueci-me da palavra-passe."
+],
+[
+"pt-PT",
+"Aplicação"
+],
+[
+"pt-PT",
+"Descarreguei uma nova aplicação."
+],
+[
+"pt-PT",
+"Ficheiro"
+],
+[
+"pt-PT",
+"Onde está o ficheiro?"
+],
+[
+"pt-PT",
+"Ecrã"
+],
+[
+"pt-PT",
+"Pode partilhar o ecrã?"
+],
+[
+"pt-PT",
+"Reunião"
+],
+[
+"pt-PT",
+"A reunião começa às dez."
+],
+[
+"pt-PT",
+"Projeto"
+],
+[
+"pt-PT",
+"O nosso projeto está atrasado."
+],
+[
+"pt-PT",
+"Automatização"
+],
+[
+"pt-PT",
+"A automatização poupa tempo."
+],
+[
+"pt-PT",
+"Nuvem"
+],
+[
+"pt-PT",
+"O ficheiro está na nuvem."
+],
+[
+"pt-PT",
+"Equipa"
+],
+[
+"pt-PT",
+"A nossa equipa é ótima!"
 ],
 [
 "pt-PT",
@@ -35181,10 +36177,6 @@
 ],
 [
 "pt-PT",
-"Onde é a casa de banho?"
-],
-[
-"pt-PT",
 "Há wi-fi aqui?"
 ],
 [
@@ -35213,19 +36205,7 @@
 ],
 [
 "pt-PT",
-"O ficheiro está na nuvem."
-],
-[
-"pt-PT",
-"O nosso projeto está atrasado."
-],
-[
-"pt-PT",
 "Temos de automatizar isto."
-],
-[
-"pt-PT",
-"Pode partilhar o ecrã?"
 ],
 [
 "pt-PT",
