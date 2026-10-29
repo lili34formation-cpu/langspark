@@ -978,7 +978,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v45</span>
+          <span style="font-size:10px;color:#444">v46</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -5844,7 +5844,7 @@ function bbRender() {
         <div class="bb-speak-status" id="bb-speak-status">Appuyez sur le micro et prononcez</div>
       </div>
       <div id="bb-feedback"></div>
-      <button class="bb-next-btn bb-btn-ghost" id="bb-skip" onclick="bbNext()">Passer (micro indisponible) →</button>`;
+      <button class="bb-next-btn bb-btn-ghost" id="bb-skip" onclick="bbNext()">🗣️ Sans micro : je l'ai répété à voix haute →</button>`;
   }
 
   const html = `
@@ -6059,6 +6059,24 @@ function bbSpeakScore(spoken, expected) {
   return eWords.filter(w => sWords.includes(w)).length / eWords.length;
 }
 
+// Explication claire selon la cause (iPhone surtout) quand le micro ne marche pas
+function bbMicHelp(code) {
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  const installed = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  if (ios && installed && (!code || code === 'service-not-allowed' || code === 'not-allowed'))
+    return "Sur iPhone, le micro ne fonctionne pas quand l'app est ouverte depuis l'icône de l'écran d'accueil. Ouvrez-la dans <b>Safari</b> (même adresse) pour les exercices de prononciation — votre progression suit grâce à votre compte.";
+  if (!code) return "Votre navigateur ne gère pas la reconnaissance vocale. Utilisez <b>Safari</b> sur iPhone, ou <b>Chrome</b> sur Android / ordinateur.";
+  if (code === 'not-allowed') return ios
+    ? "L'accès au micro est refusé. Dans Safari, touchez <b>aA</b> (ou l'icône à gauche de l'adresse) › <b>Réglages du site web</b> › <b>Micro</b> › <b>Autoriser</b>. Vérifiez aussi <b>Réglages › Safari › Micro</b>."
+    : "L'accès au micro est refusé. Touchez le cadenas à gauche de l'adresse › <b>Micro</b> › <b>Autoriser</b>, puis rechargez la page.";
+  if (code === 'service-not-allowed') return ios
+    ? "La reconnaissance vocale est désactivée. Activez la dictée : <b>Réglages › Général › Clavier › Activer Dictée</b>, puis rechargez la page."
+    : "La reconnaissance vocale est bloquée par le navigateur. Essayez avec Chrome.";
+  if (code === 'audio-capture') return "Aucun micro détecté. Vérifiez qu'aucune autre app (appel, enregistreur…) ne l'utilise.";
+  if (code === 'network') return "La reconnaissance vocale a besoin d'Internet. Vérifiez votre connexion.";
+  return `Le micro n'a pas fonctionné (${bbEsc(code)}). Réessayez.`;
+}
+
 function bbSpeak() {
   const ex = bbState.steps[bbState.idx];
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -6067,8 +6085,7 @@ function bbSpeak() {
   const fbBox = document.getElementById('bb-feedback');
 
   if (!SR) {
-    fbBox.innerHTML = `<div class="bb-feedback ko">❌ Votre navigateur ne supporte pas la reconnaissance vocale. Utilisez Chrome.</div>
-      <button class="bb-next-btn" onclick="bbNext()">Passer →</button>`;
+    fbBox.innerHTML = `<div class="bb-feedback ko">⚠️ ${bbMicHelp('')}</div>`;
     return;
   }
 
@@ -6121,10 +6138,10 @@ function bbSpeak() {
     if (skip) skip.remove();
     btn.classList.remove('listening');
     status.textContent = '';
-    fbBox.innerHTML = `<div class="bb-feedback ko">⚠️ Micro non détecté (${bbEsc(err.error)}). Vérifiez les permissions.</div>
+    fbBox.innerHTML = `<div class="bb-feedback ko">⚠️ ${bbMicHelp(err.error)}</div>
       <div style="display:flex;gap:10px">
         <button class="bb-next-btn bb-btn-ghost" onclick="bbSpeak()">🎤 Réessayer</button>
-        <button class="bb-next-btn" onclick="bbNext()">Passer →</button>
+        <button class="bb-next-btn" onclick="bbNext()">🗣️ Sans micro : je l'ai dit →</button>
       </div>`;
   };
 
