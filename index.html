@@ -101,6 +101,9 @@
 
         /* ── Category tabs ── */
         .category-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+        #pt-cat-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+        #pt-cat-tabs .cat-tab { flex: 0 0 auto; white-space: nowrap; }
+        #pt-cat-tabs .cat-tab.active, #pt-mode-tabs .cat-tab.active { background: var(--accent); }
         .cat-tab {
             padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
             cursor: pointer; border: 1px solid var(--border); color: var(--text-secondary);
@@ -978,7 +981,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v46</span>
+          <span style="font-size:10px;color:#444">v47</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -1361,14 +1364,7 @@
         </div>
 
         <!-- Category filter -->
-        <div class="category-tabs" id="pt-cat-tabs">
-            <button class="cat-tab active" data-cat="all"         onclick="setPtCat('all',this)">Tout</button>
-            <button class="cat-tab"        data-cat="salutations" onclick="setPtCat('salutations',this)">👋 Salutations</button>
-            <button class="cat-tab"        data-cat="quotidien"   onclick="setPtCat('quotidien',this)">🏠 Quotidien</button>
-            <button class="cat-tab"        data-cat="famille"     onclick="setPtCat('famille',this)">👨‍👩‍👧 Famille</button>
-            <button class="cat-tab"        data-cat="chiffres"    onclick="setPtCat('chiffres',this)">🔢 Chiffres</button>
-            <button class="cat-tab"        data-cat="tech"        onclick="setPtCat('tech',this)">💻 Tech</button>
-        </div>
+        <div class="category-tabs" id="pt-cat-tabs"></div>
 
         <div id="pt-content"></div>
     </div>
@@ -1449,6 +1445,7 @@
 <script src="courses/listen-pt.js"></script>
 <script src="courses/listen-en.js"></script>
 <script src="courses/listen-es.js"></script>
+<script src="courses/cards-pt.js"></script>
 <script>
 // ════════════════════════════════════════
 //  DATA
@@ -1626,8 +1623,10 @@ function showView(v) {
   if (v === 'quiz')       startQuiz();
   if (v === 'flashcards') renderFC();
   if (v === 'pt') {
-    ptMode='fc'; ptCat='all'; ptFcIndex=0; ptFlipped=false; ptCards=[...ptVocab];
+    ptMode='fc'; ptCat='all'; ptFcIndex=0; ptFlipped=false; ptFcAll=false; ptCards=ptFcQueue('all');
     document.getElementById('pt-cat-tabs').style.display='flex';
+    ptRenderCats();
+    document.querySelectorAll('#pt-mode-tabs .cat-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === 'fc'));
     renderPt();
   }
   if (v === 'airtable')  { initATView(); }
@@ -3012,7 +3011,80 @@ let ptMode    = 'fc';
 let ptCat     = 'all';
 let ptFcIndex = 0;
 let ptFlipped = false;
-let ptCards   = [...ptVocab];
+// Paquets : les anciens thèmes + ceux de courses/cards-pt.js
+const PT_DECK_META = [
+  { id: 'salutations', icon: '👋', title: 'Salutations' },
+  { id: 'quotidien', icon: '🏠', title: 'Quotidien' },
+  { id: 'famille', icon: '👨‍👩‍👧', title: 'Famille' },
+  { id: 'chiffres', icon: '🔢', title: 'Chiffres' },
+  ...(window.PT_DECKS || []).map(d => ({ id: d.id, icon: d.icon, title: d.title })),
+  { id: 'tech', icon: '💻', title: 'Travail & tech' },
+];
+(window.PT_DECKS || []).forEach(d => d.cards.forEach(([pt, fr, ex, exFr]) => ptVocab.push({ pt, fr, ex, exFr, category: d.id })));
+
+// ── Répétition espacée (boîtes de Leitner) — synchronisée avec le compte (préfixe bb_) ──
+const PT_FC_KEY = 'bb_fc_pt';
+const PT_FC_DAYS = [0, 1, 3, 7, 16, 35];   // délai avant de revoir une carte, selon sa boîte
+const PT_FC_NEW = 15;                       // nouvelles cartes par séance
+let ptFcDir = (() => { try { return localStorage.getItem('pt_fc_dir') || 'pt'; } catch { return 'pt'; } })();
+let ptFcAll = false;
+
+function ptFcMem() { try { return JSON.parse(localStorage.getItem(PT_FC_KEY)) || {}; } catch { return {}; } }
+function ptFcPool(cat) { return cat === 'all' ? ptVocab : ptVocab.filter(v => v.category === cat); }
+function ptFcStats(cat) {
+  const m = ptFcMem(), now = Date.now(), pool = ptFcPool(cat);
+  const seen = pool.filter(c => m[c.pt]);
+  return {
+    total: pool.length,
+    fresh: pool.length - seen.length,
+    due: seen.filter(c => m[c.pt].d <= now).length,
+    known: seen.filter(c => m[c.pt].b >= 4).length,
+    next: seen.filter(c => m[c.pt].d > now).reduce((t, c) => Math.min(t, m[c.pt].d), Infinity),
+  };
+}
+// File de la séance : d'abord les cartes à revoir, puis quelques nouvelles
+function ptFcQueue(cat) {
+  const m = ptFcMem(), now = Date.now(), pool = ptFcPool(cat);
+  if (ptFcAll) return [...pool].sort(() => Math.random() - .5);
+  const due = pool.filter(c => m[c.pt] && m[c.pt].d <= now).sort((a, b) => m[a.pt].b - m[b.pt].b);
+  const fresh = pool.filter(c => !m[c.pt]).slice(0, PT_FC_NEW);
+  return [...due, ...fresh];
+}
+function ptFcGrade(ok) {
+  const c = ptCards[0];
+  if (!c) return;
+  const m = ptFcMem();
+  const b = ok ? Math.min((m[c.pt]?.b ?? 0) + 1, PT_FC_DAYS.length - 1) : 0;
+  m[c.pt] = { b, d: Date.now() + PT_FC_DAYS[b] * 864e5 };
+  localStorage.setItem(PT_FC_KEY, JSON.stringify(m));
+  ptCards.shift();
+  if (!ok) ptCards.splice(Math.min(3, ptCards.length), 0, c);   // revient quelques cartes plus loin
+  if (ok) sparkOnCorrect();
+  ptFlipped = false;
+  ptRenderCats();
+  renderPtFlashcards();
+}
+function ptFcSetDir(d) {
+  ptFcDir = d; ptFlipped = false;
+  try { localStorage.setItem('pt_fc_dir', d); } catch {}
+  renderPtFlashcards();
+}
+function ptFcReviewAll() { ptFcAll = true; ptCards = ptFcQueue(ptCat); ptFlipped = false; renderPtFlashcards(); }
+
+function ptRenderCats() {
+  const el = document.getElementById('pt-cat-tabs');
+  if (!el) return;
+  const tab = (id, label) => {
+    const st = ptFcStats(id);
+    return `<button class="cat-tab${ptCat === id ? ' active' : ''}" onclick="setPtCat('${id}',this)">${label}
+      <span style="font-size:11px;opacity:.7">${st.known}/${st.total}${st.due ? ` · 🔁${st.due}` : ''}</span></button>`;
+  };
+  el.innerHTML = tab('all', 'Tout') + PT_DECK_META.map(d => tab(d.id, `${d.icon} ${bbEsc(d.title)}`)).join('');
+  const act = el.querySelector('.active');
+  if (act) el.scrollLeft = act.offsetLeft - 16;
+}
+
+let ptCards   = ptFcQueue('all');
 let ptQuizQ   = [];
 let ptQIndex  = 0;
 let ptQScore  = 0;
@@ -3031,8 +3103,9 @@ function setPtCat(cat, el) {
   document.querySelectorAll('#pt-cat-tabs .cat-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   ptCat = cat;
-  ptFcIndex = 0; ptFlipped = false;
-  ptCards = cat === 'all' ? [...ptVocab] : ptVocab.filter(v => v.category === cat);
+  ptFcIndex = 0; ptFlipped = false; ptFcAll = false;
+  ptCards = ptFcQueue(cat);
+  ptRenderCats();
   renderPt();
 }
 
@@ -3045,32 +3118,57 @@ function renderPt() {
 
 // ── PT Flashcards ──
 function renderPtFlashcards() {
-  const cards = ptCards;
-  if (!cards.length) { document.getElementById('pt-content').innerHTML = '<p style="color:var(--text-secondary);padding:20px">Aucun mot dans cette catégorie.</p>'; return; }
-  const c = cards[ptFcIndex];
-  const catColors = { salutations:'#22c55e', quotidien:'#3b82f6', famille:'#f472b6', chiffres:'#f59e0b', tech:'#a855f7' };
-  const col = catColors[c.category] || 'var(--accent)';
-
-  document.getElementById('pt-content').innerHTML = `
+  const el = document.getElementById('pt-content');
+  const st = ptFcStats(ptCat);
+  const dirBtn = (d, label) => `<button class="cat-tab${ptFcDir === d ? ' active' : ''}"${ptFcDir === d ? ' style="background:var(--accent)"' : ''} onclick="ptFcSetDir('${d}')">${label}</button>`;
+  const head = `
     <div class="flashcard-container">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px">
+        ${dirBtn('pt', '🇵🇹 → 🇫🇷 Comprendre')}${dirBtn('fr', '🇫🇷 → 🇵🇹 Retrouver le mot')}
+      </div>
+      <div style="text-align:center;font-size:13px;color:var(--text-secondary);margin-bottom:14px">
+        🆕 ${st.fresh} nouvelles · 🔁 ${st.due} à revoir · ⭐ ${st.known} bien ancrées sur ${st.total}
+      </div>`;
+  const c = ptCards[0];
+  if (!c) {
+    const next = st.next < Infinity ? new Date(st.next).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+    el.innerHTML = head + `
+      <div class="quiz-results">
+        <div style="font-size:54px;margin-bottom:10px">🎉</div>
+        <div class="result-label">${st.fresh ? 'Séance terminée, bravo !' : "Rien à réviser pour l'instant dans ce paquet"}</div>
+        <div class="result-sub">${next ? `Prochaine révision : ${next}. Les cartes reviennent juste avant que vous ne les oubliiez.` : 'Choisissez un autre paquet pour découvrir de nouveaux mots.'}</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          ${st.fresh ? `<button class="btn btn-success" onclick="ptFcAll=false;ptCards=ptFcQueue(ptCat);renderPtFlashcards()">➕ ${Math.min(st.fresh, PT_FC_NEW)} nouveaux mots</button>` : ''}
+          <button class="btn btn-secondary" onclick="ptFcReviewAll()">🔄 Revoir tout le paquet quand même</button>
+          <button class="btn btn-primary" onclick="setPtMode('quiz',document.querySelector('#pt-mode-tabs [data-cat=quiz]'))">⚡ Faire le quiz</button>
+        </div>
+      </div></div>`;
+    return;
+  }
+  const meta = PT_DECK_META.find(d => d.id === c.category) || { icon: '', title: c.category };
+  const m = ptFcMem()[c.pt];
+  const status = !m ? '🆕 Nouvelle carte' : m.b >= 4 ? '⭐ Bien retenue' : `🔁 Révision (niveau ${m.b}/5)`;
+  const ptFace = `
+    <div class="card-category-badge" style="background:#22c55e22;color:#22c55e">🇵🇹 Portugais</div>
+    <div class="card-word" style="font-size:30px">${bbEsc(c.pt)}</div>
+    ${c.prononc ? `<div style="font-size:13px;color:var(--accent2);margin-top:6px">🔊 ${bbEsc(c.prononc)}</div>` : ''}`;
+  const frFace = `
+    <div class="card-category-badge" style="background:#6c63ff22;color:#a5a0ff">🇫🇷 Français</div>
+    <div class="card-translation">${bbEsc(c.fr)}</div>`;
+  const example = c.ex ? `<div class="card-example">🇵🇹 « ${bbEsc(c.ex)} »</div><div class="card-example-fr">🇫🇷 ${bbEsc(c.exFr)}</div>` : '';
+  const front = ptFcDir === 'pt' ? ptFace : frFace;
+  const back = ptFcDir === 'pt' ? frFace + example : ptFace + example;
+  el.innerHTML = head + `
       <div class="flashcard-meta">
-        <span>${ptFcIndex+1} / ${cards.length}</span>
-        <span style="color:${col};font-weight:600;font-size:13px">${c.category.charAt(0).toUpperCase()+c.category.slice(1)}</span>
+        <span>${meta.icon} ${bbEsc(meta.title)} · ${status}</span>
+        <span>Reste ${ptCards.length}</span>
       </div>
       <div class="flashcard-wrapper" onclick="flipPtCard()" style="cursor:pointer">
-        <div class="flashcard ${ptFlipped?'flipped':''}" id="pt-card">
-          <div class="card-face front" style="border-color:${col}44">
-            <div class="card-category-badge" style="background:${col}22;color:${col}">🇵🇹 Portugais</div>
-            <div class="card-word" style="font-size:32px">${c.pt}</div>
-            <div style="font-size:13px;color:var(--accent2);margin-top:6px">🔊 ${c.prononc}</div>
-            <div class="card-hint" style="margin-top:14px">Cliquez pour voir la traduction →</div>
+        <div class="flashcard ${ptFlipped ? 'flipped' : ''}" id="pt-card">
+          <div class="card-face front">${front}
+            <div class="card-hint" style="margin-top:14px">${ptFcDir === 'pt' ? 'Que veut dire ce mot ? Touchez pour vérifier →' : 'Dites le mot en portugais, puis touchez pour vérifier →'}</div>
           </div>
-          <div class="card-face back" style="border-color:${col}44">
-            <div class="card-category-badge" style="background:${col}22;color:${col}">🇫🇷 Français</div>
-            <div class="card-translation">${c.fr}</div>
-            <div class="card-example">🇵🇹 « ${c.ex} »</div>
-            <div class="card-example-fr">🇫🇷 ${c.exFr}</div>
-          </div>
+          <div class="card-face back">${back}</div>
         </div>
       </div>
       <button onclick="pronouncePt()" style="
@@ -3079,14 +3177,14 @@ function renderPtFlashcards() {
           background:var(--accent);color:white;border:none;border-radius:14px;
           cursor:pointer;box-shadow:0 4px 16px rgba(108,99,255,.4);transition:all .2s;
           " id="btn-pronounce-pt">🔊 Écouter le mot</button>
-      <button onclick="pronouncePtExample()" class="fc-example-btn" id="btn-pronounce-pt-ex">🔊 Écouter l'exemple</button>
+      ${c.ex ? `<button onclick="pronouncePtExample()" class="fc-example-btn" id="btn-pronounce-pt-ex">🔊 Écouter l'exemple</button>` : ''}
       <div class="flashcard-actions">
-        <button class="btn btn-secondary" onclick="ptPrev()">← Précédent</button>
-        <button class="btn btn-danger"    onclick="ptNext()">À revoir</button>
-        <button class="btn btn-success"   onclick="ptNext()">Je connais ✓</button>
-        <button class="btn btn-secondary" onclick="ptNext()">Suivant →</button>
+        <button class="btn btn-danger"  onclick="ptFcGrade(false)">🔁 À revoir</button>
+        <button class="btn btn-success" onclick="ptFcGrade(true)">✓ Je savais</button>
       </div>
-      <div class="card-counter">${cards.map((_,i)=>`<div class="dot ${i===ptFcIndex?'current':''}"></div>`).join('')}</div>
+      <div style="text-align:center;font-size:12px;color:var(--text-secondary);max-width:520px;margin:0 auto">
+        « Je savais » : la carte revient dans quelques jours, puis de plus en plus tard. « À revoir » : elle revient tout de suite.
+      </div>
     </div>`;
 }
 
@@ -3095,12 +3193,12 @@ function speakPhrase(btn) {
 }
 
 function pronouncePt() {
-  const c = ptCards[ptFcIndex];
+  const c = ptCards[0];
   if (!c) return;
   speakEL(c.pt, 'pt-PT', document.getElementById('btn-pronounce-pt'));
 }
 function pronouncePtExample() {
-  const c = ptCards[ptFcIndex];
+  const c = ptCards[0];
   if (!c || !c.ex) return;
   // on montre la phrase avant de la faire entendre
   if (!ptFlipped) { ptFlipped = true; document.getElementById('pt-card')?.classList.add('flipped'); }
@@ -3110,16 +3208,16 @@ function pronouncePtExample() {
 function flipPtCard() {
   ptFlipped = !ptFlipped;
   document.getElementById('pt-card')?.classList.toggle('flipped', ptFlipped);
+  if (ptFlipped && ptFcDir === 'fr') pronouncePt();   // on entend la réponse portugaise
 }
-function ptNext() { ptFlipped=false; ptFcIndex=(ptFcIndex+1)%ptCards.length; renderPtFlashcards(); sparkOnCorrect(); }
-function ptPrev() { ptFlipped=false; ptFcIndex=(ptFcIndex-1+ptCards.length)%ptCards.length; renderPtFlashcards(); }
 
 // ── PT Quiz ──
 function startPtQuiz() {
   const pool = ptCat==='all' ? ptVocab : ptVocab.filter(v=>v.category===ptCat);
   const shuffled = [...pool].sort(()=>Math.random()-.5).slice(0,Math.min(10,pool.length));
   ptQuizQ = shuffled.map(item => {
-    const wrong = ptVocab.filter(v=>v.pt!==item.pt).sort(()=>Math.random()-.5).slice(0,3).map(v=>v.fr);
+    const same = ptVocab.filter(v => v.category === item.category && v.fr !== item.fr);
+    const wrong = [...new Set((same.length >= 3 ? same : ptVocab.filter(v => v.fr !== item.fr)).sort(()=>Math.random()-.5).map(v=>v.fr))].slice(0,3);
     const options = [...wrong, item.fr].sort(()=>Math.random()-.5);
     return { pt:item.pt, prononc:item.prononc, correct:item.fr, options, ex:item.ex, exFr:item.exFr };
   });
@@ -3182,7 +3280,7 @@ function nextPtQ() {
 function renderPtResults() {
   const pct = Math.round(ptQScore/ptQuizQ.length*100);
   const ok  = pct>=70;
-  const msg = pct>=90?"Incrível! Você é um craque! 🏆":pct>=70?"Muito bem! Continue assim! 🌟":pct>=50?"Bom começo! Continue estudando 📚":"Não desista! Você vai conseguir! 💪";
+  const msg = pct>=90?"Excelente! És um craque! 🏆":pct>=70?"Muito bem! Continua assim! 🌟":pct>=50?"Bom começo! Continua a estudar 📚":"Não desistas! Vais conseguir! 💪";
   document.getElementById('pt-content').innerHTML = `
     <div class="quiz-results">
       <div style="font-size:60px;margin-bottom:12px">${ok?'🇵🇹':'📚'}</div>
@@ -3200,7 +3298,10 @@ function renderPtResults() {
 // ── PT Phrases ──
 function renderPtPhrases() {
   const cat = ptCat==='all' ? null : ptCat;
-  const list = cat ? ptPhrases.filter(p=>p.category===cat) : ptPhrases;
+  // les phrases d'exemple des paquets thématiques s'ajoutent aux phrases de base
+  const deckPhrases = (window.PT_DECKS || []).flatMap(d => d.cards.map(([w, , ex, exFr]) => ({ pt: ex, fr: exFr, category: d.id, context: w })));
+  const all = [...ptPhrases, ...deckPhrases];
+  const list = cat ? all.filter(p=>p.category===cat) : all;
   document.getElementById('pt-content').innerHTML = `
     <div class="phrases-grid">
       ${list.map(p=>`
