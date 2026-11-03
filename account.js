@@ -10,6 +10,7 @@ const SUPABASE_KEY = 'sb_publishable_SDO0DRapm4GQMeXWUmndvQ_Qw7qv95o';
 
 const ACCT_PREFIXES = ['bb_', 'cj_', 'te_'];   // progression synchronisée (jamais la clé d'API Claude)
 const ACCT_OWNER_KEY = 'acct_owner';           // id du compte à qui appartient la progression locale
+const ACCT_USER_KEY = 'acct_user';             // dernière personne connectée : permet d'ouvrir l'app sans réseau
 const ACCT_APP_URL = location.origin + location.pathname;
 
 // Tant que le projet Supabase n'est pas renseigné, l'app fonctionne comme avant, sans comptes
@@ -21,6 +22,34 @@ let acctUser = null;
 let acctSyncTimer = null;
 let acctApplying = false;
 let acctLastSync = null;
+let acctOffline = false;   // ouvert sans réseau : la session sera revérifiée au retour du réseau
+
+// Erreur réseau (avion, pas de 4G…) ≠ session vraiment expirée ou révoquée
+const acctIsNetworkError = e => !!e && (e.name === 'AuthRetryableFetchError' || e.status === 0 || /fetch|network|load failed|timeout/i.test(e.message || ''));
+function acctCachedUser() {
+  try {
+    // à défaut, la session gardée par Supabase sur l'appareil (même expirée) contient la personne
+    const u = JSON.parse(localStorage.getItem(ACCT_USER_KEY))
+      || JSON.parse(localStorage.getItem('sb-' + new URL(SUPABASE_URL).hostname.split('.')[0] + '-auth-token'))?.user;
+    return u && u.id && u.id === localStorage.getItem(ACCT_OWNER_KEY) ? u : null;
+  } catch (e) { return null; }
+}
+// getSession peut attendre longtemps sur un réseau qui ne répond pas : on abandonne au bout de 6 s
+async function acctGetSession() {
+  const timeout = new Promise(res => setTimeout(() => res({ data: { session: null }, error: { name: 'AuthRetryableFetchError', message: 'timeout' } }), 6000));
+  try { return await Promise.race([sb.auth.getSession(), timeout]); }
+  catch (e) { return { data: { session: null }, error: e }; }
+}
+// Au retour du réseau : on récupère une vraie session (ou on redemande la connexion si elle a été révoquée)
+async function acctRecheckSession() {
+  const { data: { session }, error } = await acctGetSession();
+  if (session) { acctUser = session.user; acctOffline = false; return true; }
+  if (!navigator.onLine || acctIsNetworkError(error)) return false;
+  acctOffline = false;
+  acctUser = null;
+  acctShowGate('login', 'Votre session a expiré : reconnectez-vous. Votre progression faite hors ligne est conservée sur cet appareil.');
+  return false;
+}
 
 const acctIsSyncKey = k => ACCT_PREFIXES.some(p => k.startsWith(p));
 const acctName = u => u?.user_metadata?.name || u?.email?.split('@')[0] || '';
@@ -80,6 +109,7 @@ function acctScheduleSync() {
 async function acctSync() {
   if (!acctUser) return false;
   clearTimeout(acctSyncTimer);
+  if (acctOffline && !(await acctRecheckSession())) { acctUpdateBadges(true); return false; }
   try {
     const { data: row, error } = await sb.from('progress').select('data').eq('user_id', acctUser.id).maybeSingle();
     if (error) throw error;
@@ -258,6 +288,7 @@ async function acctStart(user) {
     acctClearLocal();
   }
   localStorage.setItem(ACCT_OWNER_KEY, user.id);
+  localStorage.setItem(ACCT_USER_KEY, JSON.stringify({ id: user.id, email: user.email, user_metadata: { name: user.user_metadata?.name || '' } }));
   acctHideGate();
   await acctSync();
   acctRefreshView();
@@ -269,6 +300,7 @@ async function acctLogout() {
   await acctSync();
   acctClearLocal();
   localStorage.removeItem(ACCT_OWNER_KEY);
+  localStorage.removeItem(ACCT_USER_KEY);
   await sb.auth.signOut();
   acctUser = null;
   location.reload();
@@ -281,6 +313,7 @@ async function acctDeleteAccount() {
   if (error) return alert('❌ Suppression impossible : ' + acctError(error));
   acctClearLocal();
   localStorage.removeItem(ACCT_OWNER_KEY);
+  localStorage.removeItem(ACCT_USER_KEY);
   await sb.auth.signOut();
   alert('Votre compte a été supprimé.');
   location.reload();
@@ -322,9 +355,20 @@ document.addEventListener('visibilitychange', () => {
 
 (async () => {
   const isRecovery = /type=recovery/.test(location.hash);
-  const { data: { session } } = await sb.auth.getSession();
+  const cached = acctCachedUser();
+  // en mode avion, inutile d'attendre Supabase
+  const { data: { session }, error } = !navigator.onLine && cached && !isRecovery
+    ? { data: { session: null }, error: null } : await acctGetSession();
   if (isRecovery) return;   // l'événement PASSWORD_RECOVERY affichera le formulaire
   if (session) await acctStart(session.user);
+  else if (cached && (!navigator.onLine || acctIsNetworkError(error))) {
+    // Pas de réseau (avion…) : on continue avec la dernière personne connectée, tout est gardé sur l'appareil
+    acctUser = cached;
+    acctOffline = true;
+    acctHideGate();
+    acctRefreshView();
+    acctUpdateBadges(true);
+  }
   else acctShowGate('login');
   if (location.hash.includes('access_token')) history.replaceState(null, '', ACCT_APP_URL);
 })();
