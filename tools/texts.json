@@ -2809,11 +2809,11 @@
 ],
 [
 "en-US",
-"Nice to meet you!"
+"I'm not very good at English."
 ],
 [
 "en-US",
-"I'm not very good at English."
+"Nice to meet you!"
 ],
 [
 "en-US",
@@ -2869,7 +2869,7 @@
 ],
 [
 "en-US",
-"That's thirteen euros, please."
+"The train leaves at quarter to eight."
 ],
 [
 "en-US",
@@ -2877,7 +2877,7 @@
 ],
 [
 "en-US",
-"The train leaves at quarter to eight."
+"That's thirteen euros, please."
 ],
 [
 "en-US",
@@ -2937,15 +2937,15 @@
 ],
 [
 "en-US",
+"My sister's got two kids."
+],
+[
+"en-US",
 "He's really shy but very kind."
 ],
 [
 "en-US",
 "My grandparents live by the sea."
-],
-[
-"en-US",
-"My sister's got two kids."
 ],
 [
 "en-US",
@@ -2997,15 +2997,15 @@
 ],
 [
 "en-US",
-"It takes about half an hour by bus."
-],
-[
-"en-US",
 "There's a bakery next to my flat."
 ],
 [
 "en-US",
 "I never have breakfast during the week."
+],
+[
+"en-US",
+"It takes about half an hour by bus."
 ],
 [
 "en-US",
@@ -3057,11 +3057,11 @@
 ],
 [
 "en-US",
-"I'm afraid we're fully booked tonight."
+"Is service included?"
 ],
 [
 "en-US",
-"Is service included?"
+"I'm afraid we're fully booked tonight."
 ],
 [
 "en-US",
@@ -3109,15 +3109,15 @@
 ],
 [
 "en-US",
+"Is breakfast included in the price?"
+],
+[
+"en-US",
 "The flight to Lisbon has been cancelled."
 ],
 [
 "en-US",
 "Go straight on and take the second left."
-],
-[
-"en-US",
-"Is breakfast included in the price?"
 ],
 [
 "en-US",
@@ -3169,15 +3169,15 @@
 ],
 [
 "en-US",
-"I didn't go out on Saturday."
-],
-[
-"en-US",
 "We missed the last bus home."
 ],
 [
 "en-US",
 "It rained all weekend."
+],
+[
+"en-US",
+"I didn't go out on Saturday."
 ],
 [
 "en-US",
@@ -3297,7 +3297,7 @@
 ],
 [
 "en-US",
-"You should take these twice a day after meals."
+"I've had a headache since this morning."
 ],
 [
 "en-US",
@@ -3305,7 +3305,7 @@
 ],
 [
 "en-US",
-"I've had a headache since this morning."
+"You should take these twice a day after meals."
 ],
 [
 "en-US",
@@ -3353,11 +3353,11 @@
 ],
 [
 "en-US",
-"We've known each other since school."
+"Have you finished yet?"
 ],
 [
 "en-US",
-"Have you finished yet?"
+"We've known each other since school."
 ],
 [
 "en-US",
@@ -3477,15 +3477,15 @@
 ],
 [
 "en-US",
+"I wish I'd listened to you."
+],
+[
+"en-US",
 "I couldn't agree more."
 ],
 [
 "en-US",
 "If I were you, I'd take the job."
-],
-[
-"en-US",
-"I wish I'd listened to you."
 ],
 [
 "en-US",
@@ -3537,15 +3537,15 @@
 ],
 [
 "en-US",
-"I was cooking when the lights went out."
-],
-[
-"en-US",
 "She told me she was moving abroad."
 ],
 [
 "en-US",
 "By the time we arrived, the film had started."
+],
+[
+"en-US",
+"I was cooking when the lights went out."
 ],
 [
 "en-US",
@@ -10793,6 +10793,178 @@
 ],
 [
 "pt-PT",
+"O meu carro é azul e a minha bicicleta é vermelha."
+],
+[
+"pt-PT",
+"Qual é o seu nome?"
+],
+[
+"pt-PT",
+"A casa deles tem piscina."
+],
+[
+"pt-PT",
+"o meu, a minha"
+],
+[
+"pt-PT",
+"os meus, as minhas"
+],
+[
+"pt-PT",
+"Os meus amigos e as minhas amigas vêm jantar."
+],
+[
+"pt-PT",
+"o teu, a tua, os teus, as tuas"
+],
+[
+"pt-PT",
+"A tua casa é muito gira!"
+],
+[
+"pt-PT",
+"o seu, a sua"
+],
+[
+"pt-PT",
+"Posso ver o seu passaporte?"
+],
+[
+"pt-PT",
+"o nosso, a nossa"
+],
+[
+"pt-PT",
+"A nossa filha mora em Coimbra."
+],
+[
+"pt-PT",
+"o vosso, a vossa"
+],
+[
+"pt-PT",
+"Onde está o vosso carro?"
+],
+[
+"pt-PT",
+"dele, dela, deles, delas"
+],
+[
+"pt-PT",
+"O carro dele é novo e a casa delas é antiga."
+],
+[
+"pt-PT",
+"Olá! Esta é a vossa casa nova?"
+],
+[
+"pt-PT",
+"É, sim! Aquele é o nosso quarto e este é o quarto dos miúdos."
+],
+[
+"pt-PT",
+"E a tua irmã? Também mora aqui?"
+],
+[
+"pt-PT",
+"Não, ela mora com o namorado. A casa deles fica em Setúbal."
+],
+[
+"pt-PT",
+"E os teus pais?"
+],
+[
+"pt-PT",
+"Os meus pais moram no Algarve. A casa deles tem piscina!"
+],
+[
+"pt-PT",
+"Os meus filhos e as minhas sobrinhas estão na praia."
+],
+[
+"pt-PT",
+"A vossa casa é muito bonita."
+],
+[
+"pt-PT",
+"O meu café está frio. E o teu?"
+],
+[
+"pt-PT",
+"De quem é esta mala? — É minha."
+],
+[
+"pt-PT",
+"Um amigo meu mora em Sintra."
+],
+[
+"pt-PT",
+"De quem é?"
+],
+[
+"pt-PT",
+"De quem é este telemóvel?"
+],
+[
+"pt-PT",
+"É meu, é minha"
+],
+[
+"pt-PT",
+"Este casaco é meu e a mala também é minha."
+],
+[
+"pt-PT",
+"o teu, a tua"
+],
+[
+"pt-PT",
+"o dele, o dela"
+],
+[
+"pt-PT",
+"O meu quarto é pequeno, o dela é enorme."
+],
+[
+"pt-PT",
+"um amigo meu"
+],
+[
+"pt-PT",
+"Uma colega minha fala francês."
+],
+[
+"pt-PT",
+"De quem é esta mala azul?"
+],
+[
+"pt-PT",
+"É minha! Muito obrigado."
+],
+[
+"pt-PT",
+"E a preta? É sua também?"
+],
+[
+"pt-PT",
+"Não, essa não é minha. Deve ser daquela senhora."
+],
+[
+"pt-PT",
+"Sim, é minha! A minha tem uma fita vermelha."
+],
+[
+"pt-PT",
+"Uma amiga minha trabalha num restaurante."
+],
+[
+"pt-PT",
+"De quem são estes óculos? São teus?"
+],
+[
+"pt-PT",
 "Trabalho num restaurante."
 ],
 [
@@ -13057,11 +13229,11 @@
 ],
 [
 "pt-PT",
-"São dezoito euros e cinquenta."
+"A loja fecha às sete."
 ],
 [
 "pt-PT",
-"A loja fecha às sete."
+"São dezoito euros e cinquenta."
 ],
 [
 "pt-PT",
@@ -13125,11 +13297,11 @@
 ],
 [
 "pt-PT",
-"Os meus pais estão reformados."
+"O meu avô tem oitenta anos."
 ],
 [
 "pt-PT",
-"O meu avô tem oitenta anos."
+"Os meus pais estão reformados."
 ],
 [
 "pt-PT",
@@ -13185,15 +13357,15 @@
 ],
 [
 "pt-PT",
+"Deito-me tarde e levanto-me cedo."
+],
+[
+"pt-PT",
 "As chaves estão em cima da mesa."
 ],
 [
 "pt-PT",
 "Não há elevador, é no terceiro andar."
-],
-[
-"pt-PT",
-"Deito-me tarde e levanto-me cedo."
 ],
 [
 "pt-PT",
@@ -13301,11 +13473,11 @@
 ],
 [
 "pt-PT",
-"O próximo autocarro passa daqui a quinze minutos."
+"É logo ali, depois do semáforo."
 ],
 [
 "pt-PT",
-"É logo ali, depois do semáforo."
+"O próximo autocarro passa daqui a quinze minutos."
 ],
 [
 "pt-PT",
@@ -13429,15 +13601,15 @@
 ],
 [
 "pt-PT",
+"Amanhã vai estar muito vento."
+],
+[
+"pt-PT",
 "Está a chover, leva o guarda-chuva."
 ],
 [
 "pt-PT",
 "Vou ligar-te logo à noite."
-],
-[
-"pt-PT",
-"Amanhã vai estar muito vento."
 ],
 [
 "pt-PT",
@@ -13557,11 +13729,11 @@
 ],
 [
 "pt-PT",
-"Moro em Lisboa há quinze anos."
+"Nunca tinha comido polvo antes."
 ],
 [
 "pt-PT",
-"Nunca tinha comido polvo antes."
+"Moro em Lisboa há quinze anos."
 ],
 [
 "pt-PT",
@@ -13661,15 +13833,15 @@
 ],
 [
 "pt-PT",
-"Espero que corra tudo bem."
-],
-[
-"pt-PT",
 "Se calhar vou amanhã."
 ],
 [
 "pt-PT",
 "Não acho que ele tenha razão."
+],
+[
+"pt-PT",
+"Espero que corra tudo bem."
 ],
 [
 "pt-PT",
@@ -13789,15 +13961,15 @@
 ],
 [
 "pt-PT",
-"Não sei, pá, se calhar amanhã."
-],
-[
-"pt-PT",
 "Isto custou os olhos da cara."
 ],
 [
 "pt-PT",
 "Esse filme é bué giro."
+],
+[
+"pt-PT",
+"Não sei, pá, se calhar amanhã."
 ],
 [
 "pt-PT",
@@ -25125,7 +25297,7 @@
 ],
 [
 "es-ES",
-"No hablo muy bien español."
+"Encantada de conocerte."
 ],
 [
 "es-ES",
@@ -25133,7 +25305,7 @@
 ],
 [
 "es-ES",
-"Encantada de conocerte."
+"No hablo muy bien español."
 ],
 [
 "es-ES",
@@ -25185,15 +25357,15 @@
 ],
 [
 "es-ES",
-"Son dieciséis euros con cincuenta."
-],
-[
-"es-ES",
 "El autobús pasa cada veinte minutos."
 ],
 [
 "es-ES",
 "La tienda abre a las diez y cierra a las nueve."
+],
+[
+"es-ES",
+"Son dieciséis euros con cincuenta."
 ],
 [
 "es-ES",
@@ -25253,11 +25425,11 @@
 ],
 [
 "es-ES",
-"Soy hija única."
+"Mi sobrino tiene cinco años."
 ],
 [
 "es-ES",
-"Mi sobrino tiene cinco años."
+"Soy hija única."
 ],
 [
 "es-ES",
@@ -25309,15 +25481,15 @@
 ],
 [
 "es-ES",
-"Tardo media hora en llegar."
-],
-[
-"es-ES",
 "Nunca desayuno entre semana."
 ],
 [
 "es-ES",
 "Las llaves están encima de la mesa."
+],
+[
+"es-ES",
+"Tardo media hora en llegar."
 ],
 [
 "es-ES",
@@ -25373,15 +25545,15 @@
 ],
 [
 "es-ES",
-"¿Nos trae la cuenta, por favor?"
-],
-[
-"es-ES",
 "La cocina cierra a las once."
 ],
 [
 "es-ES",
 "De primero quiero una ensalada."
+],
+[
+"es-ES",
+"¿Nos trae la cuenta, por favor?"
 ],
 [
 "es-ES",
@@ -25545,7 +25717,7 @@
 ],
 [
 "es-ES",
-"Mañana va a hacer mucho viento."
+"Coge el paraguas, está lloviendo."
 ],
 [
 "es-ES",
@@ -25553,7 +25725,7 @@
 ],
 [
 "es-ES",
-"Coge el paraguas, está lloviendo."
+"Mañana va a hacer mucho viento."
 ],
 [
 "es-ES",
@@ -25609,7 +25781,7 @@
 ],
 [
 "es-ES",
-"No puede beber alcohol con este medicamento."
+"Estoy constipado desde el lunes."
 ],
 [
 "es-ES",
@@ -25617,7 +25789,7 @@
 ],
 [
 "es-ES",
-"Estoy constipado desde el lunes."
+"No puede beber alcohol con este medicamento."
 ],
 [
 "es-ES",
@@ -25669,15 +25841,15 @@
 ],
 [
 "es-ES",
+"De pequeño pasaba los veranos con mis abuelos."
+],
+[
+"es-ES",
 "Llevo quince años viviendo en Madrid."
 ],
 [
 "es-ES",
 "Nunca había probado el pulpo."
-],
-[
-"es-ES",
-"De pequeño pasaba los veranos con mis abuelos."
 ],
 [
 "es-ES",
@@ -25781,7 +25953,7 @@
 ],
 [
 "es-ES",
-"No creo que tenga razón."
+"A lo mejor voy mañana."
 ],
 [
 "es-ES",
@@ -25789,7 +25961,7 @@
 ],
 [
 "es-ES",
-"A lo mejor voy mañana."
+"No creo que tenga razón."
 ],
 [
 "es-ES",
@@ -25845,11 +26017,11 @@
 ],
 [
 "es-ES",
-"Cuando llegué, ella ya se había ido."
+"Cuando llegues, mándame un mensaje."
 ],
 [
 "es-ES",
-"Cuando llegues, mándame un mensaje."
+"Cuando llegué, ella ya se había ido."
 ],
 [
 "es-ES",
@@ -25909,15 +26081,15 @@
 ],
 [
 "es-ES",
+"Esto me ha costado un ojo de la cara."
+],
+[
+"es-ES",
 "Esa película mola mucho."
 ],
 [
 "es-ES",
 "No sé, tío, a lo mejor mañana."
-],
-[
-"es-ES",
-"Esto me ha costado un ojo de la cara."
 ],
 [
 "es-ES",
@@ -42154,6 +42326,166 @@
 [
 "pt-PT",
 "Ando a aprender português."
+],
+[
+"pt-PT",
+"O meu"
+],
+[
+"pt-PT",
+"O meu irmão chama-se João."
+],
+[
+"pt-PT",
+"A minha"
+],
+[
+"pt-PT",
+"A minha mãe é de Braga."
+],
+[
+"pt-PT",
+"Os meus"
+],
+[
+"pt-PT",
+"Os meus filhos adoram a praia."
+],
+[
+"pt-PT",
+"As minhas"
+],
+[
+"pt-PT",
+"As minhas chaves estão na mala."
+],
+[
+"pt-PT",
+"O teu"
+],
+[
+"pt-PT",
+"O teu telemóvel está a tocar."
+],
+[
+"pt-PT",
+"A tua"
+],
+[
+"pt-PT",
+"Gosto muito da tua camisola."
+],
+[
+"pt-PT",
+"Os teus"
+],
+[
+"pt-PT",
+"Os teus pais são muito simpáticos."
+],
+[
+"pt-PT",
+"As tuas"
+],
+[
+"pt-PT",
+"Onde estão as tuas malas?"
+],
+[
+"pt-PT",
+"O seu, a sua"
+],
+[
+"pt-PT",
+"Os seus, as suas"
+],
+[
+"pt-PT",
+"Aqui estão as suas bebidas."
+],
+[
+"pt-PT",
+"O nosso"
+],
+[
+"pt-PT",
+"O nosso apartamento fica no centro."
+],
+[
+"pt-PT",
+"A nossa"
+],
+[
+"pt-PT",
+"A nossa filha está em Erasmus."
+],
+[
+"pt-PT",
+"Os nossos, as nossas"
+],
+[
+"pt-PT",
+"As nossas férias foram ótimas."
+],
+[
+"pt-PT",
+"O vosso, a vossa"
+],
+[
+"pt-PT",
+"A vossa casa é linda!"
+],
+[
+"pt-PT",
+"Os vossos, as vossas"
+],
+[
+"pt-PT",
+"Os vossos amigos já chegaram."
+],
+[
+"pt-PT",
+"Dele"
+],
+[
+"pt-PT",
+"O carro dele está avariado."
+],
+[
+"pt-PT",
+"Dela"
+],
+[
+"pt-PT",
+"Os filhos dela são gémeos."
+],
+[
+"pt-PT",
+"Deles"
+],
+[
+"pt-PT",
+"Delas"
+],
+[
+"pt-PT",
+"As bicicletas delas são novas."
+],
+[
+"pt-PT",
+"De quem é este guarda-chuva?"
+],
+[
+"pt-PT",
+"De quem é a mala? É minha."
+],
+[
+"pt-PT",
+"Um amigo meu"
+],
+[
+"pt-PT",
+"Um amigo meu tem um restaurante em Sète."
 ],
 [
 "pt-PT",

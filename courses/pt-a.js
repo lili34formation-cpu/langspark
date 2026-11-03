@@ -263,6 +263,99 @@ unit('pt_a1_3', 'A1', 'Família e pessoas', 'Famille et entourage', '👨‍👩
       L('Gosto muito de fado.', 'J\'aime beaucoup le fado.'),
       T('Je n\'aime pas me lever tôt.', ['Não gosto de me levantar cedo.', 'Não gosto levantar cedo.', 'Gosto não de levantar cedo.', 'Não gosto de levanto cedo.']),
     ]),
+
+  lesson('Os possessivos', 'Mon, ton, son… tous les possessifs',
+    G('Tous les possessifs : mon, ton, son, notre, votre, leur',
+      `Au Portugal, toujours l\'<b>article</b> devant : <b>o meu</b> carro, <b>a minha</b> casa.<br>
+      Le possessif s\'accorde avec <b>ce qu\'on possède</b> (pas avec le possesseur) : <b>o meu</b> carro = <i>ma</i> voiture (carro est masculin).<br><br>
+      <b>mon / ma / mes</b> : o meu · a minha · os meus · as minhas<br>
+      <b>ton / ta / tes</b> : o teu · a tua · os teus · as tuas<br>
+      <b>votre</b> (vouvoiement : o senhor, a senhora) : o seu · a sua · os seus · as suas<br>
+      <b>notre / nos</b> : o nosso · a nossa · os nossos · as nossas<br>
+      <b>votre / vos</b> (à vous, plusieurs) : o vosso · a vossa · os vossos · as vossas<br>
+      <b>son / sa / ses</b> : o carro <b>dele</b> (à lui) · o carro <b>dela</b> (à elle)<br>
+      <b>leur / leurs</b> : a casa <b>deles</b> (à eux) · a casa <b>delas</b> (à elles)`,
+      [['O meu carro é azul e a minha bicicleta é vermelha.', 'Ma voiture est bleue et mon vélo est rouge.'], ['Qual é o seu nome?', 'Quel est votre nom ?'], ['A casa deles tem piscina.', 'Leur maison a une piscine.']],
+      '« dele, dela, deles, delas » se placent APRÈS le nom, sans « meu/seu » : o carro dele. Et « o seu » sert surtout à vouvoyer (votre), pas à dire « son ».'),
+    [
+      I('o meu / a minha', 'mon / ma', 'O meu carro é azul e a minha bicicleta é vermelha.', 'Ma voiture est bleue et mon vélo est rouge.'),
+      I('os meus / as minhas', 'mes', 'Os meus amigos e as minhas amigas vêm jantar.', 'Mes amis et mes amies viennent dîner.'),
+      I('o teu / a tua / os teus / as tuas', 'ton / ta / tes', 'A tua casa é muito gira!', 'Ta maison est très jolie !'),
+      I('o seu / a sua', 'votre (en vouvoyant)', 'Posso ver o seu passaporte?', 'Puis-je voir votre passeport ?'),
+      I('o nosso / a nossa', 'notre', 'A nossa filha mora em Coimbra.', 'Notre fille habite à Coimbra.'),
+      I('o vosso / a vossa', 'votre (à vous, plusieurs)', 'Onde está o vosso carro?', 'Où est votre voiture ?'),
+      I('dele / dela / deles / delas', 'son, sa (à lui / à elle), leur', 'O carro dele é novo e a casa delas é antiga.', 'Sa voiture (à lui) est neuve et leur maison (à elles) est ancienne.'),
+      D('A casa nova (la nouvelle maison)', [
+        ['Rita', 'Olá! Esta é a vossa casa nova?', 'Salut ! C\'est votre nouvelle maison ?'],
+        ['Tiago', 'É, sim! Aquele é o nosso quarto e este é o quarto dos miúdos.', 'Oui ! Là, c\'est notre chambre et ici, la chambre des enfants.'],
+        ['Rita', 'E a tua irmã? Também mora aqui?', 'Et ta sœur ? Elle habite ici aussi ?'],
+        ['Tiago', 'Não, ela mora com o namorado. A casa deles fica em Setúbal.', 'Non, elle vit avec son copain. Leur maison est à Setúbal.'],
+        ['Rita', 'E os teus pais?', 'Et tes parents ?'],
+        ['Tiago', 'Os meus pais moram no Algarve. A casa deles tem piscina!', 'Mes parents habitent en Algarve. Leur maison a une piscine !'],
+      ], [
+        ['Où habite la sœur de Tiago ?', ['À Setúbal', 'En Algarve', 'Chez Tiago', 'À Lisbonne']],
+        ['« a casa deles » =', ['leur maison', 'sa maison (à elle)', 'notre maison', 'votre maison']],
+      ]),
+      F('O ___ carro é vermelho.', ['meu', 'minha', 'meus', 'minhas'], 'Ma voiture est rouge.', 'On accorde avec l\'objet : carro est masculin → o meu, même si on dit « ma voiture » en français.'),
+      F('Esta é ___ casa.', ['a nossa', 'o nosso', 'os nossos', 'nossa a'], 'C\'est notre maison.', 'casa est féminin → a nossa.'),
+      F('Onde estão as ___ chaves?', ['tuas', 'teus', 'tua', 'teu'], 'Où sont tes clés ?', 'chaves : féminin pluriel → as tuas.'),
+      F('Os filhos ___ são gémeos.', ['dela', 'de ela', 'sua', 'da ela'], 'Ses enfants (à elle) sont jumeaux.', 'de + ela = dela, placé après le nom.'),
+      C('« Leur fille » (à eux) :', ['a filha deles', 'a filha dele', 'a deles filha', 'a sua filha deles']),
+      C('Vouvoiement : « Votre passeport, s\'il vous plaît. »', ['O seu passaporte, se faz favor.', 'O teu passaporte, se faz favor.', 'O vosso passaporte, se faz favor.', 'O dele passaporte, se faz favor.'], 'Avec o senhor / a senhora → o seu / a sua.'),
+      C('À deux amis : « Votre voiture est belle ! »', ['O vosso carro é bonito!', 'O seu carro é bonito!', 'O teu carro é bonito!', 'A vossa carro é bonito!'], 'Plusieurs personnes qu\'on tutoie → o vosso.'),
+      O('Notre fille habite à Porto.', 'A nossa filha mora no Porto', ['nosso']),
+      O('Leurs enfants (à elles) sont à la plage.', 'Os filhos delas estão na praia', ['deles']),
+      W('Ma mère est portugaise.', 'A minha mãe é portuguesa'),
+      W('Où est ta voiture ?', 'Onde está o teu carro|Onde é que está o teu carro'),
+      W('Sa maison (à lui) est grande.', 'A casa dele é grande'),
+      L('Os meus filhos e as minhas sobrinhas estão na praia.', 'Mes enfants et mes nièces sont à la plage.'),
+      L('A vossa casa é muito bonita.', 'Votre maison est très belle.'),
+      T('Son mari (à elle) est médecin.', ['O marido dela é médico.', 'O marido dele é médico.', 'O seu marido dela é médico.', 'A marido dela é médico.']),
+    ]),
+
+  lesson('De quem é?', 'Le mien, le tien… et « à qui est-ce ? »',
+    G('Les pronoms possessifs : le mien, le tien, le nôtre…',
+      `Mêmes formes que les possessifs, mais sans le nom :<br>
+      <b>o meu</b> = le mien · <b>a minha</b> = la mienne · <b>os meus</b> = les miens · <b>as minhas</b> = les miennes<br>
+      <b>o teu / a tua</b> = le tien / la tienne · <b>o seu / a sua</b> = le vôtre (vouvoiement)<br>
+      <b>o nosso / a nossa</b> = le nôtre / la nôtre · <b>o vosso / a vossa</b> = le vôtre (à vous, plusieurs)<br>
+      <b>o dele / o dela</b> = le sien (à lui / à elle) · <b>o deles / o delas</b> = le leur<br><br>
+      <b>À qui est-ce ?</b> = <b>De quem é?</b> → on répond <b>sans article</b> : É <b>meu</b>. · É <b>minha</b>. · São <b>nossos</b>. · É <b>dela</b>.<br>
+      <b>Un de mes amis</b> = <b>um amigo meu</b> (le possessif après le nom).`,
+      [['O meu café está frio. E o teu?', 'Mon café est froid. Et le tien ?'], ['De quem é esta mala? — É minha.', 'À qui est ce sac ? — Il est à moi.'], ['Um amigo meu mora em Sintra.', 'Un de mes amis habite à Sintra.']],
+      'Après « ser », sans article = appartenance (« É meu » : c\'est à moi). Avec article = choix ou comparaison (« É o meu » : c\'est le mien, pas un autre).'),
+    [
+      I('De quem é?', 'À qui est-ce ?', 'De quem é este telemóvel?', 'À qui est ce portable ?'),
+      I('É meu / é minha', 'C\'est à moi', 'Este casaco é meu e a mala também é minha.', 'Cette veste est à moi, et le sac aussi.'),
+      I('o teu / a tua', 'le tien / la tienne', 'O meu café está frio. E o teu?', 'Mon café est froid. Et le tien ?'),
+      I('o dele / o dela', 'le sien (à lui / à elle)', 'O meu quarto é pequeno, o dela é enorme.', 'Ma chambre est petite, la sienne est immense.'),
+      I('um amigo meu', 'un de mes amis', 'Uma colega minha fala francês.', 'Une de mes collègues parle français.'),
+      D('No aeroporto (à l\'aéroport)', [
+        ['Funcionária', 'De quem é esta mala azul?', 'À qui est cette valise bleue ?'],
+        ['Paul', 'É minha! Muito obrigado.', 'Elle est à moi ! Merci beaucoup.'],
+        ['Funcionária', 'E a preta? É sua também?', 'Et la noire ? Elle est à vous aussi ?'],
+        ['Paul', 'Não, essa não é minha. Deve ser daquela senhora.', 'Non, celle-là n\'est pas à moi. Elle doit être à cette dame.'],
+        ['Senhora', 'Sim, é minha! A minha tem uma fita vermelha.', 'Oui, elle est à moi ! La mienne a un ruban rouge.'],
+      ], [
+        ['À qui est la valise bleue ?', ['À Paul', 'À la dame', 'À l\'employée', 'On ne sait pas']],
+        ['« É sua também? » : l\'employée parle à Paul…', ['en le vouvoyant', 'en le tutoyant', 'à plusieurs personnes', 'd\'une autre personne']],
+      ]),
+      F('— De quem é este livro? — É ___.', ['meu', 'o minha', 'minha', 'meus'], '— À qui est ce livre ? — Il est à moi.', 'livro : masculin singulier → meu, sans article après « é ».'),
+      F('A minha casa é grande, mas a ___ é maior.', ['tua', 'teu', 'tuas', 'teus'], 'Ma maison est grande, mais la tienne est plus grande.'),
+      F('Estas chaves são ___?', ['vossas', 'vossos', 'vosso', 'vossa'], 'Ces clés sont à vous ?', 'chaves : féminin pluriel → vossas.'),
+      F('O nosso carro é velho. O ___ é novo.', ['deles', 'seus', 'de eles', 'deles o'], 'Notre voiture est vieille. La leur est neuve.'),
+      C('« Un de mes amis » :', ['um amigo meu', 'um meu amigo', 'o amigo de mim', 'um dos amigo meu']),
+      C('« Les leurs (à elles) sont ici. » (les clés)', ['As delas estão aqui.', 'As deles estão aqui.', 'As suas delas estão aqui.', 'Os delas estão aqui.']),
+      C('Quelle réponse veut dire « c\'est le mien (pas un autre) » ?', ['É o meu.', 'É meu.', 'É de mim.', 'É minha.']),
+      O('Ce sac est à elle.', 'Esta mala é dela', ['dele']),
+      O('Une de mes amies travaille à Lisbonne.', 'Uma amiga minha trabalha em Lisboa', ['meu']),
+      W('À qui est cette voiture ?', 'De quem é este carro|De quem é esse carro|De quem é aquele carro'),
+      W('Ces valises sont à nous.', 'Estas malas são nossas|Essas malas são nossas'),
+      W('Ma chambre est petite. Et la tienne ?', 'O meu quarto é pequeno. E o teu|O meu quarto é pequeno, e o teu'),
+      L('Uma amiga minha trabalha num restaurante.', 'Une de mes amies travaille dans un restaurant.'),
+      L('De quem são estes óculos? São teus?', 'À qui sont ces lunettes ? Elles sont à toi ?'),
+      T('Les nôtres sont plus jolis.', ['Os nossos são mais giros.', 'Os nosso são mais giros.', 'Os nossos é mais giros.', 'Nossos os são mais giros.']),
+    ]),
 ]),
 
 unit('pt_a1_4', 'A1', 'O dia a dia', 'La vie quotidienne', '🏠', '#f97316', [
