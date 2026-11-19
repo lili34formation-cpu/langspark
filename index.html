@@ -981,7 +981,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v50</span>
+          <span style="font-size:10px;color:#444">v51</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -6705,6 +6705,9 @@ function cjHome(lang) {
       <button class="cj-action${weak.length ? ' warn' : ''}" ${weak.length ? `onclick="cjStartDrill('${lang}',{weak:true})"` : 'disabled'}>
         <span class="cj-action-icon">🎯</span><span><b>Mes points faibles</b><br><small>${weak.length ? weak.length + ' à retravailler' : 'Aucun pour l\'instant'}</small></span>
       </button>
+      <button class="cj-action" onclick="cjStartSpeak('${lang}')">
+        <span class="cj-action-icon">🎤</span><span><b>Prononciation</b><br><small>Dites les formes à voix haute · 10 verbes</small></span>
+      </button>
       ${d.irregulars ? `<button class="cj-action" onclick="cjIrregulars('${lang}')">
         <span class="cj-action-icon">📜</span><span><b>Verbes irréguliers</b><br><small>${d.irregulars.length} verbes · liste et entraînement</small></span>
       </button>` : ''}
@@ -6761,6 +6764,7 @@ function cjTenseHTML(lang, id, withActions) {
     <div class="bb-gr-tip"><b>⚠️ Piège pour francophones</b><br>${bbEsc(t.tip)}</div>
     ${withActions ? `
       <button class="bb-next-btn bb-btn-ghost" onclick="cjStartDrill('${lang}',{tenses:['${t.id}'],verbs:'all'})">⚡ Entraînement libre sur ce temps (tous les verbes)</button>
+      <button class="bb-next-btn bb-btn-ghost" onclick="cjStartSpeak('${lang}','${t.id}')">🎤 Prononciation sur ce temps</button>
       <div class="cj-section-title">Voir un verbe à ce temps</div>
       <div class="cj-chips">${cjVerbsOf(lang, t).map(v => `<button class="cj-chip${v.irr ? ' irr' : ''}" onclick="cjVerb('${lang}','${cjArg(v.id)}')">${bbEsc(v.inf)}</button>`).join('')}</div>` : ''}`;
 }
@@ -6810,6 +6814,7 @@ function cjVerb(lang, id) {
           <div><div class="bb-gr-ex-l2">${bbEsc(l2)}</div><div class="bb-gr-ex-fr">${bbEsc(fr)}</div></div>
         </div>`).join('')}</div>
       <button class="bb-next-btn" onclick="cjStartDrill('${lang}',{verbs:'${cjArg(v.id)}'})">⚡ S'entraîner sur ce verbe</button>
+      <button class="bb-next-btn bb-btn-ghost" onclick="cjStartDrill('${lang}',{verbs:'${cjArg(v.id)}',speak:true})">🎤 Prononcer ce verbe</button>
     </div>
     <div class="cj-grid">
       ${cjTensesOf(lang, v).map(t => {
@@ -6896,7 +6901,7 @@ function cjPickWeighted(items, weight) {
 function cjStartDrill(lang, opts) {
   cjReset(lang);
   const d = cjData(lang);
-  const N = 20;
+  const N = opts.speak ? 10 : 20;
   let items = [];
 
   if (opts.level) {
@@ -6934,11 +6939,97 @@ function cjStartDrill(lang, opts) {
       const key = `${vid}|${tid}|${pi}`;
       if (seen.has(key) && seen.size < pairs.length * cjPersons(lang, tense).length) continue;
       seen.add(key);
-      items.push({ kind: 'conj', vid, tid, pi });
+      items.push({ kind: 'conj', vid, tid, pi, speak: !!opts.speak });
     }
   }
   cjState.drill = { lang, opts, items, idx: 0, score: 0, mistakes: [], answered: false };
   cjRenderDrill();
+}
+
+// ── Prononciation : dire la forme conjuguée à voix haute ──
+// Sans précision : les temps où au moins un niveau est validé (sinon le premier temps), verbes essentiels
+function cjStartSpeak(lang, tid) {
+  const sorted = cjTensesSorted(lang).filter(t => !t.refl);
+  const known = sorted.filter(t => cjLevelsFor(lang, t).some(l => cjLevelPassed(lang, t.id, l.n)));
+  const tenses = tid ? [tid] : (known.length ? known : sorted.slice(0, 1)).map(t => t.id);
+  cjStartDrill(lang, { tenses, verbs: tid ? 'all' : 'top', speak: true });
+}
+function cjSpeakWords(lang, s) { return bbNorm(String(s).split(' / ')[0], lang, false).replace(/-/g, ' ').split(' ').filter(Boolean); }
+function cjMic() {
+  const dr = cjState.drill;
+  if (dr.answered) return;
+  const { lang } = dr;
+  const it = dr.items[dr.idx];
+  const v = cjVerbById(lang, it.vid);
+  const t = cjTenseById(lang, it.tid);
+  const status = document.getElementById('cj-mic-status');
+  const btn = document.getElementById('cj-mic');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { status.innerHTML = '⚠️ ' + bbMicHelp(''); return; }
+  bbStopAudio();
+  btn.classList.add('listening');
+  status.textContent = '🎤 Je vous écoute…';
+  const target = cjSpeakWords(lang, t.forms(v)[it.pi]);
+  const rec = new SR();
+  rec.lang = bbTTS(lang);
+  rec.continuous = false;
+  rec.interimResults = false;
+  rec.maxAlternatives = 5;
+  let done = false;
+  rec.onresult = e => {
+    done = true;
+    btn.classList.remove('listening');
+    const alts = Array.from(e.results[0]).map(r => r.transcript);
+    const hit = alts.find(a => { const w = cjSpeakWords(lang, a); return target.every(x => w.includes(x)); });
+    it.tries = (it.tries || 0) + 1;
+    if (hit) return cjSpeakFinal(true, hit);
+    if (it.tries < 2) {
+      status.innerHTML = `❌ J'ai entendu : <em>« ${bbEsc(alts[0] || '')} »</em> — réessayez !`;
+      return;
+    }
+    cjSpeakFinal(false, alts[0] || '');
+  };
+  rec.onerror = err => {
+    done = true;
+    btn.classList.remove('listening');
+    status.innerHTML = '⚠️ ' + bbMicHelp(err.error);
+  };
+  rec.onend = () => { if (!done) { btn.classList.remove('listening'); status.textContent = "Je n'ai rien entendu — réessayez."; } };
+  rec.start();
+}
+// Sans micro : on se dit la forme, on la révèle, puis on s'évalue honnêtement
+function cjSelfReveal() {
+  const dr = cjState.drill;
+  const { lang } = dr;
+  const it = dr.items[dr.idx];
+  const t = cjTenseById(lang, it.tid);
+  const answer = t.forms(cjVerbById(lang, it.vid))[it.pi];
+  const person = cjPersons(lang, t)[it.pi];
+  document.getElementById('cj-self').outerHTML = `
+    <div class="bb-feedback warn" style="margin-top:12px"><div>Réponse : <strong>${bbEsc(t.refl ? `${answer}  (${person})` : `${person} ${answer}`)}</strong></div></div>
+    <div class="bb-audio-row" style="margin-top:12px">${bbAudioBtn(cjSpeak(lang, t, it.pi, answer), '🔊 Écouter')}</div>
+    <div style="display:flex;gap:10px" id="cj-self">
+      <button class="bb-next-btn bb-btn-ghost" onclick="cjSpeakFinal(false)">❌ Pas tout à fait</button>
+      <button class="bb-next-btn" onclick="cjSpeakFinal(true)">✅ Je l'avais bien dit</button>
+    </div>`;
+}
+function cjSpeakFinal(ok, heard) {
+  const dr = cjState.drill;
+  if (dr.answered) return;
+  dr.answered = true;
+  const { lang } = dr;
+  const it = dr.items[dr.idx];
+  const v = cjVerbById(lang, it.vid);
+  const t = cjTenseById(lang, it.tid);
+  const person = cjPersons(lang, t)[it.pi];
+  const answer = t.forms(v)[it.pi];
+  cjRecord(lang, v.id + '|' + t.id, ok);
+  document.getElementById('cj-self')?.remove();
+  const mic = document.getElementById('cj-mic');
+  if (mic) mic.disabled = true;
+  document.getElementById('cj-mic-status').textContent = '';
+  cjFeedback(ok, false, t.refl ? `${answer}  (${person})` : `${person} ${answer}`, `${v.inf} · ${t.short} · ${person}`, cjSpeak(lang, t, it.pi, answer), !ok && heard !== undefined);
+  if (heard) document.getElementById('cj-feedback').insertAdjacentHTML('afterbegin', `<div class="bb-expl">👂 J'ai entendu : « ${bbEsc(heard)} »</div>`);
 }
 
 function cjRenderDrill() {
@@ -6963,7 +7054,19 @@ function cjRenderDrill() {
     const t = cjTenseById(lang, it.tid);
     const person = cjPersons(lang, t)[it.pi];
     if (it.mcq && !it.options) it.options = cjOptions(lang, v, t, it.pi);
-    body = `
+    if (it.speak) body = `
+      <div class="bb-ex-type">🎤 Prononciation · ${bbEsc(t.name)}</div>
+      <div class="bb-ex-word" style="font-size:30px">${bbEsc(v.inf)}</div>
+      <div class="bb-ex-tr">${bbEsc(v.fr)}</div>
+      ${t.refl && v.q && /quest/.test(t.id) ? `<div class="bb-hint" style="margin:-4px 0 10px">❓ Posez la question en commençant par <b>« ${bbEsc(v.q)} »</b></div>` : ''}
+      <div class="cj-prompt" style="justify-content:center;margin-bottom:6px"><span class="cj-person">${bbEsc(person)}</span><span class="cj-blank">…</span></div>
+      <div class="bb-hint" style="margin-bottom:12px">Dites la forme à voix haute${t.refl ? '' : `, avec le pronom : « ${bbEsc(person.split('/')[0].trim())} … »`}</div>
+      <div class="bb-mic-wrap">
+        <button class="bb-mic-btn" id="cj-mic" onclick="cjMic()">🎤</button>
+        <div class="bb-speak-status" id="cj-mic-status">Appuyez sur le micro et parlez</div>
+      </div>
+      <button class="bb-next-btn bb-btn-ghost" id="cj-self" onclick="cjSelfReveal()">🗣️ Sans micro : je le dis, puis je vérifie</button>`;
+    else body = `
       <div class="bb-ex-type">⏱️ ${bbEsc(t.name)}</div>
       <div class="bb-ex-word" style="font-size:30px">${bbEsc(v.inf)}</div>
       <div class="bb-ex-tr">${bbEsc(v.fr)}</div>
@@ -6977,7 +7080,7 @@ function cjRenderDrill() {
   }
   const lvl = dr.opts.level ? CJ_LEVELS.find(l => l.n === dr.opts.level) : null;
   const title = lvl ? `${cjTenseById(lang, dr.opts.tense).short} · ${lvl.icon} Niveau ${lvl.n}`
-    : dr.opts.weak ? 'Points faibles' : dr.opts.irr ? 'Irréguliers' : 'Conjugaison';
+    : dr.opts.weak ? 'Points faibles' : dr.opts.irr ? 'Irréguliers' : dr.opts.speak ? 'Prononciation' : 'Conjugaison';
   cjEl(lang).innerHTML = `
     <div class="bb-lesson-header">
       <button class="bb-back-btn" onclick="${dr.opts.tense ? `cjTense('${lang}','${dr.opts.tense}')` : `cjHome('${lang}')`}">←</button>
@@ -6987,7 +7090,7 @@ function cjRenderDrill() {
     </div>
     <div class="bb-exercise">
       ${body}
-      ${it.mcq ? '' : `<button class="bb-next-btn" id="cj-check" onclick="cjCheck()">Vérifier</button>`}
+      ${it.mcq || it.speak ? '' : `<button class="bb-next-btn" id="cj-check" onclick="cjCheck()">Vérifier</button>`}
       <div id="cj-feedback"></div>
     </div>`;
   const input = document.getElementById('cj-in-1');
