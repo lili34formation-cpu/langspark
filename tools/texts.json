@@ -2809,11 +2809,11 @@
 ],
 [
 "en-US",
-"I'm not very good at English."
+"Nice to meet you!"
 ],
 [
 "en-US",
-"Nice to meet you!"
+"I'm not very good at English."
 ],
 [
 "en-US",
@@ -2869,7 +2869,7 @@
 ],
 [
 "en-US",
-"The train leaves at quarter to eight."
+"That's thirteen euros, please."
 ],
 [
 "en-US",
@@ -2877,7 +2877,7 @@
 ],
 [
 "en-US",
-"That's thirteen euros, please."
+"The train leaves at quarter to eight."
 ],
 [
 "en-US",
@@ -2941,11 +2941,11 @@
 ],
 [
 "en-US",
-"He's really shy but very kind."
+"My grandparents live by the sea."
 ],
 [
 "en-US",
-"My grandparents live by the sea."
+"He's really shy but very kind."
 ],
 [
 "en-US",
@@ -3001,11 +3001,11 @@
 ],
 [
 "en-US",
-"I never have breakfast during the week."
+"It takes about half an hour by bus."
 ],
 [
 "en-US",
-"It takes about half an hour by bus."
+"I never have breakfast during the week."
 ],
 [
 "en-US",
@@ -3109,11 +3109,11 @@
 ],
 [
 "en-US",
-"Is breakfast included in the price?"
+"The flight to Lisbon has been cancelled."
 ],
 [
 "en-US",
-"The flight to Lisbon has been cancelled."
+"Is breakfast included in the price?"
 ],
 [
 "en-US",
@@ -3169,15 +3169,15 @@
 ],
 [
 "en-US",
+"I didn't go out on Saturday."
+],
+[
+"en-US",
 "We missed the last bus home."
 ],
 [
 "en-US",
 "It rained all weekend."
-],
-[
-"en-US",
-"I didn't go out on Saturday."
 ],
 [
 "en-US",
@@ -3233,11 +3233,11 @@
 ],
 [
 "en-US",
-"Do you wanna grab a coffee?"
+"It's supposed to snow tomorrow."
 ],
 [
 "en-US",
-"It's supposed to snow tomorrow."
+"Do you wanna grab a coffee?"
 ],
 [
 "en-US",
@@ -3297,15 +3297,15 @@
 ],
 [
 "en-US",
-"I've had a headache since this morning."
-],
-[
-"en-US",
 "You don't need an appointment."
 ],
 [
 "en-US",
 "You should take these twice a day after meals."
+],
+[
+"en-US",
+"I've had a headache since this morning."
 ],
 [
 "en-US",
@@ -3349,15 +3349,15 @@
 ],
 [
 "en-US",
-"I've never tried sushi."
-],
-[
-"en-US",
 "Have you finished yet?"
 ],
 [
 "en-US",
 "We've known each other since school."
+],
+[
+"en-US",
+"I've never tried sushi."
 ],
 [
 "en-US",
@@ -3417,11 +3417,11 @@
 ],
 [
 "en-US",
-"Can I take a message?"
+"Sorry, I didn't catch your name."
 ],
 [
 "en-US",
-"Sorry, I didn't catch your name."
+"Can I take a message?"
 ],
 [
 "en-US",
@@ -3477,15 +3477,15 @@
 ],
 [
 "en-US",
-"I wish I'd listened to you."
-],
-[
-"en-US",
 "I couldn't agree more."
 ],
 [
 "en-US",
 "If I were you, I'd take the job."
+],
+[
+"en-US",
+"I wish I'd listened to you."
 ],
 [
 "en-US",
@@ -3537,15 +3537,15 @@
 ],
 [
 "en-US",
+"I was cooking when the lights went out."
+],
+[
+"en-US",
 "She told me she was moving abroad."
 ],
 [
 "en-US",
 "By the time we arrived, the film had started."
-],
-[
-"en-US",
-"I was cooking when the lights went out."
 ],
 [
 "en-US",
@@ -3601,11 +3601,11 @@
 ],
 [
 "en-US",
-"I'm skint until the end of the month."
+"Horror films aren't my cup of tea."
 ],
 [
 "en-US",
-"Horror films aren't my cup of tea."
+"I'm skint until the end of the month."
 ],
 [
 "en-US",
@@ -11953,6 +11953,282 @@
 ],
 [
 "pt-PT",
+"Conheces a Rita? Conheço-a muito bem."
+],
+[
+"pt-PT",
+"O bolo? Comprei-o na pastelaria."
+],
+[
+"pt-PT",
+"Não te ouço, fala mais alto!"
+],
+[
+"pt-PT",
+"vejo-o, vejo-a"
+],
+[
+"pt-PT",
+"O autocarro? Vejo-o ali ao fundo."
+],
+[
+"pt-PT",
+"ajuda-me"
+],
+[
+"pt-PT",
+"Ajuda-me com as malas?"
+],
+[
+"pt-PT",
+"conheço-os"
+],
+[
+"pt-PT",
+"Os vizinhos? Conheço-os há anos."
+],
+[
+"pt-PT",
+"não o vejo"
+],
+[
+"pt-PT",
+"Onde está o gato? Não o vejo."
+],
+[
+"pt-PT",
+"Conheces aquele rapaz?"
+],
+[
+"pt-PT",
+"Conheço-o, é o primo da Sara. Convidei-o eu."
+],
+[
+"pt-PT",
+"E as amigas dele? Também as convidaste?"
+],
+[
+"pt-PT",
+"Não, não as conheço. Mas são simpáticas!"
+],
+[
+"pt-PT",
+"Olha, a música está muito alta. Não te ouço!"
+],
+[
+"pt-PT",
+"O carro? Vendi-o a semana passada."
+],
+[
+"pt-PT",
+"Dei-lhe um presente."
+],
+[
+"pt-PT",
+"Ligo-lhe amanhã sem falta."
+],
+[
+"pt-PT",
+"Não lhes digas nada!"
+],
+[
+"pt-PT",
+"dou-lhe"
+],
+[
+"pt-PT",
+"Dou-lhe o meu número."
+],
+[
+"pt-PT",
+"ligo-lhe"
+],
+[
+"pt-PT",
+"Ligo-lhe logo à tarde."
+],
+[
+"pt-PT",
+"diz-me"
+],
+[
+"pt-PT",
+"Diz-me a verdade!"
+],
+[
+"pt-PT",
+"mando-lhes"
+],
+[
+"pt-PT",
+"Mando-lhes uma mensagem."
+],
+[
+"pt-PT",
+"Já ligaste à avó? Hoje é o aniversário dela!"
+],
+[
+"pt-PT",
+"Ainda não. Ligo-lhe depois do almoço."
+],
+[
+"pt-PT",
+"E o que lhe vais oferecer?"
+],
+[
+"pt-PT",
+"Vou dar-lhe um livro de receitas. Aos primos, mandei-lhes um postal."
+],
+[
+"pt-PT",
+"Boa! Diz-lhe que eu passo lá à noite."
+],
+[
+"pt-PT",
+"Pergunta-lhe se quer café."
+],
+[
+"pt-PT",
+"O bilhete? Vou comprá-lo online."
+],
+[
+"pt-PT",
+"A sopa? Fi-la ontem."
+],
+[
+"pt-PT",
+"Os miúdos? Os avós levam-nos à escola."
+],
+[
+"pt-PT",
+"comprá-lo"
+],
+[
+"pt-PT",
+"Gosto deste casaco. Vou comprá-lo."
+],
+[
+"pt-PT",
+"fazê-lo"
+],
+[
+"pt-PT",
+"Não sei fazê-lo sozinha."
+],
+[
+"pt-PT",
+"vê-la"
+],
+[
+"pt-PT",
+"Quero muito vê-la amanhã."
+],
+[
+"pt-PT",
+"fazem-no, venderam-na"
+],
+[
+"pt-PT",
+"O pão? Fazem-no aqui todos os dias."
+],
+[
+"pt-PT",
+"Estes figos estão ótimos. Vou levá-los!"
+],
+[
+"pt-PT",
+"Quer um saco para pô-los?"
+],
+[
+"pt-PT",
+"Sim, obrigada. E este queijo? Fazem-no cá?"
+],
+[
+"pt-PT",
+"Não, compramo-lo a um pastor da Serra da Estrela. Quer prová-lo?"
+],
+[
+"pt-PT",
+"Quero! Está delicioso. Vou comprá-lo também."
+],
+[
+"pt-PT",
+"A casa? Venderam-na o ano passado."
+],
+[
+"pt-PT",
+"Já o vi esta manhã."
+],
+[
+"pt-PT",
+"Onde a conheceste?"
+],
+[
+"pt-PT",
+"Acho que te conheço."
+],
+[
+"pt-PT",
+"já o vi"
+],
+[
+"pt-PT",
+"O filme? Já o vi duas vezes."
+],
+[
+"pt-PT",
+"também me disse"
+],
+[
+"pt-PT",
+"O Rui também me disse isso."
+],
+[
+"pt-PT",
+"quem te disse?"
+],
+[
+"pt-PT",
+"Quem te disse que eu estava doente?"
+],
+[
+"pt-PT",
+"já lho dei"
+],
+[
+"pt-PT",
+"O livro? Já lho dei ontem."
+],
+[
+"pt-PT",
+"Viste os meus óculos? Não os encontro."
+],
+[
+"pt-PT",
+"Vi-os na cozinha, acho eu."
+],
+[
+"pt-PT",
+"Já os procurei lá. Quem os tirou daqui?"
+],
+[
+"pt-PT",
+"Talvez os tenhas deixado no carro."
+],
+[
+"pt-PT",
+"Tens razão! Dás-me as chaves do carro?"
+],
+[
+"pt-PT",
+"Toma, dou-tas já."
+],
+[
+"pt-PT",
+"Ainda não lhe disse nada."
+],
+[
+"pt-PT",
 "Dói-me muito a garganta."
 ],
 [
@@ -13293,11 +13569,11 @@
 ],
 [
 "pt-PT",
-"A minha sobrinha é muito simpática."
+"O meu avô tem oitenta anos."
 ],
 [
 "pt-PT",
-"O meu avô tem oitenta anos."
+"A minha sobrinha é muito simpática."
 ],
 [
 "pt-PT",
@@ -13357,15 +13633,15 @@
 ],
 [
 "pt-PT",
+"Não há elevador, é no terceiro andar."
+],
+[
+"pt-PT",
 "Deito-me tarde e levanto-me cedo."
 ],
 [
 "pt-PT",
 "As chaves estão em cima da mesa."
-],
-[
-"pt-PT",
-"Não há elevador, é no terceiro andar."
 ],
 [
 "pt-PT",
@@ -13425,11 +13701,11 @@
 ],
 [
 "pt-PT",
-"O bacalhau acabou, mas temos polvo."
+"Pode trazer-me mais pão, se faz favor?"
 ],
 [
 "pt-PT",
-"Pode trazer-me mais pão, se faz favor?"
+"O bacalhau acabou, mas temos polvo."
 ],
 [
 "pt-PT",
@@ -13473,15 +13749,15 @@
 ],
 [
 "pt-PT",
-"É logo ali, depois do semáforo."
-],
-[
-"pt-PT",
 "O próximo autocarro passa daqui a quinze minutos."
 ],
 [
 "pt-PT",
 "Tem de mudar de comboio em Coimbra."
+],
+[
+"pt-PT",
+"É logo ali, depois do semáforo."
 ],
 [
 "pt-PT",
@@ -13541,11 +13817,11 @@
 ],
 [
 "pt-PT",
-"Ontem fiquei em casa a descansar."
+"Fomos jantar fora e depois ao cinema."
 ],
 [
 "pt-PT",
-"Fomos jantar fora e depois ao cinema."
+"Ontem fiquei em casa a descansar."
 ],
 [
 "pt-PT",
@@ -13605,11 +13881,11 @@
 ],
 [
 "pt-PT",
-"Está a chover, leva o guarda-chuva."
+"Vou ligar-te logo à noite."
 ],
 [
 "pt-PT",
-"Vou ligar-te logo à noite."
+"Está a chover, leva o guarda-chuva."
 ],
 [
 "pt-PT",
@@ -13669,11 +13945,11 @@
 ],
 [
 "pt-PT",
-"Doem-me as costas quando me levanto."
+"Estou constipada desde segunda-feira."
 ],
 [
 "pt-PT",
-"Estou constipada desde segunda-feira."
+"Doem-me as costas quando me levanto."
 ],
 [
 "pt-PT",
@@ -13725,15 +14001,15 @@
 ],
 [
 "pt-PT",
+"Moro em Lisboa há quinze anos."
+],
+[
+"pt-PT",
 "Quando era pequeno, passava as férias em casa dos avós."
 ],
 [
 "pt-PT",
 "Nunca tinha comido polvo antes."
-],
-[
-"pt-PT",
-"Moro em Lisboa há quinze anos."
 ],
 [
 "pt-PT",
@@ -13837,11 +14113,11 @@
 ],
 [
 "pt-PT",
-"Não acho que ele tenha razão."
+"Espero que corra tudo bem."
 ],
 [
 "pt-PT",
-"Espero que corra tudo bem."
+"Não acho que ele tenha razão."
 ],
 [
 "pt-PT",
@@ -13961,15 +14237,15 @@
 ],
 [
 "pt-PT",
-"Isto custou os olhos da cara."
-],
-[
-"pt-PT",
 "Esse filme é bué giro."
 ],
 [
 "pt-PT",
 "Não sei, pá, se calhar amanhã."
+],
+[
+"pt-PT",
+"Isto custou os olhos da cara."
 ],
 [
 "pt-PT",
@@ -15938,10 +16214,6 @@
 [
 "pt-PT",
 "Siga em frente e vire à direita."
-],
-[
-"pt-PT",
-"Diz-me a verdade!"
 ],
 [
 "pt-PT",
@@ -25297,15 +25569,15 @@
 ],
 [
 "es-ES",
-"Encantada de conocerte."
-],
-[
-"es-ES",
 "¿A qué te dedicas?"
 ],
 [
 "es-ES",
 "No hablo muy bien español."
+],
+[
+"es-ES",
+"Encantada de conocerte."
 ],
 [
 "es-ES",
@@ -25357,7 +25629,7 @@
 ],
 [
 "es-ES",
-"El autobús pasa cada veinte minutos."
+"Son dieciséis euros con cincuenta."
 ],
 [
 "es-ES",
@@ -25365,7 +25637,7 @@
 ],
 [
 "es-ES",
-"Son dieciséis euros con cincuenta."
+"El autobús pasa cada veinte minutos."
 ],
 [
 "es-ES",
@@ -25425,11 +25697,11 @@
 ],
 [
 "es-ES",
-"Mi sobrino tiene cinco años."
+"Soy hija única."
 ],
 [
 "es-ES",
-"Soy hija única."
+"Mi sobrino tiene cinco años."
 ],
 [
 "es-ES",
@@ -25481,15 +25753,15 @@
 ],
 [
 "es-ES",
-"Nunca desayuno entre semana."
-],
-[
-"es-ES",
 "Las llaves están encima de la mesa."
 ],
 [
 "es-ES",
 "Tardo media hora en llegar."
+],
+[
+"es-ES",
+"Nunca desayuno entre semana."
 ],
 [
 "es-ES",
@@ -25549,11 +25821,11 @@
 ],
 [
 "es-ES",
-"De primero quiero una ensalada."
+"¿Nos trae la cuenta, por favor?"
 ],
 [
 "es-ES",
-"¿Nos trae la cuenta, por favor?"
+"De primero quiero una ensalada."
 ],
 [
 "es-ES",
@@ -25605,11 +25877,11 @@
 ],
 [
 "es-ES",
-"El vuelo a París ha sido cancelado."
+"Tiene que cambiar de tren en Zaragoza."
 ],
 [
 "es-ES",
-"Tiene que cambiar de tren en Zaragoza."
+"El vuelo a París ha sido cancelado."
 ],
 [
 "es-ES",
@@ -25717,7 +25989,7 @@
 ],
 [
 "es-ES",
-"Coge el paraguas, está lloviendo."
+"Mañana va a hacer mucho viento."
 ],
 [
 "es-ES",
@@ -25725,7 +25997,7 @@
 ],
 [
 "es-ES",
-"Mañana va a hacer mucho viento."
+"Coge el paraguas, está lloviendo."
 ],
 [
 "es-ES",
@@ -25781,7 +26053,7 @@
 ],
 [
 "es-ES",
-"Estoy constipado desde el lunes."
+"No puede beber alcohol con este medicamento."
 ],
 [
 "es-ES",
@@ -25789,7 +26061,7 @@
 ],
 [
 "es-ES",
-"No puede beber alcohol con este medicamento."
+"Estoy constipado desde el lunes."
 ],
 [
 "es-ES",
@@ -25845,11 +26117,11 @@
 ],
 [
 "es-ES",
-"Llevo quince años viviendo en Madrid."
+"Nunca había probado el pulpo."
 ],
 [
 "es-ES",
-"Nunca había probado el pulpo."
+"Llevo quince años viviendo en Madrid."
 ],
 [
 "es-ES",
@@ -25953,15 +26225,15 @@
 ],
 [
 "es-ES",
+"No creo que tenga razón."
+],
+[
+"es-ES",
 "A lo mejor voy mañana."
 ],
 [
 "es-ES",
 "Espero que todo salga bien."
-],
-[
-"es-ES",
-"No creo que tenga razón."
 ],
 [
 "es-ES",
@@ -26017,11 +26289,11 @@
 ],
 [
 "es-ES",
-"Cuando llegues, mándame un mensaje."
+"Cuando llegué, ella ya se había ido."
 ],
 [
 "es-ES",
-"Cuando llegué, ella ya se había ido."
+"Cuando llegues, mándame un mensaje."
 ],
 [
 "es-ES",
@@ -26081,7 +26353,7 @@
 ],
 [
 "es-ES",
-"Esto me ha costado un ojo de la cara."
+"No sé, tío, a lo mejor mañana."
 ],
 [
 "es-ES",
@@ -26089,7 +26361,7 @@
 ],
 [
 "es-ES",
-"No sé, tío, a lo mejor mañana."
+"Esto me ha costado un ojo de la cara."
 ],
 [
 "es-ES",

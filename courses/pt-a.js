@@ -801,5 +801,165 @@ unit('pt_a2_4', 'A2', 'O tempo e os planos', 'Météo et projets', '🌦️', '#
     ]),
 ]),
 
+// Unité « bonus » ajoutée après coup : elle ne verrouille pas les unités suivantes
+{ ...unit('pt_a2_5', 'A2', 'Os pronomes', 'Les pronoms COD et COI', '🎯', '#6366f1', [
+  lesson('Vejo-o amanhã', 'Le COD : le, la, les',
+    G('COD : o, a, os, as (le, la, les) — après le verbe !',
+      `Le <b>COD</b> répond à « qui ? / quoi ? », directement après le verbe, sans préposition : Vejo <b>o Pedro</b> → Vejo-<b>o</b>.<br><br>
+      <b>me</b> = me · <b>te</b> = te · <b>o / a</b> = le, la (et « vous » : o senhor, a senhora) · <b>nos</b> = nous · <b>vos</b> = vous · <b>os / as</b> = les<br><br>
+      <b>Au Portugal, le pronom se met APRÈS le verbe, avec un trait d\'union</b> : Conheço-<b>a</b>. Ajudas-<b>me</b>? Convidei-<b>os</b>.<br>
+      Mais il passe <b>DEVANT</b> après une négation : <b>Não o</b> conheço. <b>Nunca a</b> vi.`,
+      [['Conheces a Rita? Conheço-a muito bem.', 'Tu connais Rita ? Je la connais très bien.'], ['O bolo? Comprei-o na pastelaria.', 'Le gâteau ? Je l\'ai acheté à la pâtisserie.'], ['Não te ouço, fala mais alto!', 'Je ne t\'entends pas, parle plus fort !']],
+      'Jamais de pronom en début de phrase au Portugal : « Me ajuda? » est brésilien, on dit « Ajuda-me? ». Et « o / a » remplace aussi les choses : o carro → vejo-o.'),
+    [
+      I('vejo-o / vejo-a', 'je le vois / je la vois', 'O autocarro? Vejo-o ali ao fundo.', 'Le bus ? Je le vois là-bas au fond.'),
+      I('ajuda-me', 'aide-moi / aidez-moi', 'Ajuda-me com as malas?', 'Tu m\'aides avec les valises ?'),
+      I('conheço-os', 'je les connais', 'Os vizinhos? Conheço-os há anos.', 'Les voisins ? Je les connais depuis des années.'),
+      I('não o vejo', 'je ne le vois pas', 'Onde está o gato? Não o vejo.', 'Où est le chat ? Je ne le vois pas.'),
+      D('Na festa (à la fête)', [
+        ['Inês', 'Conheces aquele rapaz?', 'Tu connais ce garçon ?'],
+        ['Marc', 'Conheço-o, é o primo da Sara. Convidei-o eu.', 'Je le connais, c\'est le cousin de Sara. C\'est moi qui l\'ai invité.'],
+        ['Inês', 'E as amigas dele? Também as convidaste?', 'Et ses amies ? Tu les as invitées aussi ?'],
+        ['Marc', 'Não, não as conheço. Mas são simpáticas!', 'Non, je ne les connais pas. Mais elles sont sympas !'],
+        ['Inês', 'Olha, a música está muito alta. Não te ouço!', 'Dis donc, la musique est très forte. Je ne t\'entends pas !'],
+      ], [
+        ['Qui a invité le cousin de Sara ?', ['Marc', 'Inês', 'Sara', 'Personne']],
+        ['« Também as convidaste? » : « as » remplace…', ['les amies', 'la musique', 'le garçon', 'Sara et Inês']],
+      ]),
+      F('A Rita? Conheço-___ muito bem.', ['a', 'o', 'lhe', 'la'], 'Rita ? Je la connais très bien.'),
+      F('Os bilhetes? Comprei-___ ontem.', ['os', 'as', 'o', 'lhes'], 'Les billets ? Je les ai achetés hier.', 'bilhetes : masculin pluriel → os.'),
+      F('Não ___ conheço.', ['o', '-o', 'lo', 'lhe'], 'Je ne le connais pas.', 'Après « não », le pronom passe devant le verbe, sans trait d\'union.'),
+      C('« Tu m\'aides ? » (au Portugal) :', ['Ajudas-me?', 'Me ajudas?', 'Ajudas me?', 'Ajudas-mim?']),
+      C('« Je ne t\'entends pas » :', ['Não te ouço.', 'Não ouço-te.', 'Te não ouço.', 'Não ouço te.']),
+      O('Je la vois tous les jours.', 'Vejo-a todos os dias', ['a', 'vejo']),
+      O('Nous ne les connaissons pas.', 'Não os conhecemos', ['conhecemo-los']),
+      W('Je le connais.', 'Conheço-o|Eu conheço-o'),
+      W('Je ne la vois pas.', 'Não a vejo|Eu não a vejo'),
+      L('O carro? Vendi-o a semana passada.', 'La voiture ? Je l\'ai vendue la semaine dernière.'),
+      T('Elle nous invite à dîner.', ['Ela convida-nos para jantar.', 'Ela nos convida para jantar.', 'Ela convida-nós para jantar.', 'Ela convida-os para jantar.']),
+    ]),
+
+  lesson('Ligo-lhe amanhã', 'Le COI : lui, leur',
+    G('COI : lhe, lhes (lui, leur) — et les verbes pièges',
+      `Le <b>COI</b> répond à « à qui ? » : Dou o livro <b>à Ana</b> → Dou-<b>lhe</b> o livro.<br><br>
+      <b>me</b> = me, à moi · <b>te</b> = te, à toi · <b>lhe</b> = lui, à vous (o senhor / a senhora) · <b>nos</b> = nous · <b>vos</b> = vous · <b>lhes</b> = leur<br><br>
+      Même place que le COD : <b>après le verbe</b> (Digo-<b>lhe</b>), <b>devant</b> après não, nunca, já… (<b>Não lhe</b> digo).<br>
+      Verbes avec COI : dar, dizer, perguntar, pedir, mostrar, mandar, emprestar, oferecer, escrever, telefonar <b>a</b> alguém.<br>
+      ⚠️ <b>ligar a alguém</b> (appeler quelqu\'un) se construit avec « a » : <b>Ligo-lhe</b> amanhã = Je l\'appelle demain.`,
+      [['Dei-lhe um presente.', 'Je lui ai offert un cadeau.'], ['Ligo-lhe amanhã sem falta.', 'Je vous appelle demain sans faute.'], ['Não lhes digas nada!', 'Ne leur dis rien !']],
+      '« lhe » ne change jamais : il sert pour « lui » (homme ou femme) et pour « vous » poli. Pour préciser, on ajoute « a ele / a ela » : Dei-lhe o livro a ele, não a ela.'),
+    [
+      I('dou-lhe', 'je lui donne / je vous donne', 'Dou-lhe o meu número.', 'Je vous donne mon numéro.'),
+      I('ligo-lhe', 'je l\'appelle / je vous appelle', 'Ligo-lhe logo à tarde.', 'Je l\'appelle cet après-midi.'),
+      I('diz-me', 'dis-moi', 'Diz-me a verdade!', 'Dis-moi la vérité !'),
+      I('mando-lhes', 'je leur envoie', 'Mando-lhes uma mensagem.', 'Je leur envoie un message.'),
+      D('O aniversário da avó (l\'anniversaire de mamie)', [
+        ['Sofia', 'Já ligaste à avó? Hoje é o aniversário dela!', 'Tu as déjà appelé mamie ? C\'est son anniversaire aujourd\'hui !'],
+        ['Rui', 'Ainda não. Ligo-lhe depois do almoço.', 'Pas encore. Je l\'appelle après le déjeuner.'],
+        ['Sofia', 'E o que lhe vais oferecer?', 'Et qu\'est-ce que tu vas lui offrir ?'],
+        ['Rui', 'Vou dar-lhe um livro de receitas. Aos primos, mandei-lhes um postal.', 'Je vais lui offrir un livre de recettes. Aux cousins, je leur ai envoyé une carte.'],
+        ['Sofia', 'Boa! Diz-lhe que eu passo lá à noite.', 'Super ! Dis-lui que je passe ce soir.'],
+      ], [
+        ['Quand Rui va-t-il appeler sa grand-mère ?', ['Après le déjeuner', 'Ce soir', 'Demain', 'Il l\'a déjà appelée']],
+        ['« mandei-lhes um postal » : à qui ?', ['Aux cousins', 'À la grand-mère', 'À Sofia', 'Aux voisins']],
+      ]),
+      F('Dei-___ um presente. (à ma mère)', ['lhe', 'a', 'o', 'la'], 'Je lui ai offert un cadeau.', 'à ma mère → COI → lhe.'),
+      F('Vou ligar-___ amanhã. (à toi)', ['te', 'tu', 'ti', 'lhe'], 'Je vais t\'appeler demain.'),
+      F('Escrevo-___ todas as semanas. (à mes parents)', ['lhes', 'os', 'lhe', 'as'], 'Je leur écris toutes les semaines.'),
+      C('« Je l\'appelle ce soir » (Pedro) :', ['Ligo-lhe hoje à noite.', 'Ligo-o hoje à noite.', 'Lhe ligo hoje à noite.', 'Ligo-lo hoje à noite.'], '« ligar a alguém » → COI : lhe.'),
+      C('« Ne lui dis rien ! » :', ['Não lhe digas nada!', 'Não diz-lhe nada!', 'Não digas-lhe nada!', 'Lhe não digas nada!']),
+      C('« Vejo o Pedro » : COD ou COI ?', ['COD → vejo-o', 'COI → vejo-lhe', 'COI → lhe vejo', 'COD → vejo-lhe']),
+      O('Je leur envoie un message.', 'Mando-lhes uma mensagem', ['os']),
+      O('Qu\'est-ce que tu lui dis ?', 'O que lhe dizes', ['dizes-lhe']),
+      W('Dis-moi !', 'Diz-me|Diga-me'),
+      W('Je vous appelle demain. (vouvoiement)', 'Ligo-lhe amanhã|Telefono-lhe amanhã|Eu ligo-lhe amanhã'),
+      L('Pergunta-lhe se quer café.', 'Demande-lui s\'il veut du café.'),
+      T('Je leur ai prêté ma voiture.', ['Emprestei-lhes o meu carro.', 'Emprestei-os o meu carro.', 'Lhes emprestei o meu carro.', 'Emprestei-lhe-os o meu carro.']),
+    ]),
+
+  lesson('Comprá-lo, fazem-no', 'Quand le pronom change de forme',
+    G('o, a, os, as qui changent : -lo, -la, -no, -na',
+      `Après un verbe terminé par <b>-r, -s ou -z</b>, cette lettre <b>tombe</b> et le pronom devient <b>-lo, -la, -los, -las</b> :<br>
+      comprar + o → compr<b>á-lo</b> · fazer + a → faz<b>ê-la</b> · abrir + a → abr<b>i-la</b> · fiz + o → <b>fi-lo</b> · compramos + os → compr<b>amo-los</b><br>
+      (on ajoute un accent pour garder la voyelle forte : -á, -ê, -ô)<br><br>
+      Après un son <b>nasal</b> (-m, -ão, -õe), le pronom devient <b>-no, -na, -nos, -nas</b> :<br>
+      dão + o → <b>dão-no</b> · venderam + a → <b>venderam-na</b> · põe + os → <b>põe-nos</b><br><br>
+      ⚠️ Seuls o, a, os, as changent. <b>lhe, me, te</b> ne bougent jamais : vou dar-<b>lhe</b>, compramos-<b>te</b>.`,
+      [['O bilhete? Vou comprá-lo online.', 'Le billet ? Je vais l\'acheter en ligne.'], ['A sopa? Fi-la ontem.', 'La soupe ? Je l\'ai faite hier.'], ['Os miúdos? Os avós levam-nos à escola.', 'Les enfants ? Les grands-parents les emmènent à l\'école.']],
+      '« Vou fazer-o » est une faute très courante : on dit « Vou fazê-lo ». C\'est la forme la plus fréquente à l\'oral : vou comprá-lo, quero vê-la, tenho de fazê-lo. Attention, « levam-nos » peut aussi vouloir dire « ils nous emmènent » : le contexte tranche.'),
+    [
+      I('comprá-lo', 'l\'acheter', 'Gosto deste casaco. Vou comprá-lo.', 'J\'aime cette veste. Je vais l\'acheter.'),
+      I('fazê-lo', 'le faire', 'Não sei fazê-lo sozinha.', 'Je ne sais pas le faire toute seule.'),
+      I('vê-la', 'la voir', 'Quero muito vê-la amanhã.', 'Je veux vraiment la voir demain.'),
+      I('fazem-no / venderam-na', 'ils le font / ils l\'ont vendue', 'O pão? Fazem-no aqui todos os dias.', 'Le pain ? Ils le font ici tous les jours.'),
+      D('No mercado (au marché)', [
+        ['Cliente', 'Estes figos estão ótimos. Vou levá-los!', 'Ces figues sont superbes. Je vais les prendre !'],
+        ['Vendedora', 'Quer um saco para pô-los?', 'Voulez-vous un sac pour les mettre ?'],
+        ['Cliente', 'Sim, obrigada. E este queijo? Fazem-no cá?', 'Oui, merci. Et ce fromage ? Vous le faites ici ?'],
+        ['Vendedora', 'Não, compramo-lo a um pastor da Serra da Estrela. Quer prová-lo?', 'Non, nous l\'achetons à un berger de la Serra da Estrela. Vous voulez le goûter ?'],
+        ['Cliente', 'Quero! Está delicioso. Vou comprá-lo também.', 'Oui ! Il est délicieux. Je vais l\'acheter aussi.'],
+      ], [
+        ['D\'où vient le fromage ?', ['D\'un berger de la Serra da Estrela', 'Il est fait au marché', 'Du supermarché', 'D\'Espagne']],
+        ['« compramo-lo » =', ['nous l\'achetons', 'nous les achetons', 'achetons-le', 'ils l\'achètent']],
+      ]),
+      F('A carta? Vou escrevê-___ hoje.', ['la', 'a', 'na', 'lhe'], 'La lettre ? Je vais l\'écrire aujourd\'hui.', 'escrever + a → escrevê-la (le -r tombe).'),
+      F('Os documentos? Eles trazem-___ amanhã.', ['nos', 'os', 'los', 'lhes'], 'Les documents ? Ils les apportent demain.', 'Après un son nasal (-em) → -nos.'),
+      F('O trabalho? Fi-___ ontem à noite.', ['lo', 'o', 'no', 'lhe'], 'Le travail ? Je l\'ai fait hier soir.', 'fiz + o → fi-lo.'),
+      F('As chaves? Pusemo-___ na gaveta.', ['las', 'as', 'nas', 'lhes'], 'Les clés ? Nous les avons mises dans le tiroir.', 'pusemos + as → pusemo-las.'),
+      C('« Je vais le faire » :', ['Vou fazê-lo.', 'Vou fazer-o.', 'Vou fazer-lo.', 'Vou o fazer-lo.']),
+      C('« Ils la vendent » (a casa) :', ['Vendem-na.', 'Vendem-a.', 'Vendem-la.', 'Vendem-lhe.']),
+      C('Quelle phrase est correcte ?', ['Vou dar-lhe o livro.', 'Vou dá-lhe o livro.', 'Vou dar-o.', 'Vou dá-o.'], 'Seuls o, a, os, as se transforment ; avec lhe, le -r reste.'),
+      O('Je veux la voir demain.', 'Quero vê-la amanhã', ['ver-a']),
+      O('Nous les achetons au marché.', 'Compramo-los no mercado', ['compramos-os']),
+      W('Je vais l\'acheter. (le livre)', 'Vou comprá-lo|Eu vou comprá-lo|Vou comprar o livro'),
+      W('Ils le font tous les jours.', 'Fazem-no todos os dias|Eles fazem-no todos os dias'),
+      L('A casa? Venderam-na o ano passado.', 'La maison ? Ils l\'ont vendue l\'année dernière.'),
+      T('Tu peux l\'ouvrir ? (la fenêtre)', ['Podes abri-la?', 'Podes abrir-a?', 'Podes abrir-la?', 'Podes a abrir-la?']),
+    ]),
+
+  lesson('Antes ou depois do verbo?', 'Avant ou après le verbe ? + lho, mo',
+    G('Avant ou après le verbe ? Les mots qui « attirent » le pronom',
+      `Par défaut : <b>après</b> le verbe (Vejo-<b>te</b> logo).<br>
+      Le pronom passe <b>devant</b> après :<br>
+      • la négation : <b>não, nunca, ninguém, nada</b> → Não <b>te</b> vejo.<br>
+      • certains adverbes : <b>já, ainda, também, só, sempre, talvez</b> → Já <b>o</b> vi. Também <b>me</b> disse.<br>
+      • un mot interrogatif : <b>quem, o que, onde, quando, porque…</b> → Onde <b>a</b> conheceste?<br>
+      • une subordonnée : <b>que, se, quando, porque…</b> → Acho que <b>o</b> conheço.<br>
+      • <b>todos, alguém, tudo</b> → Todos <b>me</b> ajudaram.<br><br>
+      À reconnaître (portugais soigné) : COI + COD se fondent : <b>me + o = mo</b>, <b>te + o = to</b>, <b>lhe + o = lho</b> → Dás-<b>mo</b>? (Tu me le donnes ?) · Já <b>lho</b> disse. (Je le lui ai déjà dit.)`,
+      [['Já o vi esta manhã.', 'Je l\'ai déjà vu ce matin.'], ['Onde a conheceste?', 'Où l\'as-tu rencontrée ?'], ['Acho que te conheço.', 'Je crois que je te connais.']],
+      'Une question SANS mot interrogatif garde le pronom après : « Conheces-me? » (Tu me connais ?). Avec un mot interrogatif, il passe devant : « Quem te disse? » (Qui te l\'a dit ?).'),
+    [
+      I('já o vi', 'je l\'ai déjà vu', 'O filme? Já o vi duas vezes.', 'Le film ? Je l\'ai déjà vu deux fois.'),
+      I('também me disse', 'il m\'a dit aussi', 'O Rui também me disse isso.', 'Rui m\'a dit ça aussi.'),
+      I('quem te disse?', 'qui te l\'a dit ?', 'Quem te disse que eu estava doente?', 'Qui t\'a dit que j\'étais malade ?'),
+      I('já lho dei', 'je le lui ai déjà donné', 'O livro? Já lho dei ontem.', 'Le livre ? Je le lui ai déjà donné hier.'),
+      D('Os óculos perdidos (les lunettes perdues)', [
+        ['Paulo', 'Viste os meus óculos? Não os encontro.', 'Tu as vu mes lunettes ? Je ne les trouve pas.'],
+        ['Clara', 'Vi-os na cozinha, acho eu.', 'Je les ai vues dans la cuisine, je crois.'],
+        ['Paulo', 'Já os procurei lá. Quem os tirou daqui?', 'Je les ai déjà cherchées là-bas. Qui les a enlevées d\'ici ?'],
+        ['Clara', 'Talvez os tenhas deixado no carro.', 'Tu les as peut-être laissées dans la voiture.'],
+        ['Paulo', 'Tens razão! Dás-me as chaves do carro?', 'Tu as raison ! Tu me donnes les clés de la voiture ?'],
+        ['Clara', 'Toma, dou-tas já.', 'Tiens, je te les donne tout de suite.'],
+      ], [
+        ['Où Clara pense-t-elle avoir vu les lunettes ?', ['Dans la cuisine', 'Dans la voiture', 'Au salon', 'Sur la table']],
+        ['« dou-tas » =', ['je te les donne', 'je les donne', 'donne-les-moi', 'je te la donne']],
+      ]),
+      F('Já ___ vi hoje. (o Pedro)', ['o', '-o', 'lhe', 'lo'], 'Je l\'ai déjà vu aujourd\'hui.', '« já » attire le pronom devant le verbe.'),
+      F('Acho que ___ conheço de algum lado.', ['te', '-te', 'ti', 'tu'], 'Je crois que je te connais de quelque part.', 'Après « que », le pronom passe devant.'),
+      F('Conheces-___? Sou o primo da Ana.', ['me', 'mim', 'eu', 'lhe'], 'Tu me connais ? Je suis le cousin d\'Ana.', 'Question sans mot interrogatif → le pronom reste après.'),
+      F('Todos ___ ajudaram na mudança.', ['nos', '-nos', 'nós', 'os'], 'Tout le monde nous a aidés pour le déménagement.'),
+      C('« Qui t\'a appelé ? » :', ['Quem te ligou?', 'Quem ligou-te?', 'Quem ligou te?', 'Te quem ligou?']),
+      C('« Je l\'ai aussi invitée » :', ['Também a convidei.', 'Também convidei-a.', 'Convidei-a também a.', 'Também convidei-la.']),
+      C('« Já lho disse » signifie :', ['Je le lui ai déjà dit.', 'Je lui ai déjà parlé.', 'Il me l\'a déjà dit.', 'Je l\'ai déjà vu.']),
+      O('Où l\'as-tu rencontrée ?', 'Onde a conheceste', ['conheceste-a']),
+      O('Je crois qu\'il me connaît.', 'Acho que ele me conhece', ['conhece-me']),
+      W('Je l\'ai déjà vu. (le film)', 'Já o vi|Eu já o vi|Já vi o filme'),
+      W('Qui te l\'a dit ?', 'Quem te disse|Quem to disse|Quem é que te disse|Quem é que to disse'),
+      L('Ainda não lhe disse nada.', 'Je ne lui ai encore rien dit.'),
+      T('Tu me le prêtes ? (le livre)', ['Emprestas-mo?', 'Emprestas-me-o?', 'Mo emprestas?', 'Emprestas-lo-me?']),
+    ]),
+]), bonus: true },
+
 ]);
 })();

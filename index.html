@@ -981,7 +981,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v49</span>
+          <span style="font-size:10px;color:#444">v50</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -5467,7 +5467,11 @@ function bbUnitUnlocked(lang, unitIdx) {
     const prev = BB_CURRICULUM[lang].units[unitIdx - 1];
     if (prev.level !== unit.level || bbBelowStart(lang, unit)) return true;
   }
-  const prev = BB_CURRICULUM[lang].units[unitIdx - 1];
+  // une unité « bonus » (ajoutée après coup) ne bloque pas celles qui suivent
+  const units = BB_CURRICULUM[lang].units;
+  let j = unitIdx - 1;
+  while (j > 0 && units[j].bonus) j--;
+  const prev = units[j];
   return bbCountDone(lang, prev) === prev.lessons.length && bbCheckPassed(lang, prev.id);
 }
 
