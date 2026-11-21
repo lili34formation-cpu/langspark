@@ -2869,11 +2869,11 @@
 ],
 [
 "en-US",
-"That's thirteen euros, please."
+"We're open from nine till five."
 ],
 [
 "en-US",
-"We're open from nine till five."
+"That's thirteen euros, please."
 ],
 [
 "en-US",
@@ -2997,7 +2997,7 @@
 ],
 [
 "en-US",
-"There's a bakery next to my flat."
+"I never have breakfast during the week."
 ],
 [
 "en-US",
@@ -3005,7 +3005,7 @@
 ],
 [
 "en-US",
-"I never have breakfast during the week."
+"There's a bakery next to my flat."
 ],
 [
 "en-US",
@@ -3057,11 +3057,11 @@
 ],
 [
 "en-US",
-"Is service included?"
+"I'm afraid we're fully booked tonight."
 ],
 [
 "en-US",
-"I'm afraid we're fully booked tonight."
+"Is service included?"
 ],
 [
 "en-US",
@@ -3109,15 +3109,15 @@
 ],
 [
 "en-US",
+"Go straight on and take the second left."
+],
+[
+"en-US",
 "The flight to Lisbon has been cancelled."
 ],
 [
 "en-US",
 "Is breakfast included in the price?"
-],
-[
-"en-US",
-"Go straight on and take the second left."
 ],
 [
 "en-US",
@@ -3297,11 +3297,11 @@
 ],
 [
 "en-US",
-"You don't need an appointment."
+"You should take these twice a day after meals."
 ],
 [
 "en-US",
-"You should take these twice a day after meals."
+"You don't need an appointment."
 ],
 [
 "en-US",
@@ -3477,15 +3477,15 @@
 ],
 [
 "en-US",
-"I couldn't agree more."
-],
-[
-"en-US",
 "If I were you, I'd take the job."
 ],
 [
 "en-US",
 "I wish I'd listened to you."
+],
+[
+"en-US",
+"I couldn't agree more."
 ],
 [
 "en-US",
@@ -3541,11 +3541,11 @@
 ],
 [
 "en-US",
-"She told me she was moving abroad."
+"By the time we arrived, the film had started."
 ],
 [
 "en-US",
-"By the time we arrived, the film had started."
+"She told me she was moving abroad."
 ],
 [
 "en-US",
@@ -3605,11 +3605,11 @@
 ],
 [
 "en-US",
-"I'm skint until the end of the month."
+"No worries, it's on me."
 ],
 [
 "en-US",
-"No worries, it's on me."
+"I'm skint until the end of the month."
 ],
 [
 "en-US",
@@ -13505,15 +13505,15 @@
 ],
 [
 "pt-PT",
+"O comboio chega daqui a vinte minutos."
+],
+[
+"pt-PT",
 "A loja fecha às sete."
 ],
 [
 "pt-PT",
 "São dezoito euros e cinquenta."
-],
-[
-"pt-PT",
-"O comboio chega daqui a vinte minutos."
 ],
 [
 "pt-PT",
@@ -13573,11 +13573,11 @@
 ],
 [
 "pt-PT",
-"A minha sobrinha é muito simpática."
+"Os meus pais estão reformados."
 ],
 [
 "pt-PT",
-"Os meus pais estão reformados."
+"A minha sobrinha é muito simpática."
 ],
 [
 "pt-PT",
@@ -13633,15 +13633,15 @@
 ],
 [
 "pt-PT",
-"Não há elevador, é no terceiro andar."
-],
-[
-"pt-PT",
 "Deito-me tarde e levanto-me cedo."
 ],
 [
 "pt-PT",
 "As chaves estão em cima da mesa."
+],
+[
+"pt-PT",
+"Não há elevador, é no terceiro andar."
 ],
 [
 "pt-PT",
@@ -13753,11 +13753,11 @@
 ],
 [
 "pt-PT",
-"Tem de mudar de comboio em Coimbra."
+"É logo ali, depois do semáforo."
 ],
 [
 "pt-PT",
-"É logo ali, depois do semáforo."
+"Tem de mudar de comboio em Coimbra."
 ],
 [
 "pt-PT",
@@ -13813,15 +13813,15 @@
 ],
 [
 "pt-PT",
-"Perdemos o último comboio."
-],
-[
-"pt-PT",
 "Fomos jantar fora e depois ao cinema."
 ],
 [
 "pt-PT",
 "Ontem fiquei em casa a descansar."
+],
+[
+"pt-PT",
+"Perdemos o último comboio."
 ],
 [
 "pt-PT",
@@ -13945,15 +13945,15 @@
 ],
 [
 "pt-PT",
-"Estou constipada desde segunda-feira."
-],
-[
-"pt-PT",
 "Doem-me as costas quando me levanto."
 ],
 [
 "pt-PT",
 "Não pode beber álcool com este medicamento."
+],
+[
+"pt-PT",
+"Estou constipada desde segunda-feira."
 ],
 [
 "pt-PT",
@@ -14001,11 +14001,11 @@
 ],
 [
 "pt-PT",
-"Moro em Lisboa há quinze anos."
+"Quando era pequeno, passava as férias em casa dos avós."
 ],
 [
 "pt-PT",
-"Quando era pequeno, passava as férias em casa dos avós."
+"Moro em Lisboa há quinze anos."
 ],
 [
 "pt-PT",
@@ -14109,15 +14109,15 @@
 ],
 [
 "pt-PT",
-"Se calhar vou amanhã."
-],
-[
-"pt-PT",
 "Espero que corra tudo bem."
 ],
 [
 "pt-PT",
 "Não acho que ele tenha razão."
+],
+[
+"pt-PT",
+"Se calhar vou amanhã."
 ],
 [
 "pt-PT",
@@ -14173,7 +14173,7 @@
 ],
 [
 "pt-PT",
-"Ele perguntou-me se eu queria vir."
+"Quando cheguei, ela já tinha saído."
 ],
 [
 "pt-PT",
@@ -14181,7 +14181,7 @@
 ],
 [
 "pt-PT",
-"Quando cheguei, ela já tinha saído."
+"Ele perguntou-me se eu queria vir."
 ],
 [
 "pt-PT",
@@ -14237,11 +14237,11 @@
 ],
 [
 "pt-PT",
-"Esse filme é bué giro."
+"Não sei, pá, se calhar amanhã."
 ],
 [
 "pt-PT",
-"Não sei, pá, se calhar amanhã."
+"Esse filme é bué giro."
 ],
 [
 "pt-PT",
@@ -25569,11 +25569,11 @@
 ],
 [
 "es-ES",
-"¿A qué te dedicas?"
+"No hablo muy bien español."
 ],
 [
 "es-ES",
-"No hablo muy bien español."
+"¿A qué te dedicas?"
 ],
 [
 "es-ES",
@@ -25817,15 +25817,15 @@
 ],
 [
 "es-ES",
+"De primero quiero una ensalada."
+],
+[
+"es-ES",
 "La cocina cierra a las once."
 ],
 [
 "es-ES",
 "¿Nos trae la cuenta, por favor?"
-],
-[
-"es-ES",
-"De primero quiero una ensalada."
 ],
 [
 "es-ES",
@@ -25877,11 +25877,11 @@
 ],
 [
 "es-ES",
-"Tiene que cambiar de tren en Zaragoza."
+"El vuelo a París ha sido cancelado."
 ],
 [
 "es-ES",
-"El vuelo a París ha sido cancelado."
+"Tiene que cambiar de tren en Zaragoza."
 ],
 [
 "es-ES",
@@ -25933,11 +25933,11 @@
 ],
 [
 "es-ES",
-"Perdimos el último autobús."
+"No salimos porque llovía."
 ],
 [
 "es-ES",
-"No salimos porque llovía."
+"Perdimos el último autobús."
 ],
 [
 "es-ES",
@@ -25989,7 +25989,7 @@
 ],
 [
 "es-ES",
-"Mañana va a hacer mucho viento."
+"Coge el paraguas, está lloviendo."
 ],
 [
 "es-ES",
@@ -25997,7 +25997,7 @@
 ],
 [
 "es-ES",
-"Coge el paraguas, está lloviendo."
+"Mañana va a hacer mucho viento."
 ],
 [
 "es-ES",
@@ -26053,15 +26053,15 @@
 ],
 [
 "es-ES",
+"Estoy constipado desde el lunes."
+],
+[
+"es-ES",
 "No puede beber alcohol con este medicamento."
 ],
 [
 "es-ES",
 "Me duele la espalda cuando me levanto."
-],
-[
-"es-ES",
-"Estoy constipado desde el lunes."
 ],
 [
 "es-ES",
@@ -26113,15 +26113,15 @@
 ],
 [
 "es-ES",
+"Llevo quince años viviendo en Madrid."
+],
+[
+"es-ES",
 "De pequeño pasaba los veranos con mis abuelos."
 ],
 [
 "es-ES",
 "Nunca había probado el pulpo."
-],
-[
-"es-ES",
-"Llevo quince años viviendo en Madrid."
 ],
 [
 "es-ES",
@@ -26225,15 +26225,15 @@
 ],
 [
 "es-ES",
+"Espero que todo salga bien."
+],
+[
+"es-ES",
 "No creo que tenga razón."
 ],
 [
 "es-ES",
 "A lo mejor voy mañana."
-],
-[
-"es-ES",
-"Espero que todo salga bien."
 ],
 [
 "es-ES",
@@ -26293,11 +26293,11 @@
 ],
 [
 "es-ES",
-"Cuando llegues, mándame un mensaje."
+"Me preguntó si quería venir."
 ],
 [
 "es-ES",
-"Me preguntó si quería venir."
+"Cuando llegues, mándame un mensaje."
 ],
 [
 "es-ES",
@@ -26353,7 +26353,7 @@
 ],
 [
 "es-ES",
-"No sé, tío, a lo mejor mañana."
+"Esto me ha costado un ojo de la cara."
 ],
 [
 "es-ES",
@@ -26361,7 +26361,7 @@
 ],
 [
 "es-ES",
-"Esto me ha costado un ojo de la cara."
+"No sé, tío, a lo mejor mañana."
 ],
 [
 "es-ES",
@@ -43178,5 +43178,377 @@
 [
 "pt-PT",
 "Tenho saudades tuas!"
+],
+[
+"pt-PT",
+"Bom dia! Diga, faz favor."
+],
+[
+"pt-PT",
+"Bom dia! Uma bica e um pastel de nata, se faz favor."
+],
+[
+"pt-PT",
+"É para comer aqui."
+],
+[
+"pt-PT",
+"Quer o pastel quentinho? Com canela?"
+],
+[
+"pt-PT",
+"Sim, quentinho e com canela, obrigada."
+],
+[
+"pt-PT",
+"Sim, um sumo de laranja natural, se faz favor."
+],
+[
+"pt-PT",
+"Então, é uma bica, um pastel e um sumo natural. São quatro euros e vinte."
+],
+[
+"pt-PT",
+"Pode, pode. Aproxime o cartão, faz favor. Obrigada e bom dia!"
+],
+[
+"pt-PT",
+"Obrigada, igualmente!"
+],
+[
+"pt-PT",
+"Boa noite! Quantas pessoas são?"
+],
+[
+"pt-PT",
+"Boa noite! Somos duas pessoas."
+],
+[
+"pt-PT",
+"Têm reserva?"
+],
+[
+"pt-PT",
+"Não, não temos reserva."
+],
+[
+"pt-PT",
+"De momento está tudo cheio. Mas daqui a uns quinze minutos fica uma mesa livre."
+],
+[
+"pt-PT",
+"Não faz mal, podemos esperar."
+],
+[
+"pt-PT",
+"Muito bem. Preferem dentro ou na esplanada?"
+],
+[
+"pt-PT",
+"Na esplanada, se faz favor."
+],
+[
+"pt-PT",
+"Então, podem esperar ali ao balcão. Querem beber alguma coisa enquanto esperam?"
+],
+[
+"pt-PT",
+"Sim, duas imperiais, se faz favor."
+],
+[
+"pt-PT",
+"Já está! A vossa mesa está pronta. Acompanhem-me, por favor."
+],
+[
+"pt-PT",
+"Boa noite. Trouxe-vos pão, manteiga e azeitonas. Para beber, o que vai ser?"
+],
+[
+"pt-PT",
+"Desculpe, o pão e as azeitonas pagam-se?"
+],
+[
+"pt-PT",
+"São. O couvert é dois euros e meio por pessoa. Se não quiserem, eu levo."
+],
+[
+"pt-PT",
+"Ficamos só com o pão, obrigada."
+],
+[
+"pt-PT",
+"Com certeza. E para beber?"
+],
+[
+"pt-PT",
+"Têm vinho da casa?"
+],
+[
+"pt-PT",
+"Temos, branco e tinto. Há em jarro de meio litro ou de um litro."
+],
+[
+"pt-PT",
+"Um jarro de meio litro de tinto, se faz favor."
+],
+[
+"pt-PT",
+"E água? Com gás ou sem gás? Fresca ou natural?"
+],
+[
+"pt-PT",
+"Uma garrafa grande de água sem gás, fresca."
+],
+[
+"pt-PT",
+"Muito bem, já trago. Entretanto, aqui está a ementa."
+],
+[
+"pt-PT",
+"Então, já escolheram?"
+],
+[
+"pt-PT",
+"Ainda não. O que é que recomenda?"
+],
+[
+"pt-PT",
+"Hoje o prato do dia é bacalhau à Brás. E temos polvo à lagareiro, que está muito bom."
+],
+[
+"pt-PT",
+"Uma meia dose chega para uma pessoa?"
+],
+[
+"pt-PT",
+"Chega, chega. As doses aqui são grandes. Uma dose dá bem para os dois."
+],
+[
+"pt-PT",
+"Então, uma dose de polvo à lagareiro para os dois."
+],
+[
+"pt-PT",
+"Ótima escolha. O polvo vem com batata a murro e grelos. Está bem assim?"
+],
+[
+"pt-PT",
+"Pode ser com salada em vez dos grelos?"
+],
+[
+"pt-PT",
+"Pode, sem problema. E a senhora, quer a carne? O bife é como? Bem passado, médio ou mal passado?"
+],
+[
+"pt-PT",
+"Não, obrigada, partilhamos o polvo."
+],
+[
+"pt-PT",
+"Boa tarde! Já sabem o que vão comer?"
+],
+[
+"pt-PT",
+"Antes de mais, sou alérgica a marisco."
+],
+[
+"pt-PT",
+"Obrigado por avisar. Então evite o arroz de marisco e a cataplana. O resto não tem marisco."
+],
+[
+"pt-PT",
+"E têm pratos vegetarianos?"
+],
+[
+"pt-PT",
+"Temos o risotto de cogumelos e uma salada de grão com ovo cozido."
+],
+[
+"pt-PT",
+"Queria a salada de grão, mas sem coentros, se faz favor."
+],
+[
+"pt-PT",
+"Sem coentros, anotado. E sem cebola também, ou pode ser?"
+],
+[
+"pt-PT",
+"A cebola pode ser, obrigada."
+],
+[
+"pt-PT",
+"Perfeito. Vou avisar a cozinha da alergia."
+],
+[
+"pt-PT",
+"Aqui está o polvo. Bom apetite!"
+],
+[
+"pt-PT",
+"Obrigada! Desculpe, falta um garfo."
+],
+[
+"pt-PT",
+"Peço desculpa! Já trago."
+],
+[
+"pt-PT",
+"Então, está tudo bem? Está a gostar?"
+],
+[
+"pt-PT",
+"Está tudo ótimo, o polvo está delicioso!"
+],
+[
+"pt-PT",
+"Pode trazer mais um bocadinho de pão?"
+],
+[
+"pt-PT",
+"Com certeza. E o vinho, querem outro jarro?"
+],
+[
+"pt-PT",
+"Não, obrigada, já chega."
+],
+[
+"pt-PT",
+"Muito bem. Se precisarem de alguma coisa, é só chamar."
+],
+[
+"pt-PT",
+"Já posso levar? Vão querer sobremesa?"
+],
+[
+"pt-PT",
+"Pode levar, obrigada. O que é que há de sobremesa?"
+],
+[
+"pt-PT",
+"Temos arroz doce, mousse de chocolate, pudim flan e baba de camelo."
+],
+[
+"pt-PT",
+"O que é a baba de camelo?"
+],
+[
+"pt-PT",
+"É uma mousse de leite condensado caramelizado. É muito docinha!"
+],
+[
+"pt-PT",
+"Então, um arroz doce para partilhar, com duas colheres."
+],
+[
+"pt-PT",
+"E cafés? Querem café no fim?"
+],
+[
+"pt-PT",
+"Sim, dois cafés e um descafeinado."
+],
+[
+"pt-PT",
+"Desculpe! Pode trazer a conta, se faz favor?"
+],
+[
+"pt-PT",
+"Com certeza. Quer a fatura com contribuinte?"
+],
+[
+"pt-PT",
+"Não, sem contribuinte, obrigada."
+],
+[
+"pt-PT",
+"Aqui está. São quarenta e sete euros e oitenta. Paga com cartão ou em dinheiro?"
+],
+[
+"pt-PT",
+"Com cartão, se faz favor."
+],
+[
+"pt-PT",
+"Podemos pagar em separado?"
+],
+[
+"pt-PT",
+"Podem, claro. Então, vinte e três euros e noventa cada uma."
+],
+[
+"pt-PT",
+"Aqui tem vinte e cinco. Fique com o troco."
+],
+[
+"pt-PT",
+"Muito obrigado! Voltem sempre!"
+],
+[
+"pt-PT",
+"Desculpe, já estamos à espera há quarenta minutos."
+],
+[
+"pt-PT",
+"Peço imensa desculpa, a cozinha está muito atrasada hoje. Já vou ver o que se passa."
+],
+[
+"pt-PT",
+"Aqui está: arroz de pato para a senhora."
+],
+[
+"pt-PT",
+"Desculpe, mas não foi isto que pedi. Pedi as sardinhas."
+],
+[
+"pt-PT",
+"Tem toda a razão, foi engano meu. As sardinhas estão quase prontas. Ofereço-lhe uma bebida enquanto espera."
+],
+[
+"pt-PT",
+"Acho que há um engano na conta: só pedimos uma garrafa de água, não duas."
+],
+[
+"pt-PT",
+"Deixe-me ver… Pois é, tem razão. Já corrijo. E não lhe cobro a bebida, claro."
+],
+[
+"pt-PT",
+"Obrigada, não faz mal. Acontece!"
+],
+[
+"pt-PT",
+"Boa noite! O peixe e o marisco estão ali na montra. Escolham à vontade."
+],
+[
+"pt-PT",
+"Quanto custam as gambas?"
+],
+[
+"pt-PT",
+"As gambas são a quarenta e cinco euros o quilo."
+],
+[
+"pt-PT",
+"E uma dose pesa mais ou menos quanto?"
+],
+[
+"pt-PT",
+"Normalmente uns trezentos gramas. Fica à volta de treze euros e meio."
+],
+[
+"pt-PT",
+"As amêijoas são frescas?"
+],
+[
+"pt-PT",
+"Fresquíssimas, chegaram esta manhã. À Bulhão Pato ficam ótimas: com alho, azeite e coentros."
+],
+[
+"pt-PT",
+"Então, trezentos gramas de gambas grelhadas e uma dose de amêijoas, sem coentros."
+],
+[
+"pt-PT",
+"Muito bem. As gambas vão à balança e depois digo-lhe o peso exato."
 ]
 ]

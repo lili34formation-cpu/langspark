@@ -787,6 +787,11 @@
         .cj-entry { background:rgba(108,99,255,.1);border-color:rgba(108,99,255,.35); }
         .voc-entry { background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.35); }
         .lsn-entry { background:rgba(14,165,233,.1);border-color:rgba(14,165,233,.4); }
+        .sim-entry { background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.4); }
+        .sim-log { margin-bottom:16px; }
+        .bb-dlg.masked .bb-dlg-line.right .bb-dlg-text { color:var(--text-primary);text-shadow:none;user-select:auto; }
+        .sim-instr { font-size:14px;color:var(--text-primary);background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.3);border-radius:12px;padding:10px 12px;margin-bottom:12px; }
+        .sim-action .bb-choice { text-align:left; }
         .bb-dlg.masked .bb-dlg-text { color:transparent;text-shadow:0 0 9px rgba(255,255,255,.55);user-select:none; }
         .bb-dlg.masked .bb-dlg-text .bb-mini-audio { color:var(--accent2);text-shadow:none; }
         .bb-dlg.masked .bb-dlg-tr { display:none !important; }
@@ -981,7 +986,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v52</span>
+          <span style="font-size:10px;color:#444">v53</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -1446,6 +1451,7 @@
 <script src="courses/listen-en.js"></script>
 <script src="courses/listen-es.js"></script>
 <script src="courses/cards-pt.js"></script>
+<script src="courses/sims-pt.js"></script>
 <script>
 // ════════════════════════════════════════
 //  DATA
@@ -5676,6 +5682,14 @@ function initBBView(lang) {
         <div class="bb-resume-sub">${lsnPacks(lang).length} séances : dialogues sans texte, dictées, traductions · ${Object.values(lsnScores(lang)).filter(v => v >= 0.7).length} réussies</div>
       </div>
     </div>` : ''}
+    ${simScenes(lang).length ? `
+    <div class="bb-test-card sim-entry" onclick="simHome('${lang}')">
+      <div class="bb-test-icon">🍽️</div>
+      <div>
+        <div class="bb-resume-title" style="margin:0">Au restaurant au Portugal</div>
+        <div class="bb-resume-sub">${simScenes(lang).length} mises en situation : vous êtes la cliente, le serveur vous parle · ${Object.values(simScores(lang)).filter(v => v >= 0.7).length} réussies</div>
+      </div>
+    </div>` : ''}
     ${vocData(lang) ? `
     <div class="bb-test-card voc-entry" onclick="vocHome('${lang}')">
       <div class="bb-test-icon">📚</div>
@@ -6436,6 +6450,223 @@ function bbCheckComplete() {
 }
 
 // ── Écoute & compréhension (données dans courses/listen-*.js) ──
+// ════════════════════════════════════════
+//  Mises en situation : au restaurant, vous êtes la cliente.
+//  Le serveur parle (texte masqué par défaut), vous répondez en choisissant ou à l'oral.
+// ════════════════════════════════════════
+let simState = null;
+function simScenes(lang) { return (window.SIMS && window.SIMS[lang]) || []; }
+function simScores(lang) { try { return JSON.parse(localStorage.getItem('bb_sim_' + lang)) || {}; } catch (e) { return {}; } }
+function simMode() { try { return localStorage.getItem('sim_mode') || 'choice'; } catch (e) { return 'choice'; } }
+function simSetMode(lang, m) { try { localStorage.setItem('sim_mode', m); } catch (e) {} simHome(lang); }
+
+function simHome(lang) {
+  cjReset(lang);
+  simState = null;
+  const scenes = simScenes(lang);
+  const scores = simScores(lang);
+  const mode = simMode();
+  const modeBtn = (m, label) => `<button class="cat-tab${mode === m ? ' active' : ''}"${mode === m ? ' style="background:var(--accent)"' : ''} onclick="simSetMode('${lang}','${m}')">${label}</button>`;
+  cjEl(lang).innerHTML = `
+    <button class="bb-back-btn" onclick="initBBView('${lang}')">← Retour aux cours</button>
+    <div style="margin:20px 0 14px">
+      <div style="font-size:26px;font-weight:800;color:var(--text-primary)">🍽️ Au restaurant au Portugal</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">${scenes.length} mises en situation · vous êtes la cliente, le serveur vous parle</div>
+    </div>
+    <div class="bb-hint" style="text-align:left;margin:0 0 12px">💡 Écoutez le serveur sans lire (👁 pour afficher le texte si besoin), puis répondez.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+      ${modeBtn('choice', '👆 Je choisis ma réponse')}${modeBtn('oral', '🗣️ Je réponds à l\'oral')}
+    </div>
+    <div class="bb-units">
+      ${scenes.map(sc => {
+        const best = scores[sc.id];
+        return `
+        <div class="bb-unit" onclick="simStart('${lang}','${sc.id}')">
+          <div class="bb-unit-icon" style="background:rgba(245,158,11,.15);font-size:22px">${sc.icon}</div>
+          <div class="bb-unit-info">
+            <div class="bb-unit-title">${bbEsc(sc.title)}</div>
+            <div class="bb-unit-sub">${sc.level} · ${bbEsc(sc.intro)}</div>
+          </div>
+          <div class="bb-unit-right">${best !== undefined ? `<div class="bb-unit-count">${best >= 0.7 ? '✅' : '🔁'} ${Math.round(best * 100)} %</div>` : ''}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+function simStart(lang, id) {
+  bbStopAudio();
+  const sc = simScenes(lang).find(s => s.id === id);
+  simState = { lang, sc, i: 0, log: [], score: 0, graded: 0, show: false, tr: false, mode: simMode(), action: null };
+  simAdvance();
+}
+
+// Passe au tour suivant : réplique du serveur (avec ou sans question) ou à vous de répondre
+function simAdvance() {
+  const st = simState;
+  bbStopAudio();
+  if (st.i >= st.sc.turns.length) return simEnd();
+  const turn = st.sc.turns[st.i];
+  if (turn[0] === 'S') {
+    st.log.push({ who: 'S', text: turn[1], fr: turn[2] });
+    st.action = turn[3] ? { kind: 'q', q: turn[3][0], opts: bbShuffle(turn[3][1].map((o, k) => ({ o, ok: k === 0 }))) } : { kind: 'next' };
+    simRender(turn[1]);
+  } else {
+    st.action = { kind: 'me', turn, opts: bbShuffle(turn[2].map((o, k) => ({ o, ok: k === 0 }))) };
+    simRender();
+  }
+}
+
+function simRender(autoplay) {
+  const st = simState;
+  const { lang, sc } = st;
+  bbState.lang = lang;
+  bbState.audio = [];
+  const a = st.action;
+  const pct = Math.round(st.i / sc.turns.length * 100);
+  const bubbles = st.log.map(l => `
+    <div class="bb-dlg-line ${l.who === 'S' ? 'left' : 'right'}">
+      <div class="bb-dlg-who">${l.who === 'S' ? '🧑‍🍳 Empregado' : '🙋‍♀️ Moi'}</div>
+      <div class="bb-dlg-bubble">
+        <div class="bb-dlg-text">${bbAudioBtn(l.text, '🔊', 'bb-mini-audio')} ${bbEsc(l.text)}</div>
+        <div class="bb-dlg-tr">${bbEsc(l.fr)}</div>
+      </div>
+    </div>`).join('');
+  let action = '';
+  if (a.kind === 'next') action = `<button class="bb-next-btn" onclick="simState.i++;simAdvance()">Continuer →</button>`;
+  else if (a.kind === 'q') action = `
+    <div class="bb-ex-q" style="margin-bottom:10px">👂 ${bbEsc(a.q)}</div>
+    <div class="bb-choices bb-choices-col">${a.opts.map((o, k) => `<button class="bb-choice" onclick="simAnswerQ(${k})">${bbEsc(o.o)}</button>`).join('')}</div>`;
+  else if (a.kind === 'me') action = `
+    <div class="sim-instr">🙋‍♀️ À vous : <b>${bbEsc(a.turn[1])}</b></div>
+    ${st.mode === 'oral' ? `
+      <div class="bb-mic-wrap">
+        <button class="bb-mic-btn" id="sim-mic" onclick="simMic()">🎤</button>
+        <div class="bb-speak-status" id="sim-mic-status">Appuyez sur le micro et dites votre phrase</div>
+      </div>
+      <button class="bb-next-btn bb-btn-ghost" id="sim-self" onclick="simSelfReveal()">🗣️ Sans micro : je le dis, puis je vérifie</button>` : `
+      <div class="bb-choices bb-choices-col">${a.opts.map((o, k) => `<button class="bb-choice" onclick="simAnswerMe(${k})">${bbEsc(o.o)}</button>`).join('')}</div>`}`;
+  else if (a.kind === 'fb') action = a.html;
+
+  cjEl(lang).innerHTML = `
+    <div class="bb-lesson-header">
+      <button class="bb-back-btn" onclick="simHome('${lang}')">←</button>
+      <div class="bb-lesson-title">${sc.icon} ${bbEsc(sc.title)}</div>
+      <div class="bb-progress-track"><div class="bb-progress-done" style="width:${pct}%"></div></div>
+    </div>
+    <div class="bb-exercise">
+      <div class="bb-dlg-recap" style="margin-bottom:12px">🎬 ${bbEsc(sc.intro)}</div>
+      <div class="bb-dlg-controls">
+        <button class="bb-listen-btn bb-btn-ghost" onclick="simState.show=!simState.show;simRender()">${st.show ? '🙈 Masquer le texte' : '👁 Afficher le texte'}</button>
+        <button class="bb-listen-btn bb-btn-ghost" onclick="simState.tr=!simState.tr;simRender()">${st.tr ? '🇫🇷 Masquer la traduction' : '🇫🇷 Traduction'}</button>
+      </div>
+      <div class="bb-dlg sim-log${st.show ? '' : ' masked'}${st.tr ? ' show-tr' : ''}" id="sim-log">${bubbles}</div>
+      <div class="sim-action">${action}</div>
+    </div>`;
+  const log = document.getElementById('sim-log');
+  log.lastElementChild?.scrollIntoView({ block: 'nearest' });
+  if (autoplay) bbSay(autoplay, bbTTS(lang));
+}
+
+function simAnswerQ(k) {
+  const st = simState;
+  const a = st.action;
+  const ok = a.opts[k].ok;
+  st.graded++;
+  if (ok) { st.score++; sparkOnCorrect(); } else sparkOnWrong();
+  const good = a.opts.find(o => o.ok).o;
+  st.action = { kind: 'fb', html: `
+    <div class="bb-feedback ${ok ? 'ok' : 'ko'}"><div>${ok ? '✅ Bien compris !' : `❌ Réponse : <strong>${bbEsc(good)}</strong>`}</div></div>
+    <div class="bb-hint" style="margin:8px 0">🇵🇹 « ${bbEsc(st.sc.turns[st.i][1])} »<br>🇫🇷 ${bbEsc(st.sc.turns[st.i][2])}</div>
+    <button class="bb-next-btn" onclick="simState.i++;simAdvance()">Continuer →</button>` };
+  simRender();
+}
+
+// Votre réplique : en mode choix, en mode oral (micro) ou en auto-évaluation
+function simAnswerMe(k) { simMeResult(simState.action.opts[k].ok, simState.action.opts[k].o); }
+function simMeResult(ok, said, heard) {
+  const st = simState;
+  const turn = st.action.turn;
+  st.graded++;
+  if (ok) { st.score++; sparkOnCorrect(); } else sparkOnWrong();
+  st.log.push({ who: 'M', text: turn[2][0], fr: turn[3] });
+  st.action = { kind: 'fb', html: `
+    <div class="bb-feedback ${ok ? 'ok' : 'ko'}"><div>
+      ${ok ? '✅ Parfait !' : said ? `❌ Pas tout à fait${heard ? ` — j'ai entendu « ${bbEsc(said)} »` : ` : « ${bbEsc(said)} »`}. La bonne réplique est dans la bulle.` : '🔁 Pas grave : écoutez et répétez la bonne réplique.'}
+    </div></div>
+    <div class="bb-hint" style="margin:8px 0">🇫🇷 ${bbEsc(turn[3])}${turn[4] ? `<br>💡 ${bbEsc(turn[4])}` : ''}</div>
+    <button class="bb-next-btn" onclick="simState.i++;simAdvance()">Continuer →</button>` };
+  simRender(turn[2][0]);
+}
+function simMic() {
+  const st = simState;
+  const target = turnWords(st.action.turn[2][0]);
+  const status = document.getElementById('sim-mic-status');
+  const btn = document.getElementById('sim-mic');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { status.innerHTML = '⚠️ ' + bbMicHelp(''); return; }
+  bbStopAudio();
+  btn.classList.add('listening');
+  status.textContent = '🎤 Je vous écoute…';
+  const rec = new SR();
+  rec.lang = bbTTS(st.lang);
+  rec.continuous = false;
+  rec.interimResults = false;
+  rec.maxAlternatives = 5;
+  let done = false;
+  rec.onresult = e => {
+    done = true;
+    btn.classList.remove('listening');
+    const alts = Array.from(e.results[0]).map(r => r.transcript);
+    // on tolère quelques mots manqués : 70 % des mots de la réplique suffisent
+    const score = alt => { const w = turnWords(alt); return target.filter(x => w.includes(x)).length / target.length; };
+    const best = alts.reduce((b, alt) => score(alt) > score(b) ? alt : b, alts[0] || '');
+    st.tries = (st.tries || 0) + 1;
+    if (score(best) >= 0.7) { st.tries = 0; return simMeResult(true); }
+    if (st.tries < 2) { status.innerHTML = `❌ J'ai entendu : <em>« ${bbEsc(best)} »</em> — réessayez !`; return; }
+    st.tries = 0;
+    simMeResult(false, best, true);
+  };
+  rec.onerror = err => { done = true; btn.classList.remove('listening'); status.innerHTML = '⚠️ ' + bbMicHelp(err.error); };
+  rec.onend = () => { if (!done) { btn.classList.remove('listening'); status.textContent = "Je n'ai rien entendu — réessayez."; } };
+  rec.start();
+}
+function turnWords(s) { return bbNorm(s, simState.lang, false).replace(/-/g, ' ').split(' ').filter(Boolean); }
+function simSelfReveal() {
+  const st = simState;
+  const turn = st.action.turn;
+  bbState.audio = [];
+  document.getElementById('sim-self').outerHTML = `
+    <div class="bb-feedback warn" style="margin-top:12px"><div>Réplique attendue : <strong>${bbEsc(turn[2][0])}</strong></div></div>
+    <div class="bb-audio-row" style="margin-top:12px">${bbAudioBtn(turn[2][0], '🔊 Écouter')}</div>
+    <div style="display:flex;gap:10px">
+      <button class="bb-next-btn bb-btn-ghost" onclick="simMeResult(false)">❌ Pas tout à fait</button>
+      <button class="bb-next-btn" onclick="simMeResult(true)">✅ Je l'avais bien dit</button>
+    </div>`;
+}
+
+function simEnd() {
+  const st = simState;
+  const { lang, sc } = st;
+  const pct = st.graded ? st.score / st.graded : 1;
+  const scores = simScores(lang);
+  scores[sc.id] = Math.max(scores[sc.id] ?? 0, pct);
+  localStorage.setItem('bb_sim_' + lang, JSON.stringify(scores));
+  bbAddXP(lang, st.score);
+  st.action = { kind: 'fb', html: `
+    <div class="quiz-results" style="padding:10px 0">
+      <div style="font-size:50px">${pct >= 0.7 ? '🍷' : '📚'}</div>
+      <div class="result-score">${Math.round(pct * 100)} %</div>
+      <div class="result-label">${st.score} / ${st.graded} bonnes réponses</div>
+      <div class="result-sub">${pct >= 0.9 ? 'Muito bem! Vous êtes prête pour le Portugal 🇵🇹' : pct >= 0.7 ? 'Bom trabalho! Rejouez à l\'oral pour aller plus loin.' : 'Rejouez la scène : la deuxième fois, tout paraît plus clair.'}</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="bb-next-btn bb-btn-ghost" onclick="simStart('${lang}','${sc.id}')">🔄 Rejouer</button>
+        <button class="bb-next-btn" onclick="simHome('${lang}')">Autres scènes →</button>
+      </div>
+    </div>` };
+  st.i = sc.turns.length;
+  simRender();
+}
+
 function lsnPacks(lang) { return (window.LISTEN && window.LISTEN[lang]) || []; }
 function lsnScores(lang) { return JSON.parse(localStorage.getItem('bb_listen_' + lang) || '{}'); }
 
