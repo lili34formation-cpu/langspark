@@ -52,6 +52,8 @@ COLLECT = r"""() => {
   ptVocab.forEach(c => { add('pt-PT', c.pt); if (c.ex) add('pt-PT', c.ex); });
   ptPhrases.forEach(p => add('pt-PT', p.pt));
   // Mises en situation (restaurant) : répliques du serveur et bonnes réponses
+  // Écoute vraie vie : nombres et messages
+  if (window.REAL) Object.entries(REAL).forEach(([lang, d]) => { d.numbers.forEach(n => add(bbTTS(lang), n[0])); d.messages.forEach(m => m.lines.forEach(l => add(bbTTS(lang), l[0]))); });
   if (window.SIMS) Object.entries(SIMS).forEach(([lang, scenes]) => scenes.forEach(sc => sc.turns.forEach(t => add(bbTTS(lang), t[0] === 'S' ? t[1] : t[2][0]))));
   return [...out].map(s => JSON.parse(s));
 }"""

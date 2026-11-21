@@ -5,7 +5,7 @@
 //  · Voix (audio/*.mp3) : copie locale d'abord ; chaque voix écoutée est gardée.
 //  · Comptes (Supabase) : jamais mis en cache.
 // ════════════════════════════════════════
-const VERSION = 'langspark-v28';
+const VERSION = 'langspark-v29';
 const SHELL_CACHE = 'langspark-shell-' + VERSION;
 const AUDIO_CACHE = 'langspark-audio';      // gardé d'une version à l'autre
 const NETWORK_TIMEOUT = 4000;
@@ -32,6 +32,7 @@ const SHELL = [
   './courses/listen-es.js',
   './courses/cards-pt.js',
   './courses/sims-pt.js',
+  './courses/real-pt.js',
   './audio/index.json',
   './audio/index-en-US.json',
   './audio/index-pt-PT.json',

@@ -2869,15 +2869,15 @@
 ],
 [
 "en-US",
-"We're open from nine till five."
-],
-[
-"en-US",
 "That's thirteen euros, please."
 ],
 [
 "en-US",
 "The train leaves at quarter to eight."
+],
+[
+"en-US",
+"We're open from nine till five."
 ],
 [
 "en-US",
@@ -2937,15 +2937,15 @@
 ],
 [
 "en-US",
-"My sister's got two kids."
-],
-[
-"en-US",
 "My grandparents live by the sea."
 ],
 [
 "en-US",
 "He's really shy but very kind."
+],
+[
+"en-US",
+"My sister's got two kids."
 ],
 [
 "en-US",
@@ -3109,7 +3109,7 @@
 ],
 [
 "en-US",
-"Go straight on and take the second left."
+"Is breakfast included in the price?"
 ],
 [
 "en-US",
@@ -3117,7 +3117,7 @@
 ],
 [
 "en-US",
-"Is breakfast included in the price?"
+"Go straight on and take the second left."
 ],
 [
 "en-US",
@@ -3229,15 +3229,15 @@
 ],
 [
 "en-US",
-"I'm gonna be a bit late."
-],
-[
-"en-US",
 "It's supposed to snow tomorrow."
 ],
 [
 "en-US",
 "Do you wanna grab a coffee?"
+],
+[
+"en-US",
+"I'm gonna be a bit late."
 ],
 [
 "en-US",
@@ -3301,11 +3301,11 @@
 ],
 [
 "en-US",
-"You don't need an appointment."
+"I've had a headache since this morning."
 ],
 [
 "en-US",
-"I've had a headache since this morning."
+"You don't need an appointment."
 ],
 [
 "en-US",
@@ -3417,11 +3417,11 @@
 ],
 [
 "en-US",
-"Sorry, I didn't catch your name."
+"Can I take a message?"
 ],
 [
 "en-US",
-"Can I take a message?"
+"Sorry, I didn't catch your name."
 ],
 [
 "en-US",
@@ -3481,11 +3481,11 @@
 ],
 [
 "en-US",
-"I wish I'd listened to you."
+"I couldn't agree more."
 ],
 [
 "en-US",
-"I couldn't agree more."
+"I wish I'd listened to you."
 ],
 [
 "en-US",
@@ -3537,11 +3537,11 @@
 ],
 [
 "en-US",
-"I was cooking when the lights went out."
+"By the time we arrived, the film had started."
 ],
 [
 "en-US",
-"By the time we arrived, the film had started."
+"I was cooking when the lights went out."
 ],
 [
 "en-US",
@@ -3601,15 +3601,15 @@
 ],
 [
 "en-US",
-"Horror films aren't my cup of tea."
-],
-[
-"en-US",
 "No worries, it's on me."
 ],
 [
 "en-US",
 "I'm skint until the end of the month."
+],
+[
+"en-US",
+"Horror films aren't my cup of tea."
 ],
 [
 "en-US",
@@ -13457,11 +13457,11 @@
 ],
 [
 "pt-PT",
-"Como está a senhora?"
+"Olhe, desculpe, onde é a casa de banho?"
 ],
 [
 "pt-PT",
-"Olhe, desculpe, onde é a casa de banho?"
+"Como está a senhora?"
 ],
 [
 "pt-PT",
@@ -13505,15 +13505,15 @@
 ],
 [
 "pt-PT",
-"O comboio chega daqui a vinte minutos."
-],
-[
-"pt-PT",
 "A loja fecha às sete."
 ],
 [
 "pt-PT",
 "São dezoito euros e cinquenta."
+],
+[
+"pt-PT",
+"O comboio chega daqui a vinte minutos."
 ],
 [
 "pt-PT",
@@ -13569,15 +13569,15 @@
 ],
 [
 "pt-PT",
+"A minha sobrinha é muito simpática."
+],
+[
+"pt-PT",
 "O meu avô tem oitenta anos."
 ],
 [
 "pt-PT",
 "Os meus pais estão reformados."
-],
-[
-"pt-PT",
-"A minha sobrinha é muito simpática."
 ],
 [
 "pt-PT",
@@ -13813,7 +13813,7 @@
 ],
 [
 "pt-PT",
-"Fomos jantar fora e depois ao cinema."
+"Perdemos o último comboio."
 ],
 [
 "pt-PT",
@@ -13821,7 +13821,7 @@
 ],
 [
 "pt-PT",
-"Perdemos o último comboio."
+"Fomos jantar fora e depois ao cinema."
 ],
 [
 "pt-PT",
@@ -13877,11 +13877,11 @@
 ],
 [
 "pt-PT",
-"Amanhã vai estar muito vento."
+"Vou ligar-te logo à noite."
 ],
 [
 "pt-PT",
-"Vou ligar-te logo à noite."
+"Amanhã vai estar muito vento."
 ],
 [
 "pt-PT",
@@ -13945,11 +13945,11 @@
 ],
 [
 "pt-PT",
-"Doem-me as costas quando me levanto."
+"Não pode beber álcool com este medicamento."
 ],
 [
 "pt-PT",
-"Não pode beber álcool com este medicamento."
+"Doem-me as costas quando me levanto."
 ],
 [
 "pt-PT",
@@ -14109,7 +14109,7 @@
 ],
 [
 "pt-PT",
-"Espero que corra tudo bem."
+"Se calhar vou amanhã."
 ],
 [
 "pt-PT",
@@ -14117,7 +14117,7 @@
 ],
 [
 "pt-PT",
-"Se calhar vou amanhã."
+"Espero que corra tudo bem."
 ],
 [
 "pt-PT",
@@ -14173,11 +14173,11 @@
 ],
 [
 "pt-PT",
-"Quando cheguei, ela já tinha saído."
+"Quando chegares, manda-me uma mensagem."
 ],
 [
 "pt-PT",
-"Quando chegares, manda-me uma mensagem."
+"Quando cheguei, ela já tinha saído."
 ],
 [
 "pt-PT",
@@ -14237,7 +14237,7 @@
 ],
 [
 "pt-PT",
-"Não sei, pá, se calhar amanhã."
+"Isto custou os olhos da cara."
 ],
 [
 "pt-PT",
@@ -14245,7 +14245,7 @@
 ],
 [
 "pt-PT",
-"Isto custou os olhos da cara."
+"Não sei, pá, se calhar amanhã."
 ],
 [
 "pt-PT",
@@ -25569,15 +25569,15 @@
 ],
 [
 "es-ES",
-"No hablo muy bien español."
-],
-[
-"es-ES",
 "¿A qué te dedicas?"
 ],
 [
 "es-ES",
 "Encantada de conocerte."
+],
+[
+"es-ES",
+"No hablo muy bien español."
 ],
 [
 "es-ES",
@@ -25629,15 +25629,15 @@
 ],
 [
 "es-ES",
+"El autobús pasa cada veinte minutos."
+],
+[
+"es-ES",
 "Son dieciséis euros con cincuenta."
 ],
 [
 "es-ES",
 "La tienda abre a las diez y cierra a las nueve."
-],
-[
-"es-ES",
-"El autobús pasa cada veinte minutos."
 ],
 [
 "es-ES",
@@ -25817,11 +25817,11 @@
 ],
 [
 "es-ES",
-"De primero quiero una ensalada."
+"La cocina cierra a las once."
 ],
 [
 "es-ES",
-"La cocina cierra a las once."
+"De primero quiero una ensalada."
 ],
 [
 "es-ES",
@@ -25877,11 +25877,11 @@
 ],
 [
 "es-ES",
-"El vuelo a París ha sido cancelado."
+"Tiene que cambiar de tren en Zaragoza."
 ],
 [
 "es-ES",
-"Tiene que cambiar de tren en Zaragoza."
+"El vuelo a París ha sido cancelado."
 ],
 [
 "es-ES",
@@ -25933,11 +25933,11 @@
 ],
 [
 "es-ES",
-"No salimos porque llovía."
+"Perdimos el último autobús."
 ],
 [
 "es-ES",
-"Perdimos el último autobús."
+"No salimos porque llovía."
 ],
 [
 "es-ES",
@@ -25989,7 +25989,7 @@
 ],
 [
 "es-ES",
-"Coge el paraguas, está lloviendo."
+"Mañana va a hacer mucho viento."
 ],
 [
 "es-ES",
@@ -25997,7 +25997,7 @@
 ],
 [
 "es-ES",
-"Mañana va a hacer mucho viento."
+"Coge el paraguas, está lloviendo."
 ],
 [
 "es-ES",
@@ -26053,7 +26053,7 @@
 ],
 [
 "es-ES",
-"Estoy constipado desde el lunes."
+"Me duele la espalda cuando me levanto."
 ],
 [
 "es-ES",
@@ -26061,7 +26061,7 @@
 ],
 [
 "es-ES",
-"Me duele la espalda cuando me levanto."
+"Estoy constipado desde el lunes."
 ],
 [
 "es-ES",
@@ -26113,7 +26113,7 @@
 ],
 [
 "es-ES",
-"Llevo quince años viviendo en Madrid."
+"Nunca había probado el pulpo."
 ],
 [
 "es-ES",
@@ -26121,7 +26121,7 @@
 ],
 [
 "es-ES",
-"Nunca había probado el pulpo."
+"Llevo quince años viviendo en Madrid."
 ],
 [
 "es-ES",
@@ -26225,7 +26225,7 @@
 ],
 [
 "es-ES",
-"Espero que todo salga bien."
+"A lo mejor voy mañana."
 ],
 [
 "es-ES",
@@ -26233,7 +26233,7 @@
 ],
 [
 "es-ES",
-"A lo mejor voy mañana."
+"Espero que todo salga bien."
 ],
 [
 "es-ES",
@@ -26289,15 +26289,15 @@
 ],
 [
 "es-ES",
+"Cuando llegues, mándame un mensaje."
+],
+[
+"es-ES",
 "Cuando llegué, ella ya se había ido."
 ],
 [
 "es-ES",
 "Me preguntó si quería venir."
-],
-[
-"es-ES",
-"Cuando llegues, mándame un mensaje."
 ],
 [
 "es-ES",
@@ -26353,11 +26353,11 @@
 ],
 [
 "es-ES",
-"Esto me ha costado un ojo de la cara."
+"Esa película mola mucho."
 ],
 [
 "es-ES",
-"Esa película mola mucho."
+"Esto me ha costado un ojo de la cara."
 ],
 [
 "es-ES",
@@ -43178,6 +43178,302 @@
 [
 "pt-PT",
 "Tenho saudades tuas!"
+],
+[
+"pt-PT",
+"São doze euros e cinquenta."
+],
+[
+"pt-PT",
+"Fica em dezassete euros e noventa."
+],
+[
+"pt-PT",
+"São três euros e quarenta e cinco."
+],
+[
+"pt-PT",
+"O total é cento e vinte e três euros."
+],
+[
+"pt-PT",
+"Custa dois euros e cinco cêntimos."
+],
+[
+"pt-PT",
+"São noventa e nove cêntimos."
+],
+[
+"pt-PT",
+"Fica tudo em sessenta e oito euros e trinta."
+],
+[
+"pt-PT",
+"Um bilhete custa um euro e oitenta."
+],
+[
+"pt-PT",
+"O quarto é cento e quinze euros por noite."
+],
+[
+"pt-PT",
+"A renda é de setecentos e cinquenta euros."
+],
+[
+"pt-PT",
+"São quarenta e quatro euros e sessenta."
+],
+[
+"pt-PT",
+"Custa catorze euros e vinte e cinco."
+],
+[
+"pt-PT",
+"O quilo está a oito euros e setenta."
+],
+[
+"pt-PT",
+"São mil duzentos e quarenta euros."
+],
+[
+"pt-PT",
+"O comboio parte às dezassete e quarenta e cinco."
+],
+[
+"pt-PT",
+"A consulta é às nove e meia."
+],
+[
+"pt-PT",
+"Abrimos às oito e um quarto."
+],
+[
+"pt-PT",
+"O voo chega às vinte e uma e dez."
+],
+[
+"pt-PT",
+"O jantar é às oito menos um quarto."
+],
+[
+"pt-PT",
+"A reunião é ao meio-dia e meia."
+],
+[
+"pt-PT",
+"O autocarro passa às catorze e cinco."
+],
+[
+"pt-PT",
+"Fechamos à meia-noite."
+],
+[
+"pt-PT",
+"O filme começa às dez para as dez."
+],
+[
+"pt-PT",
+"O check-in é a partir das quinze horas."
+],
+[
+"pt-PT",
+"A farmácia abre às sete e vinte."
+],
+[
+"pt-PT",
+"Moro no número cento e quarenta e sete."
+],
+[
+"pt-PT",
+"O quarto é o trezentos e doze."
+],
+[
+"pt-PT",
+"Somos treze pessoas."
+],
+[
+"pt-PT",
+"Ela tem setenta e seis anos."
+],
+[
+"pt-PT",
+"Nasci em mil novecentos e oitenta e quatro."
+],
+[
+"pt-PT",
+"Estamos em dois mil e vinte e seis."
+],
+[
+"pt-PT",
+"A viagem tem quatrocentos e oitenta quilómetros."
+],
+[
+"pt-PT",
+"Há dezasseis lugares livres."
+],
+[
+"pt-PT",
+"A porta de embarque é a vinte e sete."
+],
+[
+"pt-PT",
+"Fica a mil e quinhentos metros."
+],
+[
+"pt-PT",
+"O meu número é nove um dois, três quatro cinco, seis sete oito."
+],
+[
+"pt-PT",
+"Ligue para o duzentos e treze, quatrocentos e cinquenta, seiscentos e setenta."
+],
+[
+"pt-PT",
+"O número de emergência é o cento e doze."
+],
+[
+"pt-PT",
+"O meu contribuinte é dois cinco quatro, um oito nove, zero zero três."
+],
+[
+"pt-PT",
+"O código é sete, zero, quatro, nove."
+],
+[
+"pt-PT",
+"Boa tarde, fala da Tasca do Chico."
+],
+[
+"pt-PT",
+"Estou a ligar por causa da sua reserva para sábado, para quatro pessoas, às oito e meia."
+],
+[
+"pt-PT",
+"Infelizmente, às oito e meia já não temos mesa."
+],
+[
+"pt-PT",
+"Podemos oferecer às sete e meia ou às nove e um quarto."
+],
+[
+"pt-PT",
+"Pode ligar-nos de volta para o dois um três, quatro cinco zero, seis sete zero. Obrigada e boa tarde."
+],
+[
+"pt-PT",
+"Senhores passageiros, o comboio Alfa Pendular com destino a Porto Campanhã, com partida prevista às catorze e dez, circula com um atraso de aproximadamente vinte minutos."
+],
+[
+"pt-PT",
+"A partida far-se-á da linha cinco, e não da linha três, como previsto."
+],
+[
+"pt-PT",
+"Pedimos desculpa pelo incómodo."
+],
+[
+"pt-PT",
+"Atenção, por favor."
+],
+[
+"pt-PT",
+"Os passageiros do voo TP quatrocentos e trinta e dois, com destino a Paris, devem dirigir-se à porta de embarque vinte e sete."
+],
+[
+"pt-PT",
+"O embarque começa dentro de quinze minutos."
+],
+[
+"pt-PT",
+"Lembramos que cada passageiro só pode levar uma peça de bagagem de mão."
+],
+[
+"pt-PT",
+"Bom dia, é do Centro de Saúde de Alvalade."
+],
+[
+"pt-PT",
+"A sua consulta com a doutora Ferreira, marcada para quinta-feira às dez horas, foi adiada para sexta-feira à mesma hora, por motivo de doença da médica."
+],
+[
+"pt-PT",
+"Se não puder vir, por favor ligue-nos até quarta-feira."
+],
+[
+"pt-PT",
+"Não se esqueça de trazer o cartão de utente."
+],
+[
+"pt-PT",
+"Olá, daqui é o senhor Almeida, o senhorio."
+],
+[
+"pt-PT",
+"Só para avisar que amanhã de manhã vem cá o canalizador ver a fuga de água na casa de banho."
+],
+[
+"pt-PT",
+"Ele deve chegar entre as nove e as onze."
+],
+[
+"pt-PT",
+"Se não estiver em casa, não faz mal, eu tenho a chave e abro-lhe a porta."
+],
+[
+"pt-PT",
+"Qualquer coisa, mande-me uma mensagem."
+],
+[
+"pt-PT",
+"Olá, querida! Então, tudo bem?"
+],
+[
+"pt-PT",
+"Olha, logo à noite vamos jantar ao Bairro Alto, tás a fim?"
+],
+[
+"pt-PT",
+"Encontramo-nos às oito no Largo de Camões, tá?"
+],
+[
+"pt-PT",
+"Ah, e traz um casaco, que à noite fica bué frio."
+],
+[
+"pt-PT",
+"Se não puderes, manda-me mensagem, pronto? Beijinhos!"
+],
+[
+"pt-PT",
+"Caros clientes, aproveitem as nossas promoções desta semana."
+],
+[
+"pt-PT",
+"Na compra de duas garrafas de azeite, a terceira é oferta."
+],
+[
+"pt-PT",
+"O peixe fresco está com trinta por cento de desconto até às dezanove horas."
+],
+[
+"pt-PT",
+"Informamos que a loja encerra hoje às vinte e uma horas. Obrigado pela sua preferência."
+],
+[
+"pt-PT",
+"Para amanhã, prevê-se céu muito nublado no Norte, com aguaceiros a partir da tarde."
+],
+[
+"pt-PT",
+"No Centro e no Sul, o céu estará pouco nublado, com temperaturas entre os doze e os vinte e dois graus."
+],
+[
+"pt-PT",
+"No Algarve, vento fraco e máximas de vinte e quatro graus."
+],
+[
+"pt-PT",
+"Atenção: o mar vai estar agitado na costa ocidental."
 ],
 [
 "pt-PT",
