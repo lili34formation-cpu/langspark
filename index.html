@@ -981,7 +981,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v51</span>
+          <span style="font-size:10px;color:#444">v52</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -5463,6 +5463,7 @@ function bbBelowStart(lang, unit) {
 function bbUnitUnlocked(lang, unitIdx) {
   if (unitIdx === 0 || bbFreeMode(lang)) return true;
   const unit = BB_CURRICULUM[lang].units[unitIdx];
+  if (unit.bonus) return true;   // unité « bonus » : accessible tout de suite, sans suivre l'ordre
   if (BB_LEVELS.indexOf(unit.level) <= BB_LEVELS.indexOf(bbStartLevel(lang))) {
     const prev = BB_CURRICULUM[lang].units[unitIdx - 1];
     if (prev.level !== unit.level || bbBelowStart(lang, unit)) return true;
