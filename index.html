@@ -787,6 +787,8 @@
         .cj-entry { background:rgba(108,99,255,.1);border-color:rgba(108,99,255,.35); }
         .voc-entry { background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.35); }
         .lsn-entry { background:rgba(14,165,233,.1);border-color:rgba(14,165,233,.4); }
+        .daily-entry { background:linear-gradient(135deg,rgba(245,158,11,.16),rgba(239,68,68,.1));border-color:rgba(245,158,11,.5); }
+        .daily-entry.done { background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.4); }
         .sim-entry { background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.4); }
         .sim-log { margin-bottom:16px; }
         .bb-dlg.masked .bb-dlg-line.right .bb-dlg-text { color:var(--text-primary);text-shadow:none;user-select:auto; }
@@ -986,7 +988,7 @@
         <span>Anglais · Portugais · Espagnol</span>
         <div id="acct-side" class="acct-side"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <span style="font-size:10px;color:#444">v53</span>
+          <span style="font-size:10px;color:#444">v54</span>
           <button onclick="openELSettings()" style="background:rgba(0,212,170,.12);color:var(--accent2);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:3px 9px;font-size:11px;cursor:pointer;font-weight:600" id="el-status-badge">🎙️ Voix IA</button>
         </div>
     </div>
@@ -5397,6 +5399,8 @@ function bbReportLang(lang) {
       ${cj ? `<h3>🔤 Conjugaison — niveaux validés</h3>${conjHTML ? `<ul>${conjHTML}</ul>` : '<p class="rp-empty">Aucun niveau validé pour l\'instant.</p>'}
       ${weak.length ? `<p><b>🎯 Points faibles à retravailler :</b> ${bbEsc(weak.join(', '))}</p>` : ''}` : ''}
       ${voc ? `<h3>📖 Vocabulaire essentiel</h3><ul>${vocHTML}</ul>` : ''}
+      <h3>⏱️ Séances du jour</h3>
+      <p class="rp-empty">${Object.keys(dailyLog(lang)).length} séance(s) faite(s) · série actuelle : ${dailyStreak(lang)} jour(s)</p>
       <h3>🎧 Écoute & compréhension</h3>
       ${lsnHTML ? `<ul>${lsnHTML}</ul>` : '<p class="rp-empty">Aucune séance faite pour l\'instant.</p>'}
     </section>`;
@@ -5658,6 +5662,7 @@ function initBBView(lang) {
       <div class="bb-resume-title">Examen de fin de niveau ${next.unit.level}</div>
       <div class="bb-resume-sub">20 questions sur tout le niveau · obtenez votre certificat</div>
     </div>`}
+    ${dailyCardHTML(lang)}
     ${doneLessons === 0 && !localStorage.getItem('bb_level_' + lang) ? `
     <div class="bb-test-card" onclick="bbStartTest('${lang}')">
       <div class="bb-test-icon">🎯</div>
@@ -5969,7 +5974,7 @@ function bbRender() {
 
   const html = `
     <div class="bb-lesson-header">
-      <button class="bb-back-btn" onclick="${listen ? `lsnHome('${lang}')` : test || check?.kind === 'level' ? `initBBView('${lang}')` : `bbOpenUnit('${lang}','${check ? check.id : unit.id}')`}">←</button>
+      <button class="bb-back-btn" onclick="${listen ? (listen.daily ? `initBBView('${lang}')` : `lsnHome('${lang}')`) : test || check?.kind === 'level' ? `initBBView('${lang}')` : `bbOpenUnit('${lang}','${check ? check.id : unit.id}')`}">←</button>
       <div class="bb-lesson-title">${listen ? `🎧 ${bbEsc(listen.title)}` : test ? `🎯 Test de niveau · ${test.levels[test.li]}` : check ? bbEsc(check.title) : bbEsc(lesson.titleFr)}</div>
       ${lesson.grammar && ex.type !== 'grammar' ? `<button class="bb-back-btn" title="Revoir la règle" onclick="bbShowRule()">📘</button>` : ''}
       <div class="bb-progress-track"><div class="bb-progress-done" style="width:${pct}%"></div></div>
@@ -6079,6 +6084,7 @@ function bbResult(ok, { expected = '', note = '', allowOverride = false } = {}) 
   bbState.graded++;
   if (ok) bbState.score++;
   else bbState.mistakes.push({ prompt: ex.fr || ex.q || ex.sentence || ex.text || ex.word, expected });
+  if (ex.onResult) ex.onResult(ok);   // séance du jour : met à jour flashcards / conjugaison
   if (bbState.check && bbState.idx === bbState.steps.length - 1) bbCheckFinalize();
   const check = document.getElementById('bb-check');
   if (check) check.remove();
@@ -6667,6 +6673,126 @@ function simEnd() {
   simRender();
 }
 
+// ════════════════════════════════════════
+//  Ma séance du jour : ~10 minutes composées automatiquement
+//  vocabulaire à revoir → révision des leçons + conjugaison → dictées
+// ════════════════════════════════════════
+const DAILY_TITLE = 'Ma séance du jour';
+function dailyKey(d = new Date()) { return d.toLocaleDateString('sv-SE'); }   // AAAA-MM-JJ, heure locale
+function dailyLog(lang) { try { return JSON.parse(localStorage.getItem('bb_daily_' + lang)) || {}; } catch (e) { return {}; } }
+function dailyDoneToday(lang) { return dailyLog(lang)[dailyKey()] !== undefined; }
+// Jours consécutifs : la série continue tant que la séance d'hier ou d'aujourd'hui est faite
+function dailyStreak(lang) {
+  const log = dailyLog(lang);
+  const d = new Date();
+  if (log[dailyKey(d)] === undefined) d.setDate(d.getDate() - 1);
+  let n = 0;
+  while (log[dailyKey(d)] !== undefined) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
+// Flashcards portugaises : même règle que « Je savais / À revoir »
+function ptFcMark(c, ok) {
+  const m = ptFcMem();
+  const b = ok ? Math.min((m[c.pt]?.b ?? 0) + 1, PT_FC_DAYS.length - 1) : 0;
+  m[c.pt] = { b, d: Date.now() + PT_FC_DAYS[b] * 864e5 };
+  localStorage.setItem(PT_FC_KEY, JSON.stringify(m));
+}
+
+function dailyVocabSteps(lang, n) {
+  const pick3 = (list, good) => bbShuffle([...new Set(list.filter(x => x !== good))]).slice(0, 3);
+  if (lang === 'pt' && typeof ptVocab !== 'undefined') {
+    return ptFcQueue('all').slice(0, n).map(c => {
+      const same = ptVocab.filter(v => v.category === c.category).map(v => v.fr);
+      const wrong = pick3(same.length > 3 ? same : ptVocab.map(v => v.fr), c.fr);
+      return bbPrep({ type: 'choice', q: `🃏 Que veut dire « ${c.pt} » ?`, opts: [c.fr, ...wrong], expl: c.ex ? `${c.ex} — ${c.exFr}` : '', onResult: ok => ptFcMark(c, ok) });
+    });
+  }
+  const voc = vocData(lang);
+  if (!voc) return [];
+  return bbShuffle(voc.themes.flatMap(t => t.words.map(w => ({ w, t })))).slice(0, n).map(({ w, t }) =>
+    bbPrep({ type: 'choice', q: `📚 Comment dit-on « ${w[1]} » ?`, opts: [w[0], ...pick3(t.words.map(x => x[0]), w[0])] }));
+}
+
+function dailyConjSteps(lang, n) {
+  const cj = window.CJ && CJ[lang];
+  if (!cj) return [];
+  const pairs = cjWeakKeys(lang).map(k => k.split('|')).filter(([v, t]) => cjVerbById(lang, v) && cjTenseById(lang, t));
+  const plain = cjTensesSorted(lang).filter(t => !t.refl);
+  const known = plain.filter(t => cjLevelsFor(lang, t).some(l => cjLevelPassed(lang, t.id, l.n)));
+  const tenses = known.length ? known : plain.slice(0, 1);
+  const top = cj.verbs.filter(v => v.top && !v.refl);
+  const rnd = a => a[Math.floor(Math.random() * a.length)];
+  const list = bbShuffle(pairs).slice(0, n);
+  while (list.length < n) list.push([rnd(top).id, rnd(tenses).id]);
+  return list.map(([vid, tid]) => {
+    const v = cjVerbById(lang, vid);
+    const t = cjTenseById(lang, tid);
+    const pi = Math.floor(Math.random() * cjPersons(lang, t).length);
+    return { type: 'choice', q: `🔤 ${v.inf} (${v.fr}) · ${t.short} — ${cjPersons(lang, t)[pi]} …`, options: cjOptions(lang, v, t, pi),
+      onResult: ok => cjRecord(lang, v.id + '|' + t.id, ok) };
+  });
+}
+
+function dailySteps(lang) {
+  const cur = BB_CURRICULUM[lang];
+  const p = bbProgress(lang);
+  let lessons = cur.units.flatMap(u => u.lessons.filter(l => p[l.id]));
+  if (!lessons.length) lessons = [cur.units[0].lessons[0]];   // débutant : on révise la toute première leçon
+  const review = bbShuffle(lessons.flatMap(l => l.exercises.filter(e => ['choice', 'fill', 'translate', 'order', 'write'].includes(e.type))))
+    .slice(0, 6).map(bbPrep);
+  const dictation = bbShuffle(lessons.flatMap(l => l.exercises.filter(e => e.type === 'intro' && e.ex)))
+    .slice(0, 2).map(e => ({ type: 'listen', text: e.ex, fr: e.exTr }));
+  return [...dailyVocabSteps(lang, 4), ...bbShuffle([...review, ...dailyConjSteps(lang, 4)]), ...dictation];
+}
+
+function dailyStart(lang) {
+  bbStopAudio();
+  bbState = { lang, unit: null, lesson: null, idx: 0, score: 0, graded: 0, mistakes: [], audio: [], steps: dailySteps(lang), listen: { id: 'daily', title: DAILY_TITLE, daily: true } };
+  bbRender();
+}
+
+function dailyCardHTML(lang) {
+  const done = dailyDoneToday(lang);
+  const streak = dailyStreak(lang);
+  return `
+    <div class="bb-test-card daily-entry${done ? ' done' : ''}" onclick="dailyStart('${lang}')">
+      <div class="bb-test-icon">${done ? '✅' : '⏱️'}</div>
+      <div>
+        <div class="bb-resume-title" style="margin:0">${DAILY_TITLE}${streak ? ` · 🔥 ${streak} jour${streak > 1 ? 's' : ''}` : ''}</div>
+        <div class="bb-resume-sub">${done ? 'Faite aujourd\'hui, bravo ! Vous pouvez la refaire avec de nouvelles questions.' : '10 minutes, tout est prévu : vocabulaire à revoir, révision des leçons, conjugaison et dictée'}</div>
+      </div>
+    </div>`;
+}
+
+function dailyComplete() {
+  const { lang, score, graded, mistakes } = bbState;
+  const pct = graded ? score / graded : 0;
+  const log = dailyLog(lang);
+  const key = dailyKey();
+  const first = log[key] === undefined;
+  log[key] = Math.max(log[key] ?? 0, pct);
+  localStorage.setItem('bb_daily_' + lang, JSON.stringify(log));
+  const xp = (first ? 20 : 5) + score * 2;
+  bbAddXP(lang, xp);
+  const streak = dailyStreak(lang);
+  bbContainer(lang).innerHTML = `
+    <div class="bb-complete">
+      <div style="font-size:54px">${streak >= 2 ? '🔥' : '🎉'}</div>
+      <div class="bb-complete-title">${first ? 'Séance du jour terminée !' : 'Séance bonus terminée !'}</div>
+      <div class="bb-complete-sub">${score} / ${graded} bonnes réponses · ${Math.round(pct * 100)} %</div>
+      <div class="bb-complete-xp">⚡ +${xp} XP${streak ? ` · 🔥 ${streak} jour${streak > 1 ? 's' : ''} d'affilée` : ''}</div>
+      ${mistakes.length ? `
+        <div class="bb-review">
+          <div class="bb-review-title">📝 À revoir (${mistakes.length})</div>
+          ${mistakes.map(m => `<div class="bb-review-item"><div class="bb-review-q">${bbEsc(m.prompt)}</div><div class="bb-review-a">→ ${bbEsc(m.expected)}</div></div>`).join('')}
+        </div>` : `<div class="bb-review-perfect">🎯 Sans faute !</div>`}
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="bb-next-btn" style="max-width:260px" onclick="initBBView('${lang}')">Retour au cours →</button>
+      </div>
+    </div>`;
+}
+
 function lsnPacks(lang) { return (window.LISTEN && window.LISTEN[lang]) || []; }
 function lsnScores(lang) { return JSON.parse(localStorage.getItem('bb_listen_' + lang) || '{}'); }
 
@@ -6726,6 +6852,7 @@ function lsnStart(lang, id) {
 }
 
 function lsnComplete() {
+  if (bbState.listen.daily) return dailyComplete();
   const { lang, score, graded, mistakes, listen } = bbState;
   const pct = graded ? score / graded : 0;
   const s = lsnScores(lang);
